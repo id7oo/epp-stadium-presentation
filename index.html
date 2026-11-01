@@ -660,6 +660,40 @@ body.show-bottom .nexthint{ opacity:0 }
 @media (prefers-reduced-motion: reduce){ .actflash{ display:none } .beat::after{ display:none } .thread button.now{ animation:none } }
 @media (max-width:900px){ .split-photo,.stages,.eqn{ grid-template-columns:1fr } .eqn > b{ display:none } .stages .st::after{ display:none } .beat[data-who] .eyebrow{ margin-right:0 } .who{ position:static; align-self:flex-start; margin-bottom:8px } }
 </style>
+<style>
+/* ── rotate prompt for upright phones ─────────────────────────────────── */
+.gate-rot{ width:74px; height:74px; fill:none; stroke:#19c37d; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; animation:rot 2.4s cubic-bezier(.6,0,.3,1) infinite; transform-origin:50% 45% }
+.gate-rot .arc{ stroke:#dca84a }
+@keyframes rot{ 0%,20%{ transform:rotate(0) } 55%,80%{ transform:rotate(-90deg) } 100%{ transform:rotate(0) } }
+
+/* ── short landscape screens (phones on their side, small tablets) ─────── */
+@media (orientation:landscape) and (max-height:560px){
+  :root{ --t-h2:clamp(.98rem,2.6vw,1.2rem) }
+  body{ font-size:.8rem }
+  .beat[data-pos]{
+    top:calc(env(safe-area-inset-top,0px) + 8px) !important; bottom:calc(env(safe-area-inset-bottom,0px) + 8px) !important;
+    left:var(--gut) !important; right:auto !important; width:min(62vw,600px) !important;
+    max-height:none !important; transform:none !important; padding:12px 14px !important; border-radius:18px;
+  }
+  .beat[data-pos].out{ opacity:0; transform:translateX(-12px) !important }
+  .beat[data-pos="hero"]{ top:auto !important; width:min(70vw,620px) !important }
+  .beat[data-pos="hero"] h1{ font-size:clamp(1.3rem,4.2vw,1.9rem) !important }
+  .beat h2{ margin-bottom:8px } .eyebrow{ margin-bottom:6px; font-size:.64rem } .lede{ font-size:.8rem; margin-bottom:6px }
+  .beat .scroller{ overflow-y:auto !important; -webkit-overflow-scrolling:touch }
+  .beat .scroller.more{ mask-image:none; -webkit-mask-image:none }
+  .who{ position:static; align-self:flex-start; margin-bottom:6px } .beat[data-who] .eyebrow{ margin-right:0 }
+  .grid{ gap:7px } .tile, .card{ padding:9px 10px; border-radius:11px } .tile .k, .card p{ font-size:.72rem }
+  .tile .v{ font-size:clamp(1.1rem,3vw,1.5rem) }
+  .dtable{ font-size:.66rem } .dtable td, .dtable th{ padding:5px 7px }
+  .split-photo{ grid-template-columns:1fr 1fr } .stages{ grid-template-columns:repeat(3,minmax(0,1fr)) }
+  .eqn{ grid-template-columns:1fr auto 1fr auto 1fr } .eqn > b{ display:block } .eqn .v{ font-size:1.1rem } .eqn .k{ font-size:.62rem }
+  .thread, .nexthint, .hint, .timer{ display:none !important }
+  .brand{ display:none }
+  .actflash .t{ font-size:clamp(1.6rem,6vw,2.6rem) }
+  .team{ grid-template-columns:repeat(7,minmax(0,1fr)); gap:5px } .member{ padding:7px 3px } .member .av{ width:34px; height:34px } .member .nm{ font-size:.66rem } .member .note{ display:none }
+  .spkpanel{ max-height:46vh; bottom:8px; width:min(52vw,520px); left:auto; right:var(--gut-r); transform:none; font-size:.76rem }
+}
+</style>
 <canvas id="gl"></canvas>
 <div class="grade"></div>
 <div class="brand" id="brand">
@@ -1302,9 +1336,9 @@ Detail for questions: the 24 learners, six trainer candidates and two eligible s
 
 <div class="gate" id="sizeGate" hidden>
   <img class="gate-logo" id="gateLogo" alt="MBSC">
-  <h2>This presentation needs a bigger screen</h2>
-  <p>It is built for a laptop, desktop or projector. Open it on a screen at least
-     <strong>1024 &times; 620</strong>, in landscape.</p>
+  <svg class="gate-rot" viewBox="0 0 64 64" aria-hidden="true"><rect x="22" y="8" width="20" height="36" rx="4"/><path d="M29 39h6"/><path d="M12 48c4 6 11 9 20 9M44 54l-4 3 4 3" class="arc"/></svg>
+  <h2>Turn your phone sideways</h2>
+  <p>This presentation plays in <strong>landscape</strong>. Rotate your phone and it will start.</p>
   <p class="gate-size" id="gateSize"></p>
 </div>
 
@@ -2912,6 +2946,11 @@ window.EPP_STAGE = (function () {
     if (!sc) return;
     var figs = [].slice.call(sc.querySelectorAll('.plot svg, .dgm svg'));
     if (!figs.length) return;
+    /* on a short phone screen the card scrolls instead, so figures stay legible */
+    if (document.body.classList.contains('compact')) {
+      figs.forEach(function (sv) { if (sv.dataset.maxw) sv.style.maxWidth = sv.dataset.maxw + 'px'; });
+      sc.classList.remove('more'); return;
+    }
     /* remember each figure's natural width once, then always start from it */
     figs.forEach(function (sv) {
       if (!sv.dataset.maxw) {
@@ -3289,10 +3328,13 @@ window.EPP_STAGE = (function () {
   var gate = document.getElementById('sizeGate'), gateSize = document.getElementById('gateSize');
   function checkSize() {
     var w = innerWidth, h = innerHeight;
-    var tooSmall = w < 1024 || h < 620;
+    /* only an upright phone is blocked; landscape phones, tablets and laptops all play */
+    var tooSmall = h > w && w < 600;
     gate.hidden = !tooSmall;
     document.body.style.overflow = tooSmall ? 'hidden' : '';
-    if (tooSmall) gateSize.textContent = 'Your window is ' + Math.round(w) + ' \u00d7 ' + Math.round(h) + '.';
+    if (tooSmall) gateSize.textContent = '';
+    document.body.classList.toggle('compact', !tooSmall && (h < 560 || w < 900));
+    if (!tooSmall && cur >= 0) { var b = beats[cur]; if (b && !b.hidden) fitBeat(b); }
   }
   addEventListener('resize', checkSize, { passive: true });
   addEventListener('orientationchange', function () { setTimeout(checkSize, 250); }, { passive: true });
