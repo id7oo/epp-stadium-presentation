@@ -2489,7 +2489,7 @@ window.EPP_STAGE = (function () {
         if (!sl.m.visible) continue;
         sl.m.scale.set(sl.w, sl.h, sl.w); sl.m.position.x = sl.x;
         sl.mat.opacity = sl.o * .72; sl.em.opacity = sl.o * .9;
-        sl.sp.position.set(sl.x, sl.h + 3.9 * ls, 0); sl.sp.scale.set(12.5 * ls, 5.66 * ls, 1);
+        sl.sp.position.set(sl.x, sl.h + 5.2 * ls, 0); sl.sp.scale.set(17 * ls, 7.7 * ls, 1);
         sl.sp.material.opacity = sl.o * Math.min(1, sl.h / Math.max(.3, sl.ht) * 1.4);
       }
       pw += (pwt - pw) * k2; po += (pot - po) * k2;
@@ -2511,18 +2511,18 @@ window.EPP_STAGE = (function () {
     /* PART 2 — the multiplier and the leaks */
     { p: [40, 172, 190], t: [64, 52, 0], l: .95, f: 1, g: .75, rb: 'PART 2 · THE SPENDING MULTIPLIER AND WHERE THE MONEY LEAKS', sc: ['GDP MULTIPLIER', '100m → 120m = 1.2'] },
     { p: IN_L.p, t: IN_L.t, l: .97, f: .2, g: .72, sc: ['7.8%', 'OF SAUDI VALUE ADDED'],
-      hb: { x: 22, max: 700, span: 34, bars: [
+      hb: { x: 30, max: 700, span: 34, bars: [
         { v: 645.8, lab: '645.8', k: 'Gross output|SAR bn', c: 'base' },
         { v: 307.5, lab: '−307.5', k: 'Bought-in inputs', c: 'imp' },
         { v: 338.3, lab: '338.3', k: 'Value added', c: 'local' }] } },
     { p: [338, 54, 330], t: [296, 6, 196], l: .74, f: .15, g: .6, yd: 1, cr: 1, sc: ['54.5% · 50.3%', 'METALS · ELECTRICAL IMPORTED'], sg: 'IMPORTED INPUTS · 19.7%' },
     { p: IN_R.p, t: IN_R.t, l: 1, f: .5, g: .75, sc: ['SAR 4.5bn', 'GROUP SCENARIO'],
-      hb: { x: -22, max: 2400, span: 34, bars: [
+      hb: { x: -30, max: 2400, span: 34, bars: [
         { v: 2143, lab: 'SAR 2,143m', k: 'Total purchases|47.6% of 4.5bn', c: 'base' },
         { v: 1721, lab: 'SAR 1,721m', k: 'Inside Saudi|80.3% · next round', c: 'local' },
         { v: 421, lab: 'SAR 421m', k: 'From abroad|19.7% · first leak', c: 'imp' }] } },
     { p: IN_L.p, t: IN_L.t, l: 1, f: .6, g: .8, sc: ['SAR 421m', 'STADIUM IMPORTS'],
-      hb: { x: 19, max: 100, span: 44, h: 26, bars: [
+      hb: { x: 26, max: 100, span: 50, h: 26, bars: [
         { v: 94, lab: '94', k: 'Chemicals', c: 'imp' },
         { v: 83, lab: '83', k: 'Metals', c: 'imp' },
         { v: 39, lab: '39', k: 'Wood', c: 'other' },
@@ -2540,11 +2540,11 @@ window.EPP_STAGE = (function () {
     { p: [276, 8, 194], t: [312, 7, 226], l: .85, f: .45, g: .95, yd: 1, cr: 1, rb: 'PART 4 · ONE SHARED MATERIALS AND SYSTEMS ACADEMY', sc: ['ONE ACADEMY', 'THREE FUNCTIONS'], sg: 'SHARED ACADEMY · ONE HOST' },
     { p: [312, 16, 258], t: [284, 10, 198], l: .88, f: .5, g: .95, yd: 1, cr: 1, sc: ['24 · 6 · 2', 'LEARNERS · TRAINERS · SITES'], sg: 'HANDS-ON FIRST · ACADEMY AFTER EVIDENCE' },
     { p: IN_R.p, t: IN_R.t, l: 1, f: .7, g: .9, sc: ['SAR 44m', 'MORE DOMESTIC PURCHASES'],
-      hb: { x: -20, max: 200, span: 22, h: 30, bars: [
+      hb: { x: -28, max: 200, span: 22, h: 30, bars: [
         { v: 177, lab: 'SAR 177m', k: 'Chemicals + metals|basket', c: 'imp' },
         { v: 44, lab: 'SAR 44m', k: '25% shifted|to Saudi supply', c: 'local' }] } },
     { p: IN_L.p, t: IN_L.t, l: 1, f: .5, g: 1, sc: ['SAR 84m', 'EP CREDIT PLAN'],
-      hb: { x: 27, max: 90, span: 22, h: 32, bars: [
+      hb: { x: 34, max: 90, span: 26, h: 32, bars: [
         { v: 36, lab: '~36m', k: 'Activity|12m × 3', c: 'other' },
         { v: 36, lab: '36m', k: 'Technology|12m × 3', c: 'gold' },
         { v: 24, lab: '24m', k: 'Knowledge|12m × 2', c: 'gold' },
@@ -2553,7 +2553,7 @@ window.EPP_STAGE = (function () {
     { p: [-318, 152, 556], t: [0, -116, 0], l: 1, f: .3, g: 1, cr: 1, rb: 'THANK YOU · QUESTIONS WELCOME', sc: ['GROUP 8', 'QUESTIONS WELCOME'], fw: true },
     /* appendix — backups A to I, then sources */
     { p: IN_R.p, t: IN_R.t, l: .95, f: .4, g: .8, rb: 'BACKUPS AND SOURCES · FOR QUESTIONS', sc: ['BACKUP A', 'r = 0.4725'],
-      hb: { x: -22, max: 1400, span: 38, h: 30, bars: [
+      hb: { x: -30, max: 1400, span: 38, h: 30, bars: [
         { v: 600, lab: '600', k: '60% local|round 1', c: 'base' },
         { v: 1137.4, lab: '1,137', k: '60% local|all rounds', c: 'base' },
         { v: 700, lab: '700', k: '70% local|round 1', c: 'local' },
@@ -2663,8 +2663,8 @@ window.EPP_STAGE = (function () {
 
     var night = 1 - mix;
     var pulse = REDUCED ? 1 : .94 + Math.sin(tt * 1.7) * .06;
-    flare = Math.max(0, flare - dt * .7);
-    var fi = lv.l * night * (1 + flare * 1.6);
+    flare = Math.max(0, flare - Math.max(dt, .03) * .8);
+    var fi = lv.l * night * (1 + flare * .7);
     for (var i = 0; i < floodLights.length; i++) floodLights[i].intensity = fi * 1.95 * pulse;
     for (i = 0; i < rigs.length; i++) rigs[i].material.opacity = Math.min(1, lv.l * .3 + night * lv.l * .7);
     for (i = 0; i < beams.length; i++) beams[i].material.opacity = fi * .05;
