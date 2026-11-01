@@ -224,7 +224,9 @@ a{ color:var(--accent); text-decoration:none; border-bottom:1px solid color-mix(
   padding:14px 15px; display:flex; flex-direction:column; gap:4px; min-width:0;
 }
 .tile .v{ font-family:var(--display); font-weight:800; font-size:clamp(1.55rem,2.5vw,2.2rem); line-height:1; letter-spacing:-.04em; color:var(--fg) }
-.tile .v small{ font-size:.5em; font-weight:600; color:var(--fg-2) }
+.tile .v small{ font-size:.5em; font-weight:600; color:var(--fg-2); margin-left:.06em }
+.tile .v{ white-space:nowrap; align-self:flex-start }
+.eqn .v{ white-space:nowrap; align-self:flex-start }
 .tile .k{ font-size:.82rem; color:var(--fg-2); line-height:1.4 }
 .tile .r{ font-size:.67rem; color:var(--fg-3); font-weight:500 }
 .tile--green .v{ color:var(--s-local) } .tile--gold .v{ color:var(--s-credit) } .tile--blue .v{ color:var(--s-base) }
@@ -2878,6 +2880,14 @@ window.EPP_STAGE = (function () {
       el.insertBefore(sv, el.firstChild);
     });
   }
+  /* shrink a stat until it sits inside its tile with breathing room */
+  function fitStat(el) {
+    var box = el.parentElement; if (!box) return;
+    el.style.fontSize = '';
+    var room = box.clientWidth - (parseFloat(getComputedStyle(box).paddingLeft) || 0) - (parseFloat(getComputedStyle(box).paddingRight) || 0) - 6;
+    var fs = parseFloat(getComputedStyle(el).fontSize), n = 0;
+    while (el.getBoundingClientRect().width > room && fs > 14 && n++ < 40) { fs -= 1; el.style.fontSize = fs + 'px'; }
+  }
   function countUp(el) {
     var node = el.firstChild;
     if (!node || node.nodeType !== 3) return;
@@ -3128,6 +3138,7 @@ window.EPP_STAGE = (function () {
     mountFigures(next);
     paintIcons(next);
     renderTeam(next);
+    next.querySelectorAll('.tile .v, .eqn .v').forEach(fitStat);
     fitBeat(next);                        /* measure and settle before the reveal */
     next.style.visibility = '';
     animateIn(next);
@@ -4165,11 +4176,11 @@ window.EPP_STAGE = (function () {
       if (i < 2) s.appendChild(E('line', { x1: x + BW + 3, y1: BY + BH / 2, x2: x + 162, y2: BY + BH / 2, class: 'arrow', 'marker-end': 'url(#ah' + id + ')' }));
     });
     /* re-spending loop from 03 back to 02 */
-    s.appendChild(E('path', { d: 'M400 6 C400 -14 235 -14 235 4', class: 'arrow', 'marker-end': 'url(#ah' + id + ')', opacity: .7 }));
+    s.appendChild(E('path', { d: 'M392 2 C392 -15 243 -15 243 -3', class: 'arrow', 'marker-end': 'url(#ah' + id + ')', opacity: .7 }));
     s.appendChild(E('rect', { x: 120, y: 156, width: 230, height: 34, rx: 10, class: 'n-box n-box--l' }));
     s.appendChild(E('text', { x: 235, y: 177, class: 'n-t', 'text-anchor': 'middle', fill: 'var(--s-import)' }, 'Imports and saving reduce later rounds.'));
-    s.appendChild(E('path', { d: 'M235 118 C235 134 235 140 235 152', class: 'arrow--leak', 'marker-end': 'url(#al' + id + ')' }));
-    s.appendChild(E('path', { d: 'M400 118 C400 140 360 150 352 160', class: 'arrow--leak', 'marker-end': 'url(#al' + id + ')' }));
+    s.appendChild(E('path', { d: 'M235 120 C235 134 235 138 235 148', class: 'arrow--leak', 'marker-end': 'url(#al' + id + ')' }));
+    s.appendChild(E('path', { d: 'M392 120 C392 140 352 140 334 149', class: 'arrow--leak', 'marker-end': 'url(#al' + id + ')' }));
     s.setAttribute('viewBox', '0 -18 470 228');
     host.appendChild(s);
   }
