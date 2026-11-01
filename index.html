@@ -2445,15 +2445,19 @@ window.EPP_STAGE = (function () {
     function draw(sl, lab, k, col) {
       var x = sl.cvs.getContext('2d'), W = 512, H = 232;
       x.clearRect(0, 0, W, H);
+      /* dark glass backing so the label reads against bars, crowd and floodlight */
+      x.fillStyle = 'rgba(4,12,10,.72)'; x.strokeStyle = col; x.lineWidth = 3;
+      x.beginPath(); if (x.roundRect) x.roundRect(14, 18, W - 28, H - 30, 34); else x.rect(14, 18, W - 28, H - 30);
+      x.fill(); x.globalAlpha = .55; x.stroke(); x.globalAlpha = 1;
       x.textAlign = 'center'; x.textBaseline = 'alphabetic';
       x.shadowColor = 'rgba(0,0,0,.75)'; x.shadowBlur = 14;
       x.fillStyle = '#ffffff';
-      fitFont(x, lab, 490, 104, '800', 'Archivo, "Plus Jakarta Sans", Helvetica, sans-serif');
+      fitFont(x, lab, 450, 96, '800', 'Archivo, "Plus Jakarta Sans", Helvetica, sans-serif');
       x.fillText(lab, W / 2, 112);
       x.fillStyle = col;
       var lines = String(k || '').split('|');
       lines.forEach(function (ln, li) {
-        fitFont(x, ln, 500, 40, '700', '"Plus Jakarta Sans", Helvetica, sans-serif');
+        fitFont(x, ln, 450, 36, '700', '"Plus Jakarta Sans", Helvetica, sans-serif');
         x.fillText(ln, W / 2, 164 + li * 44);
       });
       sl.tx.needsUpdate = true;
