@@ -75,6 +75,8 @@ VIEWS = {  # azimuth from -Y (deg), elevation (deg), distance x span, aim offset
     'hero': (-22, 36, 1.95, (0, -6 * k, -4 * k), 70),
     'square': (-30, 32, 2.25, (0, -4 * k, -2 * k), 70),
     'square_front': (0, 20, 2.1, (0, 0, -2 * k), 70),
+    'square_back': (180, 18, 2.1, (0, 0, -6 * k), 70),
+    'dome': (-16, 26, 1.05, (0, 4 * k, 10 * k), 70),
     'front': (0, 16, 1.7, (0, 0, -6 * k), 80),
     'top': (10, 68, 1.45, (0, 6 * k, 0), 60),
     'billboard': (12, 14, .55, (-62 * k, -46 * k, 8 * k), 85),

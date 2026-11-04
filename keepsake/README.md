@@ -14,6 +14,14 @@ The plinth carries three lines of raised gold lettering, each in its own size an
 | RIYADH · 2034 (with gold rules either side) | SemiBold, letter-spaced | 4.0 mm / 2.7 mm |
 | GROUP 8 · MBSC EMBA · ECN 511 · 2026 | Medium (SemiBold on the small model) | 3.1 mm / 2.4 mm |
 
+## ★ Signature edition — the real King Salman Stadium
+
+![Signature edition](preview/render_signature_hero.jpg)
+
+The stadium as Populous designed it: a faceted dome of 14 folded petals (gold ridges framing green planted panels, white slots of light between them, the canyon entrance with a red MBSC media screen) in its park of green-roofed pavilions, radial paths, shrubs and the palm-lined approach with trucks. Two-tier award plinth, 170 × 170 × 59 mm: the three lines of lettering on the front face, the full MBSC logo (red shield, gold Arabic and English name) on the back.
+
+Built print-first: every surface at 45° or less, the media screen on a 45° bracket, and **zero floating regions** in a layer-by-layer check. File: `print/stadium_signature_4colour.3mf` (generator: `source/signature.py`).
+
 ## Three editions
 
 | Edition | What it is | File |
