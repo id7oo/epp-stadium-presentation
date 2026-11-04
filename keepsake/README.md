@@ -51,7 +51,7 @@ The plinth carries three lines of raised gold lettering, each in its own size an
    - Prime tower on. Under *Flushing options*, turn on **Flush into objects' infill** to cut purge waste.
 4. **The scoreboard** sits on a thin pin standing on the pitch, so it can print without supports. Leave the pin as a mount, or snap it off at the tapered top with flush cutters once printed.
 
-**Expect a long print.** The colours change on almost every layer through the lower part (lawn, palms, containers, billboard), so I could not slice it here, so I have no time estimate; Bambu Studio shows the real figure after slicing. The small one is a good first test of colours and detail.
+**Expect a long print.** The colours change on almost every layer through the lower part (lawn, palms, containers, billboard). I couldn't slice it here, so I have no time estimate; Bambu Studio shows the real figure after slicing. The small one is a good first test of colours and detail.
 
 ## Notes
 
