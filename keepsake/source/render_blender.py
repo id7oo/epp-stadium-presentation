@@ -33,13 +33,17 @@ for i, col in enumerate(['white', 'green', 'gold', 'red'], 1):
     path = os.path.join(src, 'stadium_%s_%d_%s.stl' % (size, i, col))
     bpy.ops.wm.stl_import(filepath=path)
     ob = bpy.context.selected_objects[0]; ob.name = col
-    bm = bmesh.new(); bm.from_mesh(ob.data)
-    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-4)
-    bm.to_mesh(ob.data); bm.free()
+    # weld + smooth only when asked: welding touching boxes (container stacks) makes
+    # non-manifold edges that render as black patches; the STL normals are already right
+    if os.environ.get('SMOOTH', '0') == '1':
+        bm = bmesh.new(); bm.from_mesh(ob.data)
+        bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-4)
+        bm.to_mesh(ob.data); bm.free()
     ob.data.materials.append(material(col, MATS[col]))
     bpy.context.view_layer.objects.active = ob
-    try: bpy.ops.object.shade_auto_smooth(angle=math.radians(40))
-    except Exception: pass
+    if os.environ.get('SMOOTH', '0') == '1':
+        try: bpy.ops.object.shade_auto_smooth(angle=math.radians(40))
+        except Exception: pass
     objs.append(ob)
 
 # model extents
@@ -69,6 +73,8 @@ w.node_tree.nodes['Background'].inputs['Strength'].default_value = 0.6
 # camera
 VIEWS = {  # azimuth from -Y (deg), elevation (deg), distance x span, aim offset, focal mm
     'hero': (-22, 36, 1.95, (0, -6 * k, -4 * k), 70),
+    'square': (-30, 32, 2.25, (0, -4 * k, -2 * k), 70),
+    'square_front': (0, 20, 2.1, (0, 0, -2 * k), 70),
     'front': (0, 16, 1.7, (0, 0, -6 * k), 80),
     'top': (10, 68, 1.45, (0, 6 * k, 0), 60),
     'billboard': (12, 14, .55, (-62 * k, -46 * k, 8 * k), 85),
