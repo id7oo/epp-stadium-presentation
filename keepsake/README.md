@@ -14,6 +14,16 @@ The plinth carries three lines of raised gold lettering, each in its own size an
 | RIYADH · 2034 (with gold rules either side) | SemiBold, letter-spaced | 4.0 mm / 2.7 mm |
 | GROUP 8 · MBSC EMBA · ECN 511 · 2026 | Medium (SemiBold on the small model) | 3.1 mm / 2.4 mm |
 
+## Three editions
+
+| Edition | What it is | File |
+|---|---|---|
+| **Large** | the whole stadium scene, 210 × 170 × 47 mm | `print/stadium_large_4colour.3mf` |
+| **Small** | the same scene at half size, 109 × 88 × 27 mm | `print/stadium_small_4colour.3mf` |
+| **Cutaway** | architectural section: the front half of the stands removed, the cut faces capped in gold, the scoreboard hanging over the full pitch, trucks bringing containers up the road, and a tall wall behind carrying the full college logo. 210 × 170 × 91 mm | `print/stadium_cutaway_4colour.3mf` |
+
+![Cutaway edition](preview/render_cutaway_hero.jpg)
+
 | | Large | Small |
 |---|---|---|
 | Size | 210 × 170 × 47 mm | 109 × 88 × 27 mm |
@@ -24,9 +34,9 @@ The plinth carries three lines of raised gold lettering, each in its own size an
 
 | File | Use |
 |---|---|
-| `print/stadium_large_4colour.3mf`, `print/stadium_small_4colour.3mf` | **Open these first.** One object with four parts, already assigned to AMS slots 1–4. |
+| `print/stadium_<edition>_4colour.3mf` | **Open these first.** One object with four parts, already assigned to AMS slots 1–4. |
 | `print/stadium_<size>_<slot>_<colour>.stl` | The same four parts as separate STLs, if the 3MF doesn't load its colours |
-| `preview/interactive_large.html`, `preview/interactive_small.html` | Turn the model in a browser (drag to rotate, scroll to zoom) |
+| `preview/interactive_large.html`, `preview/interactive_small.html`, `preview/interactive_cutaway.html` | Turn the model in a browser (drag to rotate, scroll to zoom) |
 | `preview/render_*.jpg` | Blender (Cycles) renders |
 | `source/statue.py` | Generates every print file. `python statue.py OUT_DIR` |
 | `source/render_blender.py` | Makes the renders. `python render_blender.py PRINT_DIR large OUT.png hero` |
@@ -58,3 +68,4 @@ The plinth carries three lines of raised gold lettering, each in its own size an
 - The palm fronds are the most delicate part. If the tips look stringy, enable supports for the palms only, using painted tree supports.
 - The stadium is a stylised model built from the presentation's 3D scene, not Populous's architectural design.
 - The MBSC shield is traced from the logo used in the presentation. Check that you may reproduce the college's logo for your purpose.
+- The cutaway's logo wall is 80 mm tall and 4 mm thick, with five buttresses behind it. Print the cutaway with the wall towards the back of the plate, and keep the chamber door closed so drafts can't make the wall wobble.
