@@ -292,7 +292,7 @@ def build(S, small):
         pts_axis = []
         for i in range(nseg + 1):
             f = i / nseg
-            pts_axis.append(np.array([x + lx * f * f * hgt, y + ly * f * f * hgt, z0 + LZ * .5 + f * hgt]))
+            pts_axis.append(np.array([x + lx * f * f * hgt, y + ly * f * f * hgt, z0 + f * hgt]))
         for i in range(nseg):
             c0, c1 = pts_axis[i], pts_axis[i + 1]
             r0 = tr * (1 - .25 * i / nseg); r1 = tr * (1 - .25 * (i + 1) / nseg)
@@ -310,7 +310,7 @@ def build(S, small):
             a = 2 * math.pi * j / nf + rng.uniform(-.25, .25)
             reach = L(6.4, 3.6) * rng.uniform(.85, 1.1)
             lift = L(3.4, 2.0) * rng.uniform(.9, 1.15)
-            end = lift * .55 + reach * .27                     # >= ~15 deg at the tip
+            end = lift + reach * .22                           # keeps rising to the tip, ~12 deg there
             d = np.array([math.cos(a), math.sin(a), 0.0])
             p0 = top + [0, 0, L(.2)]; p1 = top + d * reach * .35 + [0, 0, lift]; p2 = top + d * reach + [0, 0, end]
             side = np.array([-d[1], d[0], 0.0])
@@ -368,7 +368,7 @@ def build(S, small):
             hgt = 1 if (r + c) % 3 else 2
             for lvl in range(hgt):
                 col = cols[(k + lvl) % len(cols)]
-                P[col].append(box(x, yy, z0 + lvl * chh, x + cw, yy + cd, z0 + (lvl + 1) * chh - .02 * (lvl == 0)))
+                P[col].append(box(x, yy, z0 + lvl * chh, x + cw, yy + cd, z0 + (lvl + 1) * chh))
             k += 1
 
     # floodlight masts by the yard (white post, gold 45-degree head)
@@ -473,33 +473,72 @@ def write_stl(path, v, f):
         fh.write(b'King Salman Stadium keepsake'.ljust(80, b' '))
         fh.write(np.uint32(len(f)).tobytes()); fh.write(data.tobytes())
 
+FILAMENT_HEX = {'white': '#F2F0EB', 'green': '#1F8A4C', 'gold': '#D4A24C', 'red': '#C8102E'}
+
 def write_3mf(path, parts, name):
-    """Bambu Studio / PrusaSlicer 3MF: one object, four parts, parts mapped to AMS slots 1-4."""
-    objs, comps, cfg_parts = [], [], []
+    """Bambu Studio project 3MF: one object made of four parts, each part bound to
+    AMS slot 1-4, with the four filament colours set in the project."""
+    import json, uuid
+    U = lambda: str(uuid.uuid4())
+    # centre the model on its own origin; the build item places it mid-plate
+    allv = np.vstack([v for _, (v, f) in parts])
+    off = np.array([(allv[:, 0].min() + allv[:, 0].max()) / 2, (allv[:, 1].min() + allv[:, 1].max()) / 2, 0])
+    sub_objs, comps, cfg_parts = [], [], []
     for i, (col, (v, f)) in enumerate(parts, start=1):
-        vs = '\n'.join('<vertex x="%.4f" y="%.4f" z="%.4f"/>' % tuple(p) for p in v)
-        ts = '\n'.join('<triangle v1="%d" v2="%d" v3="%d"/>' % tuple(t) for t in f)
-        objs.append('<object id="%d" type="model"><mesh><vertices>\n%s\n</vertices><triangles>\n%s\n</triangles></mesh></object>' % (i, vs, ts))
-        comps.append('<component objectid="%d"/>' % i)
-        cfg_parts.append('<part id="%d" subtype="normal_part"><metadata key="name" value="%s"/><metadata key="extruder" value="%d"/></part>' % (i, col.capitalize(), i))
+        vv = v - off
+        vs = ''.join('<vertex x="%.4f" y="%.4f" z="%.4f"/>' % tuple(p) for p in vv)
+        ts = ''.join('<triangle v1="%d" v2="%d" v3="%d"/>' % tuple(t) for t in f)
+        sub_objs.append('<object id="%d" p:UUID="%s" type="model"><mesh><vertices>%s</vertices><triangles>%s</triangles></mesh></object>' % (i, U(), vs, ts))
+        comps.append('<component p:path="/3D/Objects/object_1.model" objectid="%d" p:UUID="%s" transform="1 0 0 0 1 0 0 0 1 0 0 0"/>' % (i, U()))
+        cfg_parts.append(
+            '<part id="%d" subtype="normal_part"><metadata key="name" value="%d %s"/>'
+            '<metadata key="matrix" value="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1"/>'
+            '<metadata key="extruder" value="%d"/></part>' % (i, i, col.capitalize(), i))
     oid = len(parts) + 1
-    model = ('<?xml version="1.0" encoding="UTF-8"?>\n<model unit="millimeter" xml:lang="en-US" '
-             'xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" '
-             'xmlns:BambuStudio="http://schemas.bambulab.com/package/2021">\n'
-             '<metadata name="Title">%s</metadata>\n<resources>\n%s\n<object id="%d" type="model"><components>%s</components></object>\n'
-             '</resources>\n<build><item objectid="%d" transform="1 0 0 0 1 0 0 0 1 128 128 0" printable="1"/></build>\n</model>\n'
-             % (name, '\n'.join(objs), oid, ''.join(comps), oid))
+    NS = ('xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" '
+          'xmlns:BambuStudio="http://schemas.bambulab.com/package/2021" '
+          'xmlns:p="http://schemas.microsoft.com/3dmanufacturing/production/2015/06" requiredextensions="p"')
+    head = '<?xml version="1.0" encoding="UTF-8"?>\n<model unit="millimeter" xml:lang="en-US" %s>\n' % NS
+    meta = ('<metadata name="Application">BambuStudio-01.10.01.50</metadata>\n'
+            '<metadata name="BambuStudio:3mfVersion">1</metadata>\n')
+    main = (head + meta + '<metadata name="Title">%s</metadata>\n<resources>\n'
+            '<object id="%d" p:UUID="%s" type="model"><components>%s</components></object>\n</resources>\n'
+            '<build p:UUID="%s"><item objectid="%d" p:UUID="%s" transform="1 0 0 0 1 0 0 0 1 128 128 0" printable="1"/></build>\n</model>\n'
+            % (name, oid, U(), ''.join(comps), U(), oid, U()))
+    objects = head + meta + '<resources>\n' + '\n'.join(sub_objs) + '\n</resources>\n<build/>\n</model>\n'
     cfg = ('<?xml version="1.0" encoding="UTF-8"?>\n<config>\n<object id="%d"><metadata key="name" value="%s"/>'
-           '<metadata key="extruder" value="1"/>%s</object>\n</config>\n' % (oid, name, ''.join(cfg_parts)))
+           '<metadata key="extruder" value="1"/>%s</object>\n'
+           '<plate><metadata key="plater_id" value="1"/><metadata key="plater_name" value=""/><metadata key="locked" value="false"/>'
+           '<model_instance><metadata key="object_id" value="%d"/><metadata key="instance_id" value="0"/>'
+           '<metadata key="identify_id" value="%d"/></model_instance></plate>\n'
+           '<assemble><assemble_item object_id="%d" instance_id="0" transform="1 0 0 0 1 0 0 0 1 128 128 0" offset="0 0 0"/></assemble>\n'
+           '</config>\n' % (oid, name, ''.join(cfg_parts), oid, 100 + oid, oid))
+    cols = [FILAMENT_HEX[c] for c, _ in parts]
+    project = {
+        'version': '01.10.01.50', 'name': 'project_settings', 'from': 'project',
+        'filament_colour': cols, 'filament_type': ['PLA'] * len(cols),
+        'filament_settings_id': ['Bambu PLA Basic @BBL X1C'] * len(cols),
+        'printer_settings_id': 'Bambu Lab X1 Carbon 0.4 nozzle', 'printer_model': 'Bambu Lab X1 Carbon',
+        'enable_support': '0', 'layer_height': '0.16', 'sparse_infill_density': '15%', 'sparse_infill_pattern': 'gyroid',
+        'wall_loops': '3', 'enable_prime_tower': '1',
+    }
     ct = ('<?xml version="1.0" encoding="UTF-8"?>\n<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
           '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
           '<Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml"/>'
+          '<Default Extension="png" ContentType="image/png"/>'
           '<Default Extension="config" ContentType="text/xml"/></Types>')
     rels = ('<?xml version="1.0" encoding="UTF-8"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
-            '<Relationship Target="/3D/3dmodel.model" Id="rel0" Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"/></Relationships>')
+            '<Relationship Target="/3D/3dmodel.model" Id="rel-1" Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"/></Relationships>')
+    mrels = ('<?xml version="1.0" encoding="UTF-8"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
+             '<Relationship Target="/3D/Objects/object_1.model" Id="rel-1" Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel"/></Relationships>')
     with zipfile.ZipFile(path, 'w', zipfile.ZIP_DEFLATED) as z:
-        z.writestr('[Content_Types].xml', ct); z.writestr('_rels/.rels', rels)
-        z.writestr('3D/3dmodel.model', model); z.writestr('Metadata/model_settings.config', cfg)
+        z.writestr('[Content_Types].xml', ct)
+        z.writestr('_rels/.rels', rels)
+        z.writestr('3D/3dmodel.model', main)
+        z.writestr('3D/_rels/3dmodel.model.rels', mrels)
+        z.writestr('3D/Objects/object_1.model', objects)
+        z.writestr('Metadata/model_settings.config', cfg)
+        z.writestr('Metadata/project_settings.config', json.dumps(project, indent=4))
 
 if __name__ == '__main__':
     out = sys.argv[1]; os.makedirs(out, exist_ok=True)
