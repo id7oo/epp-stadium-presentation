@@ -100,8 +100,10 @@ def mask_cs(mask, width_mm, cx, cy, px_per_mm=12):
     return cs.translate([cx - (b[0] + b[2]) / 2, cy - (b[1] + b[3]) / 2])
 
 # ── the scene ───────────────────────────────────────────────────────────────
-def build(S, small):
-    """S = linear scale (1 = large). `small` drops detail finer than a 0.4 mm nozzle."""
+def build(S, small, cut=False):
+    """S = linear scale (1 = large). `small` drops detail finer than a 0.4 mm nozzle.
+    `cut` = the cutaway edition: the front half of the stands is removed along the
+    stadium's long axis, the cut face is capped in gold, trucks run the approach."""
     def L(v, lo=None):                       # scaled length with a printable floor
         v = v * S
         return max(v, lo) if lo else v
@@ -149,7 +151,7 @@ def build(S, small):
     bb_x0, bb_x1, bb_y = -W / 2 + L(10), -W / 2 + L(60), yStrip + L(13)
     billboard_pad = rect(bb_x0 - L(2), bb_y - L(5), bb_x1 + L(2), bb_y + L(5))
     lawn = rrect(W - L(7), D - L(7), L(7)).translate([0, 0]) - rect(-W, -D, W, yStrip + L(1.5))
-    lawn = lawn - plaza - road - yard - billboard_pad
+    lawn = lawn - plaza - road - yard - (billboard_pad if not cut else rect(0, 0, 0.01, 0.01))
     LZ = L(1.2, .8)
     P['green'].append(slab(lawn, z0, LZ))
 
@@ -169,8 +171,8 @@ def build(S, small):
         f = i / (N - 1)
         ai, bi = a0 + (Ai - a0) * f, b0 + (Bi - b0) * f
         h = L(2.2) + (L(24) - L(2.2)) * f ** 1.2
-        P['white'].append(slab(st(ellipse(A, B) - ellipse(ai, bi)), z0, h))
-    P['white'].append(slab(st(ellipse(A, B) - ellipse(Ai, Bi)), z0, WALL))
+        P.setdefault('_stand', []).append(slab(st(ellipse(A, B) - ellipse(ai, bi)), z0, h))
+    P['_stand'].append(slab(st(ellipse(A, B) - ellipse(Ai, Bi)), z0, WALL))
     # vomitory tunnels into the middle tier
     for k in range(10):
         th = 2 * math.pi * k / 10 + .31
@@ -179,7 +181,6 @@ def build(S, small):
         vw = L(3.2, 2)
         v = box(-vw / 2, -L(4), 0, vw / 2, L(4), L(3.2, 2)).rotate([0, 0, math.degrees(th) + 90])
         v = v.translate([mid_a * fx, cy + mid_b * fy, z0 + L(2.2) + (L(24) - L(2.2)) * .5 ** 1.2 - L(3.2, 2) + .01])
-        P['white'][-1] = P['white'][-1]  # keep wall
         P.setdefault('_cut', []).append(v)
 
     # pitch (green) with white field markings
@@ -228,7 +229,7 @@ def build(S, small):
                             for dz in (-rib_w / 2, rib_w / 2):
                                 pts.append([x + nx * dn + tx * dt, y + ny * dn + ty * dt, z + dz])
                 ribs.append(Manifold.hull_points(np.array(pts)))
-    P['white'].append(union(ribs))
+    P['_stand'].append(union(ribs))
 
     # gold roof ring: 45-degree undersides inside and out, so it prints without supports
     rz = z0 + WALL
@@ -240,7 +241,7 @@ def build(S, small):
     cone = ellipse(Ai, Bi).extrude(inset, scale_top=((Ai - inset) / Ai, (Bi - inset) / Bi)).translate([0, cy, rz - .01])
     hole = slab(st(ellipse(Ai - inset, Bi - inset)), rz + inset - .02, L(10))
     ring = outer - cone - hole
-    P['gold'].append(ring)
+    P['_ring'] = [ring]
 
     # the centre-hung scoreboard from the presentation, on cables to the wall top
     sbw, sbh = L(19, 10), L(9, 5)
@@ -270,7 +271,7 @@ def build(S, small):
     # cables: straight gold rods from the board's top corners to the wall top
     cr = L(.75, .6)
     for dx in (-1, 1):
-        for dy in (-1, 1):
+        for dy in ((1,) if cut else (-1, 1)):
             th = math.atan2(dy * B, dx * A)
             ex, ey = (Ai + L(1)) * math.cos(th), cy + (Bi + L(1)) * math.sin(th)
             sx0, sy0 = dx * (sbw / 2 - cr), cy + dy * (sbw / 2 - cr)
@@ -341,6 +342,8 @@ def build(S, small):
     grove = [(-W/2 + L(18), D/2 - L(18)), (-W/2 + L(28), D/2 - L(12)), (W/2 - L(18), D/2 - L(18)), (W/2 - L(30), D/2 - L(11)),
              (-W/2 + L(14), L(18)), (-W/2 + L(22), L(4)), (W/2 - L(16), L(22)), (W/2 - L(26), L(30))]
     if small: grove = grove[::2]
+    if cut:   # a palm grove where the front billboard stands in the other editions
+        grove += [(-W/2 + L(18), yStrip + L(10)), (-W/2 + L(30), yStrip + L(16)), (-W/2 + L(44), yStrip + L(9)), (-W/2 + L(24), yStrip + L(26))]
     for (gx, gy) in grove:
         pal.append(palm(gx, gy, L(14, 8) * rng.uniform(.85, 1.1), L(.08), rng.uniform(0, 2 * math.pi)))
     # rounded shrubs ringing the plaza (half spheres print without supports)
@@ -350,7 +353,7 @@ def build(S, small):
         px, py = (A + L(11)) * math.cos(th), cy + (B + L(11)) * math.sin(th)
         if abs(px) < road_w / 2 + L(3) and py < cy: continue                       # keep the road clear
         if px > L(40) and py < L(-20): continue                                      # and the yard
-        if -W / 2 + L(8) < px < -W / 2 + L(62) and py < yStrip + L(22): continue    # and the billboard
+        if not cut and -W / 2 + L(8) < px < -W / 2 + L(62) and py < yStrip + L(22): continue    # and the billboard
         if abs(px) > W / 2 - L(5) or abs(py) > D / 2 - L(5) or py < yStrip + L(3): continue
         r = L(2.1, 1.4) * rng.uniform(.8, 1.15)
         pal.append(Manifold.sphere(r, 20).translate([px, py, z0 + LZ * .5]).trim_by_plane([0, 0, 1], z0 + LZ * .5))
@@ -371,6 +374,31 @@ def build(S, small):
                 P[col].append(box(x, yy, z0 + lvl * chh, x + cw, yy + cd, z0 + (lvl + 1) * chh))
             k += 1
 
+    # trucks bringing containers up the approach road (cutaway edition)
+    if cut:
+        def truck(x, y, heading, col):
+            tw, cab_l, tr_l = L(6.6), L(5.6), L(15)
+            parts = {'white': [], 'gold': [], col: []}
+            ch_h, wh_r = L(1.2), L(1.5)
+            # wheels: short cylinders across the truck, sunk into the road so they start on a face
+            for wy in (L(1.8), cab_l + L(3), cab_l + tr_l - L(2.5)):
+                cyl = Manifold.cylinder(tw + L(.4), wh_r, wh_r, 20).rotate([0, 90, 0]).translate([-(tw + L(.4)) / 2, wy, z0 + wh_r * .7])
+                parts['white'].append(cyl)
+            parts['white'].append(box(-tw / 2, 0, z0 + wh_r * .9, tw / 2, cab_l + tr_l, z0 + wh_r * .9 + ch_h))   # chassis
+            cz = z0 + wh_r * .9 + ch_h
+            parts['white'].append(box(-tw / 2, 0, cz, tw / 2, cab_l - L(.6), cz + L(5.2)))                     # cab
+            parts['gold'].append(box(-tw / 2 + L(.6), -L(.4), cz + L(2.6), tw / 2 - L(.6), L(.2), cz + L(4.4)))  # windscreen
+            parts[col].append(box(-tw / 2 + L(.2), cab_l, cz, tw / 2 - L(.2), cab_l + tr_l, cz + L(5.6)))       # container
+            out = {}
+            for c, ms in parts.items():
+                m = union(ms)
+                if heading: m = m.rotate([0, 0, 180]).translate([0, cab_l + tr_l, 0])
+                out[c] = m.translate([x, y, 0])
+            return out
+        lane = road_w / 4
+        for (x, y, hd, col) in [(lane, yStrip + L(2), False, 'red'), (-lane, yStrip + L(6), True, 'gold')]:
+            for c, m in truck(x, y, hd, col).items(): P[c].append(m)
+
     # floodlight masts by the yard (white post, gold 45-degree head)
     if not small:
         for (x, y) in [(L(42), yStrip + L(6)), (W / 2 - L(6), L(-26)), (W / 2 - L(6), yStrip + L(6))]:
@@ -383,6 +411,13 @@ def build(S, small):
             P['gold'].append(Manifold.hull_points(np.array(pts)))
 
     # the billboard from the opening scene, carrying the MBSC shield
+    if not cut:
+        _billboard(P, L, z0, small, bb_x0, bb_x1, bb_y)
+    else:
+        _backdrop(P, L, z0, W, D, cy, B)
+    return _resolve(P, L, W, D, cy, cut)
+
+def _billboard(P, L, z0, small, bb_x0, bb_x1, bb_y):
     bw, bh, bt = bb_x1 - bb_x0, L(36, 20), L(3.4, 2.6)
     base_h = L(3, 2)
     P['white'].append(box(bb_x0 - L(1), bb_y - L(3), z0, bb_x1 + L(1), bb_y + L(3), z0 + base_h))
@@ -444,6 +479,75 @@ def build(S, small):
     fr = L(1.2, 1)
     frame = (rect(bb_x0, z0 + base_h, bb_x1, z0 + base_h + bh) - rect(bb_x0 + fr, z0 + base_h + fr, bb_x1 - fr, z0 + base_h + bh - fr))
     P['gold'].append(on_face(frame, L(.6, .5), front))
+
+
+def _face_solid(cs, depth, y_face):
+    """CrossSection drawn in (x, z) -> relief standing out from a face at y_face towards -Y."""
+    return cs.extrude(depth).rotate([90, 0, 0]).translate([0, y_face + .01, 0])
+
+def _mask_rings(mask, x_left, z_top, mm_per_px, px_per_mm=14):
+    step = max(1, int(round(1 / (mm_per_px * px_per_mm))))
+    mm = np.pad(mask[::step, ::step], 2).astype(float)
+    rings = []
+    for c in measure.find_contours(mm, .5):
+        if len(c) < 6: continue
+        rings.append(np.c_[x_left + (c[:, 1] - 2) * step * mm_per_px, z_top - (c[:, 0] - 2) * step * mm_per_px])
+    return CrossSection(rings, FillRule.EvenOdd).simplify(.02)
+
+def _backdrop(P, L, z0, W, D, cy, B):
+    """Cutaway edition: a tall wall behind the stands carrying the full college logo:
+    red shield with white calligraphy, the Arabic and English name raised in gold, the red rule."""
+    from PIL import Image
+    full = np.array(Image.open(os.path.join(HERE, 'logo_full.png')).convert('L')) > 127
+    redm = np.array(Image.open(os.path.join(HERE, 'logo_red.png')).convert('L')) > 127
+    pw, ph, pt = L(150), L(80), L(4)
+    y_back = D / 2 - L(6)
+    yf = y_back - pt                                   # front face of the wall
+    base_h = L(3)
+    zb = z0 + base_h
+    # a stepped plinth so the wall stands firm, then the wall and a gold frame
+    P["white"].append(box(-pw / 2 - L(2), yf - L(3), z0, pw / 2 + L(2), y_back + L(4.4), z0 + base_h))
+    P['white'].append(box(-pw / 2, yf, zb, pw / 2, y_back, zb + ph))
+    # triangular buttresses behind the wall keep a tall thin panel rigid while it prints
+    for bx in np.linspace(-pw / 2 + L(8), pw / 2 - L(8), 5):
+        P['white'].append(Manifold.hull_points(np.array([[bx + dx, y_back - .01, zb] for dx in (-L(1), L(1))] +
+                                                         [[bx + dx, y_back + L(4.2), zb] for dx in (-L(1), L(1))] +
+                                                         [[bx + dx, y_back - .01, zb + ph * .7] for dx in (-L(1), L(1))])))
+    fr = L(1.4)
+    frame = rect(-pw / 2, zb, pw / 2, zb + ph) - rect(-pw / 2 + fr, zb + fr, pw / 2 - fr, zb + ph - fr)
+    P['gold'].append(_face_solid(frame, L(.7), yf))
+    # logo placement inside the frame
+    lh = L(46)
+    k = lh / full.shape[0]
+    lw = full.shape[1] * k
+    x_left, z_top = -lw / 2, zb + ph - L(5.5)          # logo in the upper wall, above the roof ring
+    shield_cols = 1010                                 # the shield ends here in the logo raster
+    sh_part = np.zeros_like(full); sh_part[:, :shield_cols] = full[:, :shield_cols]
+    tx_part = np.zeros_like(full); tx_part[:, shield_cols:] = full[:, shield_cols:]
+    shield = morphology.remove_small_holes(sh_part, max_size=5000)
+    sh_white = morphology.dilation(sh_part & ~redm, morphology.disk(3))
+    sh_cs = _mask_rings(shield, x_left, z_top, k)
+    wh_cs = _mask_rings(sh_white & shield, x_left, z_top, k)
+    P['red'].append(_face_solid(sh_cs - wh_cs, L(.9), yf))
+    P['white'].append(_face_solid(wh_cs, L(1.5), yf))
+    gold_txt = morphology.dilation(tx_part & ~redm, morphology.disk(2))
+    P['gold'].append(_face_solid(_mask_rings(gold_txt, x_left, z_top, k), L(.9), yf))
+    rule = tx_part & redm
+    if rule.any():
+        P['red'].append(_face_solid(_mask_rings(morphology.dilation(rule, morphology.disk(2)), x_left, z_top, k), L(.9), yf))
+
+def _resolve(P, L, W, D, cy, cut):
+    # ── the stands: whole, or cut away with a gold section face ──
+    stand = union(P.pop('_stand', [])); ring = union(P.pop('_ring', []))
+    if cut:
+        poche = L(.9, .8)
+        keep = box(-W, cy + poche, -1, W, D, 200)
+        face = box(-W, cy, -1, W, cy + poche, 200)
+        P['white'].append(stand ^ keep)
+        P['gold'].append(stand ^ face)
+        P['gold'].append(ring ^ box(-W, cy, -1, W, D, 200))
+    else:
+        P['white'].append(stand); P['gold'].append(ring)
 
     # ── resolve colours so no two parts overlap ──
     cut = union(P.pop('_cut', []))
@@ -542,8 +646,8 @@ def write_3mf(path, parts, name):
 
 if __name__ == '__main__':
     out = sys.argv[1]; os.makedirs(out, exist_ok=True)
-    for label, S, small in [('large', 1.0, False), ('small', 0.52, True)]:
-        solids = build(S, small)
+    for label, S, small, cut in [('large', 1.0, False, False), ('small', 0.52, True, False), ('cutaway', 1.0, False, True)]:
+        solids = build(S, small, cut)
         parts = []
         for col in COLOURS:
             m = solids[col]
