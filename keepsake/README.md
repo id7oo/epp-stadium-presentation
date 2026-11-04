@@ -42,7 +42,7 @@ The plinth carries three lines of raised gold lettering, each in its own size an
 
 ## Printing on the X1C (Bambu Studio)
 
-1. Open the 3MF. If Bambu Studio asks whether to load it as one object with multiple parts, choose **Yes**.
+1. Open the 3MF. It is a Bambu Studio project file: when asked, choose **Load as project** so the four filament colours (white, green, gold, red) and the part-to-slot assignments come in with it. Then sync the filaments with your AMS.
 2. Check each part's filament in the Objects list matches the table above. If you used the STLs instead, select all four, right-click → *Assemble*, then set each part's filament.
 3. Settings:
    - **0.16 mm** layer height (0.12 mm for the small one), 0.4 mm nozzle

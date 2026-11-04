@@ -73,6 +73,12 @@ VIEWS = {  # azimuth from -Y (deg), elevation (deg), distance x span, aim offset
     'top': (10, 68, 1.45, (0, 6 * k, 0), 60),
     'billboard': (12, 14, .55, (-62 * k, -46 * k, 8 * k), 85),
     'bowl': (8, 44, .62, (0, 14 * k, 6 * k), 70),
+    'back': (205, 30, 1.85, (0, 4 * k, -4 * k), 70),
+    'side': (68, 24, 1.75, (0, 0, -4 * k), 70),
+    'scoreboard': (14, 40, .58, (0, 14 * k, 6 * k), 85),
+    'yard': (-28, 32, .66, (66 * k, -44 * k, 6 * k), 80),
+    'avenue': (4, 10, .64, (0, -30 * k, 10 * k), 50),
+    'palms': (40, 14, .46, (-14 * k, -44 * k, 10 * k), 70),
 }
 az, el, dk, aim, focal = VIEWS[view]
 tgt = ctr + Vector(aim)
@@ -90,7 +96,10 @@ sc.render.engine = 'CYCLES'
 sc.cycles.device = 'CPU'
 sc.cycles.samples = int(os.environ.get('SAMPLES', 96))
 sc.cycles.use_denoising = True
-sc.render.resolution_x, sc.render.resolution_y = 1600, 1000
+rx, ry = (int(v) for v in os.environ.get('RES', '1600x1000').split('x'))
+sc.render.resolution_x, sc.render.resolution_y = rx, ry
+sc.cycles.use_adaptive_sampling = True; sc.cycles.adaptive_threshold = 0.015
+sc.render.image_settings.file_format = 'PNG'; sc.render.image_settings.color_depth = '16'
 sc.render.film_transparent = False
 try: sc.view_settings.view_transform = 'AgX'; sc.view_settings.look = 'AgX - Punchy'; sc.view_settings.exposure = -0.35
 except Exception: pass
