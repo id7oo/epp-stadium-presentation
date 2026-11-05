@@ -11,8 +11,8 @@ const IMG = (n) => path.join(__dirname, 'img', n);
 const PASS = process.env.PASS || 'final';
 const OUT = process.argv[2] || 'deck.pptx';
 
-const F = { body: 'Segoe UI', semi: 'Segoe UI Semibold', black: 'Segoe UI Black', light: 'Segoe UI Light' };
-const THEME = { name: 'King Salman Night Glass', headFontFace: F.semi, bodyFontFace: F.body,
+const F = { body: 'Arial', semi: 'ARIAL_BOLD', black: 'ARIAL_BOLD', light: 'ARIAL_REG' };   // Arial: identical on Mac and Windows
+const THEME = { name: 'King Salman Night Glass', headFontFace: 'Arial', bodyFontFace: 'Arial',
   colors: { dk1: '0B1115', lt1: 'F2F7F6', dk2: '04090B', lt2: 'B4C5C2', accent1: '22D38B', accent2: 'E2B357', accent3: 'EE6A33', accent4: '4A95F0', accent5: 'D79A1E', accent6: '7F928F', hlink: '22D38B', folHlink: 'B4C5C2' } };
 const HX = { fg: 'F2F7F6', fg2: 'B4C5C2', fg3: '7F928F', green: '22D38B', gold: 'E2B357', imp: 'EE6A33', blue: '4A95F0', credit: 'D79A1E', other: '6E837C', bg: '04090B' };
 
@@ -25,10 +25,10 @@ const C = pres.SchemeColor;
 const W = 13.333, Hh = 7.5, MX = 0.62, CW = W - 2 * MX;
 
 pres.defineSlideMaster({ title: 'CONTENT', background: { color: HX.bg }, objects: [
-  { placeholder: { options: { name: 'title', type: 'title', x: MX, y: 0.98, w: CW, h: 0.95, fontSize: 26, fontFace: F.semi, color: C.background1, valign: 'top', align: 'left', margin: 0 }, text: '' } }],
-  slideNumber: { x: 12.3, y: 7.05, w: 0.42, h: 0.25, fontSize: 9, color: C.accent6, align: 'right', fontFace: F.body } });
+  { placeholder: { options: { name: 'title', type: 'title', x: MX, y: 0.98, w: CW, h: 0.95, fontSize: 26, fontFace: 'Arial', bold: true, color: C.background1, valign: 'top', align: 'left', margin: 0 }, text: '' } }],
+  slideNumber: { x: 12.3, y: 7.05, w: 0.42, h: 0.25, fontSize: 9, color: C.accent6, align: 'right', fontFace: 'Arial' } });
 pres.defineSlideMaster({ title: 'DIVIDER', background: { color: HX.bg }, objects: [
-  { placeholder: { options: { name: 'title', type: 'title', x: MX + 0.4, y: 3.05, w: 9.2, h: 1.2, fontSize: 50, fontFace: F.semi, color: C.background1, valign: 'top', align: 'left', margin: 0 }, text: '' } }] });
+  { placeholder: { options: { name: 'title', type: 'title', x: MX + 0.4, y: 3.05, w: 9.2, h: 1.2, fontSize: 50, fontFace: 'Arial', bold: true, color: C.background1, valign: 'top', align: 'left', margin: 0 }, text: '' } }] });
 pres.defineSlideMaster({ title: 'COVER', background: { color: HX.bg }, objects: [] });
 
 // ── slide bookkeeping and the glass spec ────────────────────────────────
@@ -42,7 +42,16 @@ function newSlide(master, sec, base, mode, shade) {
 const glass = (x, y, w, h, o = {}) => cur.panels.push(Object.assign({ x, y, w, h }, o));
 
 // ── text and shape helpers ──────────────────────────────────────────────
-function T(s, text, o) { s.addText(text, Object.assign({ isTextBox: true, margin: 0, fontSize: 14, fontFace: F.body, color: C.background2, valign: 'top' }, o)); }
+function norm(o) {
+  if (!o) return o;
+  if (o.fontFace === 'ARIAL_BOLD') { o.fontFace = 'Arial'; o.bold = true; }
+  else if (o.fontFace === 'ARIAL_REG') { o.fontFace = 'Arial'; o.bold = false; }
+  return o;
+}
+function T(s, text, o) {
+  if (Array.isArray(text)) text.forEach((r) => norm(r.options));
+  s.addText(text, norm(Object.assign({ isTextBox: true, margin: 0, fontSize: 14, fontFace: F.body, color: C.background2, valign: 'top' }, o)));
+}
 const run = (text, o = {}) => ({ text, options: o });
 function pill(s, x, y, w, h, o = {}) { glass(x, y, w, h, Object.assign({ r: h / 2, shadow: false }, o)); }
 function eyebrow(s, text, x = MX, y = 0.46) {
@@ -115,7 +124,7 @@ function thread(s, n, now) {
 }
 function content(sec, base, title, head, eb, o = {}) {
   const s = newSlide('CONTENT', sec, base, 'content');
-  s.addText(head, { placeholder: 'title' });
+  s.addText(head.length > 62 ? [{ text: head, options: { fontSize: 22 } }] : head, { placeholder: 'title' });
   eyebrow(s, eb); presenter(s, title); notes(s, title); if (!o.noFooter) footer(s);
   return s;
 }
@@ -156,15 +165,15 @@ divider(P1, '01', 'Our case', 'What a World Cup stadium buys, and who supplies i
   // the photo, framed in glass
   glass(6.35, 1.95, 6.36, 4.0, { r: 0.24 });
   s.addImage({ path: IMG('aerial.jpg'), x: 6.5, y: 2.1, w: 6.06, h: 3.41, altText: 'King Salman Stadium concept rendering, aerial view', rounding: false });
-  pill(s, 6.7, 4.98, 4.5, 0.42, { tint: 'dark' });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 6.7, y: 4.98, w: 4.5, h: 0.42, rectRadius: 0.21, fill: { color: '061210', transparency: 25 }, line: { color: 'FFFFFF', width: 0.75, transparency: 70 } });
   T(s, [run('92,760 ', { fontFace: F.black, color: HX.gold, fontSize: 14 }), run('planned seats · King Salman Stadium, Riyadh', { color: HX.fg })], { x: 6.85, y: 4.98, w: 4.3, h: 0.42, fontSize: 10, valign: 'middle' });
   T(s, 'King Salman Stadium concept rendering © Populous', { x: 6.5, y: 5.58, w: 6.06, h: 0.25, fontSize: 8, color: C.accent6, align: 'right' });
   T(s, 'A stadium buys civil works, materials, building systems and specialist expertise.', { x: MX, y: 1.98, w: 5.4, h: 1.0, fontSize: 19, fontFace: F.semi, color: C.background1 });
   T(s, bullets(['Ministry of Sport buys the works.', 'Populous designs the stadium.', 'Contractors and specialist suppliers deliver.']), { x: MX, y: 3.1, w: 5.4, h: 1.2, fontSize: 14.5 });
-  const tw = 1.78, ty = 4.42;
-  stat(s, MX, ty, tw, 1.52, '15', 'stadiums in 5 host cities');
-  stat(s, MX + tw + 0.1, ty, tw, 1.52, '7.8%', 'of Saudi value added, 2023 sector scale', HX.green, { g: { tint: 'green' } });
-  stat(s, MX + 2 * (tw + 0.1), ty, tw, 1.52, 'SAR 646bn', 'gross output, 2023', HX.blue, { vs: 17, vh: 0.7 });
+  const tw = 1.78, ty = 4.3;
+  stat(s, MX, ty, tw, 1.68, '15', 'stadiums in 5 host cities', null, { vh: 0.62, ks: 11 });
+  stat(s, MX + tw + 0.1, ty, tw, 1.68, '7.8%', 'of Saudi value added, 2023 sector scale', HX.green, { vh: 0.62, ks: 11, g: { tint: 'green' } });
+  stat(s, MX + 2 * (tw + 0.1), ty, tw, 1.68, 'SAR 646bn', 'gross output, 2023', HX.blue, { vs: 16, vh: 0.62, ks: 11 });
   src(s, 'Sources: FIFA 2034 bid evaluation; GASTAT Supply and Use Tables 2023; Ministry of Sport; Populous [R01, R05, R02–R03, R53].');
 }
 {
@@ -175,7 +184,7 @@ divider(P1, '01', 'Our case', 'What a World Cup stadium buys, and who supplies i
    ['SAR 646bn', 'construction output in 2023, of which SAR 307.5bn is bought-in inputs', HX.blue, 'glass'],
    ['15', 'stadiums across 5 host cities in FIFA’s 2024 bid evaluation', null, 'glass'],
    ['92,760', 'planned seats at King Salman Stadium, Riyadh — our case', HX.gold, 'gold']].forEach((d, i) =>
-    stat(s, MX + i * (tw + 0.12), ty, tw, 1.38, d[0], d[1], d[2], { vs: 26, vh: 0.52, ks: 11, g: { tint: d[3] } }));
+    stat(s, MX + i * (tw + 0.12), ty, tw, 1.42, d[0], d[1], d[2], { vs: 26, vh: 0.5, ks: 10.5, g: { tint: d[3] } }));
   grid(s, MX, 3.6, [3.0, 0.95, 1.95, 4.4, 1.79], ['Stadium', 'Seats', 'Who buys', 'Who supplies', 'Published value'], [
     ['Prince Mohammed bin Salman Stadium, Qiddiya', '45,000', 'Qiddiya Investment Co.', 'FCC (Spain) – Nesma (KSA); Elegancia: mechanical SAR 829m; IKK Fangda: facade SAR 997m ex-VAT', 'about SAR 4.0bn'],
     ['Aramco Stadium, Al Khobar', '46,096', 'Saudi Aramco', 'Besix (Belgium) – Albawani (KSA)', 'about SAR 3.7bn'],
@@ -252,7 +261,7 @@ divider(P2, '02', 'Multiplier and leakage', 'Follow the riyal: where it is spent
 }
 {
   const t = 'How import-dependent it is';
-  const s = content(P2, B2, t, 'Construction’s two most imported inputs: basic metals (54.5%) and electrical machinery (50.3%)', 'Part 1 · How import-dependent it is');
+  const s = content(P2, B2, t, 'Construction’s two most imported inputs: basic metals (54.5%) and electrical machinery (50.3%)', 'Part 1 · How import-dependent it is', { noFooter: true });
   glass(MX, 2.0, CW, 1.0, { r: 0.2 });
   T(s, 'SAR 646bn construction output in 2023, of which SAR 307.5bn is bought-in inputs', { x: MX + 0.26, y: 2.1, w: CW - 0.5, h: 0.28, fontSize: 11.5, fontFace: F.semi, color: C.background1 });
   const bw = CW - 0.52, wi = bw * 0.197;
@@ -293,8 +302,8 @@ divider(P2, '02', 'Multiplier and leakage', 'Follow the riyal: where it is spent
   T(s, [run('SAR 2,143m   ', { fontSize: 26, fontFace: F.black, color: HX.fg }), run('total purchases = 47.6% of the SAR 4.5bn', { fontSize: 12.5 })], { x: MX + 0.32, y: 4.5, w: 11, h: 0.5, valign: 'middle' });
   const bx = MX + 0.32, bw2 = CW - 0.64, wl = bw2 * 1721 / 2143;
   bar(s, bx, 5.1, wl - 0.05, 0.5, HX.green, { r: 0.25 }); bar(s, bx + wl, 5.1, bw2 - wl, 0.5, HX.imp, { r: 0.25 });
-  T(s, [run('SAR 1,721m  ', { fontFace: F.black, color: HX.green, fontSize: 15 }), run('Purchases inside Saudi Arabia (80.3%) → next spending round')], { x: bx, y: 5.74, w: 7.4, h: 0.55, fontSize: 12 });
-  T(s, [run('SAR 421m  ', { fontFace: F.black, color: HX.imp, fontSize: 15 }), run('Purchases from abroad (19.7%) — the first leak')], { x: bx + 7.0, y: 5.74, w: bw2 - 7.0, h: 0.55, fontSize: 12, align: 'right' });
+  T(s, [run('SAR 1,721m  ', { fontFace: F.black, color: HX.green, fontSize: 15 }), run('Purchases inside Saudi Arabia (80.3%) → next spending round')], { x: bx, y: 5.74, w: 6.3, h: 0.55, fontSize: 12 });
+  T(s, [run('SAR 421m  ', { fontFace: F.black, color: HX.imp, fontSize: 15 }), run('Purchases from abroad (19.7%) — the first leak')], { x: bx + 6.3, y: 5.74, w: bw2 - 6.3, h: 0.55, fontSize: 12, align: 'right' });
   src(s, 'Sources: R57, R58 (benchmarks); GASTAT Supply and Use Tables 2023, sheets 6.1–6.2 [R05]. Group scenario using national ratios; figures are rounded.', 6.58);
   thread(s, 3, [0, 1, 2]);
 }
@@ -501,7 +510,7 @@ divider(P4, '04', 'The academy proposal', 'Turning the obligation into Saudi cap
   stat(s, rx, 3.55, rw, 1.2, 'SAR 84m', 'EP credit = 36 + 24 + 24', HX.green, { vs: 28, vh: 0.55, g: { tint: 'green', edge: '22D38B' } });
   glass(rx, 4.88, rw, 1.22, { shadow: false });
   T(s, [run('Why these factors: ', { fontFace: F.semi, color: HX.fg }), run('LCGPA sets the final factor within each draft range. We start at the minimum and add 1 per condition met: usable licences (2→3), new skills with independent tests (1→2), approved Saudi materials with real orders (1→2). Not the maximum: no manufacturing rights, recognised qualification or new plant.')],
-    { x: rx + 0.2, y: 4.94, w: rw - 0.38, h: 1.12, fontSize: 8.5 });
+    { x: rx + 0.22, y: 4.95, w: rw - 0.42, h: 1.12, fontSize: 9.5, valign: 'middle' });
   T(s, 'Proposed start: 24 learners, 6 trainer candidates, 2 confirmed eligible sites', { x: MX, y: 6.2, w: CW, h: 0.3, fontSize: 13, fontFace: F.semi, color: C.accent1 });
   src(s, 'Proposal targets for agreement, not forecasts or observed results. Scale on proven skills, demand, quality, cost and licensed rights. Policy basis: LCGPA [R63].', 6.55);
   thread(s, 7, [6]);
@@ -549,5 +558,14 @@ SOURCES.forEach(([title, head, refs, foot]) => {
 
 (async () => {
   if (PASS === 'spec') { fs.writeFileSync(path.join(__dirname, 'spec.json'), JSON.stringify(SPEC)); console.log('spec', SPEC.length); return; }
-  await pres.writeFile({ fileName: OUT }); await applyTheme(OUT, THEME); console.log('wrote', OUT);
+  await pres.writeFile({ fileName: OUT }); await applyTheme(OUT, THEME);
+  // turn proofing off on every run, so names like Qiddiya get no red squiggles
+  const JSZip = require('jszip'); const zip = await JSZip.loadAsync(fs.readFileSync(OUT));
+  for (const name of Object.keys(zip.files).filter((n) => /^ppt\/(slides|slideLayouts|slideMasters)\/[^/]+\.xml$/.test(n))) {
+    let x = await zip.file(name).async('string');
+    x = x.replace(/<a:(rPr|endParaRPr|defRPr)(?![^>]*noProof)(\s|>|\/>)/g, (m, tag, tail) => '<a:' + tag + ' noProof="1"' + (tail === '>' || tail === '/>' ? tail : ' '));
+    zip.file(name, x);
+  }
+  fs.writeFileSync(OUT, await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' }));
+  console.log('wrote', OUT);
 })();
