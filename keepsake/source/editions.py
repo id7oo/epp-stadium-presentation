@@ -150,20 +150,7 @@ def palm(x, y, z0, hgt, rng, s=1.0, lean=.06):
                 seg.append([c[0] + r * math.cos(a), c[1] + r * math.sin(a), c[2]])
         parts.append(Manifold.hull_points(np.array(seg)))
     top = axis[-1]
-    parts.append(Manifold.sphere(tr * 1.25, 18).translate(top.tolist()))
-    for j in range(9):
-        a = 2 * math.pi * j / 9 + rng.uniform(-.25, .25)
-        reach, lift = L(6.4, 3.6) * rng.uniform(.85, 1.1), L(3.4, 2.0) * rng.uniform(.9, 1.15)
-        end = lift + reach * .22
-        d = np.array([math.cos(a), math.sin(a), 0.0]); side = np.array([-d[1], d[0], 0.0])
-        p0, p1, p2 = top + [0, 0, L(.2)], top + d * reach * .35 + [0, 0, lift], top + d * reach + [0, 0, end]
-        prev = None
-        for i in range(8):
-            t = i / 7; c = bez(p0, p1, p2, t)
-            w = L(1.5, 1.0) * (1 - t) + L(.45, .45) * t; th = L(.8, .7) * (1 - t) + L(.45, .45) * t
-            sec = [c + side * w / 2, c - side * w / 2, c + [0, 0, th / 2], c - [0, 0, th / 2]]
-            if prev is not None: parts.append(Manifold.hull_points(np.array(prev + sec)))
-            prev = sec
+    parts += ST.printable_crown(top, tr, L(5.0, 3.2), rng, 8)
     return union(parts)
 
 def shrub(x, y, z0, r):
