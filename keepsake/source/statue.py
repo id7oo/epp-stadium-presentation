@@ -100,41 +100,68 @@ def mask_cs(mask, width_mm, cx, cy, px_per_mm=12):
     return cs.translate([cx - (b[0] + b[2]) / 2, cy - (b[1] + b[3]) / 2])
 
 # ── the scene ───────────────────────────────────────────────────────────────
-def build(S, small, cut=False):
+def build(S, small, cut=False, text='top'):
     """S = linear scale (1 = large). `small` drops detail finer than a 0.4 mm nozzle.
     `cut` = the cutaway edition: the front half of the stands is removed along the
-    stadium's long axis, the cut face is capped in gold, trucks run the approach."""
+    stadium's long axis, the cut face is capped in gold, trucks run the approach.
+    `text` = where the lettering goes: 'top' (a strip along the front of the top),
+    'face' (the front face of a taller plinth, with the MBSC logo on the back face),
+    'bevel' (a 45-degree nameplate slope along the front edge)."""
     def L(v, lo=None):                       # scaled length with a printable floor
         v = v * S
         return max(v, lo) if lo else v
     P = {c: [] for c in COLOURS}
 
     W, D = L(210), L(170)
-    H = L(8, 5)                              # plinth height
+    H = {'top': L(8, 5), 'face': L(20), 'bevel': L(15)}[text]     # plinth height
     CH = L(1.4, 1)                           # top chamfer
-    P['white'].append(rrect(W, D, L(10)).extrude(H - CH))
-    P['white'].append(rrect(W, D, L(10)).extrude(CH, scale_top=((W - 2*CH) / W, (D - 2*CH) / D)).translate([0, 0, H - CH]))
+    plinth = rrect(W, D, L(10)).extrude(H - CH) + rrect(W, D, L(10)).extrude(CH, scale_top=((W - 2*CH) / W, (D - 2*CH) / D)).translate([0, 0, H - CH])
+    BZ = L(3)                                # the nameplate slope starts this high above the table
+    if text == 'bevel':
+        # cut the front edge back at 45 degrees: a desk-nameplate face for the lettering
+        top_y = -D / 2 + (H + 2 - BZ)
+        wedge = Manifold.hull_points(np.array([[x, y, z] for x in (-W, W) for (y, z) in
+                                               ((-D / 2 - 1, BZ - 1), (-D / 2 - 1, H + 2), (top_y, H + 2))]))
+        plinth = plinth - wedge
+    P['white'].append(plinth)
     z0 = H
 
-    # front text strip
-    # a three-level hierarchy: the name, the place and year, then the group credit
-    t1, t2, t3 = L(7.6, 4.2), L(4.0, 2.7), L(3.1, 2.4)
-    y3 = -D / 2 + L(4.2, 2.4) + t3 / 2
-    y2 = y3 + t3 / 2 + L(3.0, 1.7) + t2 / 2
-    y1 = y2 + t2 / 2 + L(3.2, 1.9) + t1 / 2
-    strip = (y1 + t1 / 2 + L(3.2, 1.9)) + D / 2
-    tz1, tz2 = L(1.0, .7), L(.7, .5)
-    title = tracked_cs('KING SALMAN STADIUM', t1, 0, y1, 'Black', .04)
-    sub = tracked_cs('RIYADH  ·  2034', t2, 0, y2, 'SemiBold', .28)
-    cred = tracked_cs('GROUP 8  ·  MBSC EMBA  ·  ECN 511  ·  2026', t3, 0, y3, 'SemiBold' if small else 'Medium', .18)
-    P['gold'].append(slab(title, z0, tz1))
-    P['gold'].append(slab(sub, z0, tz2))
-    P['gold'].append(slab(cred, z0, tz2))
-    # hairline rules either side of RIYADH · 2034, plaque style
-    sb = sub.bounds(); tb = title.bounds(); rw = L(.8, .7)
-    for x0, x1 in [(tb[0], sb[0] - L(4, 2.4)), (sb[2] + L(4, 2.4), tb[2])]:
-        if x1 - x0 > L(4): P['gold'].append(box(x0, y2 - rw / 2, z0, x1, y2 + rw / 2, z0 + tz2))
-    yStrip = -D / 2 + strip
+    lines3 = [('KING SALMAN STADIUM', 'Black', .04), ('RIYADH  \u00b7  2034', 'SemiBold', .28),
+              ('GROUP 8  \u00b7  MBSC EMBA  \u00b7  ECN 511  \u00b7  2026', 'SemiBold' if small else 'Medium', .18)]
+    if text == 'top':
+        # front text strip: a three-level hierarchy, the name, the place and year, the group credit
+        t1, t2, t3 = L(7.6, 4.2), L(4.0, 2.7), L(3.1, 2.4)
+        y3 = -D / 2 + L(4.2, 2.4) + t3 / 2
+        y2 = y3 + t3 / 2 + L(3.0, 1.7) + t2 / 2
+        y1 = y2 + t2 / 2 + L(3.2, 1.9) + t1 / 2
+        strip = (y1 + t1 / 2 + L(3.2, 1.9)) + D / 2
+        tz1, tz2 = L(1.0, .7), L(.7, .5)
+        title = tracked_cs(lines3[0][0], t1, 0, y1, *lines3[0][1:])
+        sub = tracked_cs(lines3[1][0], t2, 0, y2, *lines3[1][1:])
+        cred = tracked_cs(lines3[2][0], t3, 0, y3, *lines3[2][1:])
+        P['gold'].append(slab(title, z0, tz1))
+        P['gold'].append(slab(sub, z0, tz2))
+        P['gold'].append(slab(cred, z0, tz2))
+        # hairline rules either side of RIYADH \u00b7 2034, plaque style
+        sb = sub.bounds(); tb = title.bounds(); rw = L(.8, .7)
+        for x0, x1 in [(tb[0], sb[0] - L(4, 2.4)), (sb[2] + L(4, 2.4), tb[2])]:
+            if x1 - x0 > L(4): P['gold'].append(box(x0, y2 - rw / 2, z0, x1, y2 + rw / 2, z0 + tz2))
+        yStrip = -D / 2 + strip
+    elif text == 'face':
+        # monument: the lettering on the plinth's front face, the college logo on its back face
+        yf = -D / 2
+        for (txt, wt, tr), cap, zc in zip(lines3, (L(7.0), L(3.1), L(2.6)), (H - L(5.8), H - L(11.6), H - L(16.0))):
+            P['gold'].append(_face_relief(tracked_cs(txt, cap, 0, zc, wt, tr), L(.8), yf))
+        P['gold'].append(_face_relief(rect(-W / 2 + L(18), L(1.5), W / 2 - L(18), L(2.3)), L(.6), yf))
+        _back_logo(P, D, H, L(15.5))
+        yStrip = -D / 2 + L(6)
+    else:
+        # nameplate: the lettering on the 45-degree slope, title on top
+        slope_len = (H - BZ) * math.sqrt(2)
+        for (txt, wt, tr), cap, sc in zip(lines3, (L(6.2), L(2.9), L(2.5)), (slope_len - L(4.4), slope_len - L(9.4), slope_len - L(13.3))):
+            cs = tracked_cs(txt, cap, 0, sc, wt, tr)
+            P['gold'].append(cs.extrude(L(.8) + .3).translate([0, 0, -.3]).rotate([45, 0, 0]).translate([0, -D / 2, BZ]))
+        yStrip = top_y + L(3)
 
     # stadium footprint (centre pushed back so the road has room)
     cy = L(14)
@@ -481,6 +508,33 @@ def _billboard(P, L, z0, small, bb_x0, bb_x1, bb_y):
     P['gold'].append(on_face(frame, L(.6, .5), front))
 
 
+def _face_relief(cs, depth, y_face, embed=.3):
+    """Relief drawn in (x, z) standing `depth` out from a face at y_face towards -Y,
+    sunk `embed` into the wall so a slicer always sees it attached."""
+    return cs.extrude(depth + embed).rotate([90, 0, 0]).translate([0, y_face + embed, 0])
+
+def _back_logo(P, D, H, lh):
+    """The full college logo (red shield with white calligraphy, gold Arabic and
+    English name, red rule) on the plinth's back face."""
+    from PIL import Image
+    full = np.array(Image.open(os.path.join(HERE, 'logo_full.png')).convert('L')) > 127
+    redm = np.array(Image.open(os.path.join(HERE, 'logo_red.png')).convert('L')) > 127
+    k = lh / full.shape[0]; lw = full.shape[1] * k
+    x_left, z_top = -lw / 2, H / 2 + lh / 2
+    sc = 1010
+    sh = np.zeros_like(full); sh[:, :sc] = full[:, :sc]
+    tx = np.zeros_like(full); tx[:, sc:] = full[:, sc:]
+    shield = morphology.remove_small_holes(sh, max_size=5000)
+    sh_w = morphology.dilation(sh & ~redm, morphology.disk(3)) & shield
+    sh_cs, wh_cs = _mask_rings(shield, x_left, z_top, k), _mask_rings(sh_w, x_left, z_top, k)
+    yf = -D / 2
+    out = [('red', _face_relief(sh_cs - wh_cs, .9, yf)), ('white', _face_relief(wh_cs, 1.5, yf)),
+           ('gold', _face_relief(_mask_rings(morphology.dilation(tx & ~redm, morphology.disk(2)), x_left, z_top, k), .9, yf))]
+    if (tx & redm).any():
+        out.append(('red', _face_relief(_mask_rings(morphology.dilation(tx & redm, morphology.disk(2)), x_left, z_top, k), .9, yf)))
+    for c, m in out:
+        P[c].append(m.rotate([0, 0, 180]))
+
 def _face_solid(cs, depth, y_face):
     """CrossSection drawn in (x, z) -> relief standing out from a face at y_face towards -Y."""
     return cs.extrude(depth).rotate([90, 0, 0]).translate([0, y_face + .01, 0])
@@ -646,8 +700,11 @@ def write_3mf(path, parts, name):
 
 if __name__ == '__main__':
     out = sys.argv[1]; os.makedirs(out, exist_ok=True)
-    for label, S, small, cut in [('large', 1.0, False, False), ('small', 0.52, True, False), ('cutaway', 1.0, False, True)]:
-        solids = build(S, small, cut)
+    only = set(sys.argv[2:])
+    for label, S, small, cut, txt in [('large', 1.0, False, False, 'top'), ('small', 0.52, True, False, 'top'), ('cutaway', 1.0, False, True, 'top'),
+                                     ('monument', 1.0, False, False, 'face'), ('nameplate', 1.0, False, False, 'bevel')]:
+        if only and label not in only: continue
+        solids = build(S, small, cut, txt)
         parts = []
         for col in COLOURS:
             m = solids[col]
