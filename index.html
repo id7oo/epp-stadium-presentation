@@ -4175,12 +4175,13 @@ window.EPP_STAGE = (function () {
       if (i < 2) s.appendChild(E('line', { x1: x + BW + 3, y1: BY + BH / 2, x2: x + 162, y2: BY + BH / 2, class: 'arrow', 'marker-end': 'url(#ah' + id + ')' }));
     });
     /* re-spending loop from 03 back to 02 */
-    s.appendChild(E('path', { d: 'M392 2 C392 -15 243 -15 243 -3', class: 'arrow', 'marker-end': 'url(#ah' + id + ')', opacity: .7 }));
+    s.appendChild(E('path', { d: 'M400 3 V-5 Q400 -12 393 -12 H242 Q235 -12 235 -5 V-1', class: 'arrow', 'marker-end': 'url(#ah' + id + ')', opacity: .75 }));   /* re-spending loop: 03 back to 02, centred, head pointing straight down */
+    s.appendChild(E('text', { x: 317.5, y: -16, class: 'n-n', 'text-anchor': 'middle', fill: 'var(--accent)' }, 'spent again'));
     s.appendChild(E('rect', { x: 120, y: 156, width: 230, height: 34, rx: 10, class: 'n-box n-box--l' }));
     s.appendChild(E('text', { x: 235, y: 177, class: 'n-t', 'text-anchor': 'middle', fill: 'var(--s-import)' }, 'Imports and saving reduce later rounds.'));
     s.appendChild(E('path', { d: 'M235 120 C235 134 235 138 235 148', class: 'arrow--leak', 'marker-end': 'url(#al' + id + ')' }));
     s.appendChild(E('path', { d: 'M392 120 C392 140 352 140 334 149', class: 'arrow--leak', 'marker-end': 'url(#al' + id + ')' }));
-    s.setAttribute('viewBox', '0 -18 470 228');
+    s.setAttribute('viewBox', '0 -28 470 238');
     host.appendChild(s);
   }
 
