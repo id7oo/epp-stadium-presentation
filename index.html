@@ -752,6 +752,32 @@ body.show-bottom .nexthint{ opacity:0 }
 .rs-total b{ color:var(--fg) }
 @media (max-width:760px){ .rs-row{ grid-template-columns:30px 1fr 54px } .rs-row .pr{ grid-column:2 / -1 } .rs-row .at{ display:none } }
 </style>
+<style>
+/* ── closing slide ──────────────────────────────────────────────────────── */
+.beat.thanks{ width:min(1040px,90vw) !important; padding:clamp(30px,3.4vw,52px) clamp(28px,3.4vw,56px); align-items:center; text-align:center }
+.beat.thanks .who{ display:none }
+.ty-head{ display:flex; flex-direction:column; align-items:center; gap:6px; margin-bottom:clamp(20px,2.6vw,34px) }
+.ty-kicker{ font-size:.72rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--gold) }
+.beat.thanks h2.ty-title{ font-family:var(--display); font-weight:800; font-size:clamp(3rem,6.6vw,5.6rem); letter-spacing:-.045em; line-height:1; margin:0;
+  background:linear-gradient(100deg,var(--fg) 30%,var(--accent) 50%,var(--fg) 70%); background-size:250% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent }
+.anim .beat.thanks.shown .ty-title{ animation:afSheen 2.4s ease .3s both }
+.ty-sub{ font-size:clamp(.95rem,1.2vw,1.1rem); color:var(--fg-2) }
+.ty-sub::before, .ty-sub::after{ content:""; display:inline-block; width:34px; height:1px; background:var(--gold-edge); vertical-align:middle; margin:0 12px }
+.ty-team{ display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:10px; width:100% }
+.ty-team .member{ transform:none; box-shadow:none; animation:none; background:none; border:0; border-top:2px solid var(--line); border-radius:0;
+  padding:14px 4px 0; gap:5px; align-items:center }
+.ty-team .member:hover{ transform:none; box-shadow:none; border-top-color:var(--accent) }
+.ty-ini{ display:grid; place-items:center; width:42px; height:42px; border-radius:50%; font-family:var(--display); font-weight:800; font-size:.82rem; letter-spacing:.02em;
+  color:var(--accent); border:1.5px solid color-mix(in srgb,var(--accent) 55%,transparent); background:color-mix(in srgb,var(--accent) 9%,transparent); margin-bottom:4px }
+.ty-team .nm{ font-size:.8rem; font-weight:400; color:var(--fg-2); line-height:1.25; transform:none }
+.ty-team .nm b{ display:block; font-weight:700; color:var(--fg); font-size:.9rem }
+.ty-team .rl{ font-size:.66rem; color:var(--fg-3); line-height:1.35 }
+.ty-team .sl{ font-size:.62rem; font-weight:700; color:var(--gold); font-variant-numeric:tabular-nums }
+.anim .beat.thanks .ty-team .member{ opacity:0; translate:0 10px; transition:opacity .5s ease var(--d), translate .6s cubic-bezier(.16,.84,.3,1) var(--d) }
+.anim .beat.thanks.shown .ty-team .member{ opacity:1; translate:0 0 }
+.ty-foot{ margin-top:clamp(20px,2.4vw,30px); font-size:.72rem; color:var(--fg-3); letter-spacing:.06em }
+@media (max-width:900px), (orientation:landscape) and (max-height:560px){ .ty-team{ grid-template-columns:repeat(4,minmax(0,1fr)); row-gap:16px } .ty-title{ font-size:2.6rem } }
+</style>
 <canvas id="gl"></canvas>
 <div class="grade"></div>
 <div class="brand" id="brand">
@@ -855,7 +881,7 @@ body.show-bottom .nexthint{ opacity:0 }
 </section>
 
 <!-- ══ PART 2 · THE MULTIPLIER AND THE LEAKS ═══════════════════════════════ -->
-<section class="beat" data-act="2" data-pos="right" data-title="The spending multiplier" data-next="How much of construction is Saudi value" data-who="Salman Alfaris" data-sec="45" data-no="02">
+<section class="beat" data-act="2" data-pos="right" data-title="The spending multiplier" data-next="How much of construction is Saudi value" data-who="Abdulmajeed Alajlan" data-sec="45" data-no="02">
   <p class="eyebrow">02 · The spending multiplier, in simple terms</p>
   <h2>One public payment creates income that people spend again</h2>
   <div class="scroller">
@@ -896,7 +922,7 @@ Qualification: the 100m / 120m example illustrates the definition only. GDP is i
 Qualification: 645.8 minus 307.5 equals 338.3bn, using rounded figures. Total Saudi gross value added is 4,332.9bn, so construction is 7.8%. The 52.4% accounting share is not a local-content score or a spending multiplier.</template>
 </section>
 
-<section class="beat" data-act="2" data-pos="wide-l" data-title="How import-dependent it is" data-next="Apply these ratios to one SAR 4.5bn stadium" data-who="Abdulaziz Alweheab" data-sec="40" data-no="·">
+<section class="beat" data-act="2" data-pos="wide-l" data-title="How import-dependent it is" data-next="Apply these ratios to one SAR 4.5bn stadium" data-who="Salman Alfaris" data-sec="40" data-no="·">
   <p class="eyebrow">Part 1 · How import-dependent it is</p>
   <h2>Construction’s two most imported inputs: basic metals (54.5%) and electrical machinery (50.3%)</h2>
   <div class="scroller">
@@ -909,7 +935,7 @@ Qualification: 645.8 minus 307.5 equals 338.3bn, using rounded figures. Total Sa
 Amount = construction use of the product (sheet 6.2 col. H) × its national import rate: basic metals 21.9 × 54.5% = 12.0; electrical machinery 4.0 × 50.3% = 2.0; other chemical products 31.1 × 43.2% = 13.4.</template>
 </section>
 
-<section class="beat" data-act="2" data-pos="right" data-title="A SAR 4.5bn stadium scenario" data-thread="3" data-next="What is inside the SAR 421m leak" data-who="Salman Alfaris" data-sec="40" data-no="04">
+<section class="beat" data-act="2" data-pos="right" data-title="A SAR 4.5bn stadium scenario" data-thread="3" data-next="What is inside the SAR 421m leak" data-who="Abdulaziz Alweheab" data-sec="40" data-no="04">
   <p class="eyebrow">04 · Applying the multiplier to our case</p>
   <h2>Applying a SAR 4.5bn stadium scenario</h2>
   <div class="scroller">
@@ -970,7 +996,7 @@ Amount = construction use of the product (sheet 6.2 col. H) × its national impo
 Qualification: 421 × 20% = 84.2m, rounded to 84m. This applies the tier rate to the whole import value; the draft summaries do not say whether tiers are marginal. If marginal: 300 × 25% + 121 × 20% = 99.2m. The 421m covers modelled intermediate-input imports only, so imported equipment or foreign services could raise the EP base.</template>
 </section>
 
-<section class="beat" data-act="3" data-pos="bottom" data-title="London 2012" data-thread="5" data-next="The five controls that make it credible" data-who="Haifa Binnafisah" data-sec="30" data-no="07">
+<section class="beat" data-act="3" data-pos="bottom" data-title="London 2012" data-thread="5" data-next="The five controls that make it credible" data-who="Abdulrahman Aldahlawi" data-sec="30" data-no="07">
   <p class="eyebrow">07 · London 2012 offers a construction skills lesson</p>
   <h2>A fixed event deadline made live-site learning especially valuable</h2>
   <div class="scroller">
@@ -986,7 +1012,7 @@ Qualification: 421 × 20% = 84.2m, rounded to 84m. This applies the tier rate to
   <template class="spk">London 2012 shows that a fixed-event construction programme can support a skills legacy. The UK government reported more than three thousand training places and four hundred and eight apprentices. Training connected people to live construction work. The weakness was relying on encouragement rather than binding skills requirements. Our adaptation puts paid practice, independent tests and trainer return into the delivery agreement. We measure what participants can do and where they work afterwards.</template>
 </section>
 
-<section class="beat" data-act="3" data-pos="right" data-title="The controls" data-thread="5" data-next="One academy that licenses, qualifies and buys together" data-who="Haifa Binnafisah" data-sec="40" data-no="08">
+<section class="beat" data-act="3" data-pos="right" data-title="The controls" data-thread="5" data-next="One academy that licenses, qualifies and buys together" data-who="Abdulrahman Aldahlawi" data-sec="40" data-no="08">
   <p class="eyebrow">08 · The controls that make the solution credible</p>
   <h2>Five risks, five controls</h2>
   <div class="scroller">
@@ -1009,7 +1035,7 @@ Qualification: 421 × 20% = 84.2m, rounded to 84m. This applies the tier rate to
 </section>
 
 <!-- ══ PART 4 · THE PROPOSAL ═══════════════════════════════════════════════ -->
-<section class="beat" data-act="4" data-pos="wide-l" data-title="One academy, three functions" data-thread="5" data-next="Start on live sites before building a campus" data-who="Abdulrahman Aldahlawi" data-sec="30" data-no="09">
+<section class="beat" data-act="4" data-pos="wide-l" data-title="One academy, three functions" data-thread="5" data-next="Start on live sites before building a campus" data-who="Haifa Binnafisah" data-sec="30" data-no="09">
   <p class="eyebrow">09 · One academy with three connected functions</p>
   <h2>Shared delivery across eligible stadium suppliers, with separate EP obligations</h2>
   <div class="scroller">
@@ -1033,7 +1059,7 @@ Qualification: 421 × 20% = 84.2m, rounded to 84m. This applies the tier rate to
 Extended: first, suppliers license technical manuals and diagnostic access, provide training equipment, and train Saudi trainers through paid site practice. Second, the hub tests and qualifies specified Saudi coatings, metal products and other materials against the project standard. Existing Saudi manufacturing evidence makes that plausible, but grades and capacity still need checking. Third, the authorised buyer coordinates standard specifications and competitive call-off orders across confirmed sites. This can improve negotiating power without guaranteeing discounts. Later, Saudi-owned training content and licensed services can be sold abroad within the agreed IP rights.</template>
 </section>
 
-<section class="beat" data-act="4" data-pos="bottom" data-title="Hands-on training first" data-thread="5" data-next="What Saudi Arabia keeps, now and after opening" data-who="Abdulrahman Aldahlawi" data-sec="35" data-no="10">
+<section class="beat" data-act="4" data-pos="bottom" data-title="Hands-on training first" data-thread="5" data-next="What Saudi Arabia keeps, now and after opening" data-who="Haifa Binnafisah" data-sec="35" data-no="10">
   <p class="eyebrow">10 · Hands-on training first, academy after evidence</p>
   <h2>Begin inside real projects with an existing qualified training provider</h2>
   <div class="scroller">
@@ -1101,192 +1127,18 @@ Detail for questions: the 24 learners, six trainer candidates and two eligible s
   <template class="spk">We ask LCGPA to approve a pilot with clearly allocated supplier activities and evidence for any higher credit factor. The authorised buyer should approve a competitive shared purchasing process with separate contracts and fair supplier access. Our proposed starting design is twenty-four learners at two confirmed eligible sites, with six candidates returning as trainers. These are targets to agree, not results already achieved. To cover the SAR 84 million EP obligation, we plan about 36 million of approved activity: 12 million each on technology transfer at a factor of 3, knowledge transfer at 2 and localisation at 2. We use the middle of each draft range because the academy adds new, independently tested capability and usable licences, but no manufacturing rights or rare technology, so we claim no bonus. LCGPA sets the final factor. At the low end of every range we would need about 63 million, still below 84. Expand only when skills, paid demand, licensed rights, supplier quality and costs justify it. The goal is a Saudi capability that keeps working after the stadium opens.</template>
 </section>
 
-<section class="beat" data-act="4" data-pos="bottom" data-title="Thank you" data-thread="7" data-who="Group 8" data-sec="0">
-  <p class="eyebrow">Group 8 · Thank you</p>
-  <div class="tell">
-    <h3>How much of the money stays in Saudi Arabia?</h3>
-    <p>About four riyals in five of construction’s purchases are made here. The leak sits in metals, chemicals and electrical systems. A shared academy that licenses, qualifies and buys together can turn an <strong>SAR 84m EP obligation</strong> into Saudi capability that keeps working after the stadium opens.</p>
+<section class="beat thanks" data-act="4" data-pos="center" data-title="Thank you" data-who="Group 8" data-sec="0">
+  <div class="ty-head">
+    <p class="ty-kicker">Group 8 · MBSC EMBA · ECN 511</p>
+    <h2 class="ty-title">Thank you</h2>
+    <p class="ty-sub">Questions welcome</p>
   </div>
-  <div class="team" id="teamGrid"></div>
-  <p class="note" style="margin-top:10px;opacity:.75">Questions welcome. Press <strong>M</strong> for the map, backups and sources.</p>
-  <template class="spk">Closing. Thank the audience and invite questions. Backups A–I and the four source pages are in the appendix (press M).</template>
+  <div class="ty-team" id="teamGrid"></div>
+  <p class="ty-foot">King Salman Stadium · Riyadh 2034</p>
+  <template class="spk">Closing. Thank the audience and invite questions. The four source pages follow in the appendix (press M).</template>
 </section>
 
 <!-- ══ APPENDIX · backups and sources ══════════════════════════════════════ -->
-<section class="beat" data-act="9" data-pos="right" data-title="Backup A · The economics behind the illustration" data-qa="Salman Alfaris">
-  <p class="eyebrow">Backup A</p>
-  <h2>The economics behind the illustration</h2>
-  <div class="scroller">
-    <div class="plot" data-chart="rounds"></div>
-    <table class="dtable" style="margin-top:10px">
-      <thead><tr><th>Initial local share</th><th class="num">Initial domestic spending</th><th class="num">Gross output across rounds</th></tr></thead>
-      <tbody><tr><td>60%</td><td class="num">SAR 600m</td><td class="num">SAR 1,137.4m</td></tr><tr><td>70%</td><td class="num">SAR 700m</td><td class="num">SAR 1,327.0m</td></tr><tr class="hl"><td><strong>Difference</strong></td><td class="num">SAR 100m</td><td class="num"><strong>SAR 189.6m</strong></td></tr></tbody>
-    </table>
-    <p class="note" style="margin-top:10px"><strong>Assumed re-spending rate</strong> · r = 0.75 × 0.90 × 0.70 = 0.4725 · Y = initial domestic spending ÷ (1 − r)</p>
-    <p class="src">The 10% deduction is a teaching parameter. The illustration assumes spare capacity, stable prices and unchanged spending behaviour. It is not a GDP forecast. Model values derive from the report Appendix C. The 10% parameter is not an estimate of Saudi income tax, VAT or GOSI. IMF review averages of 0.2 short-run and 0.6 peak/long-run use a different method and outcome [R05, R08].</p>
-  </div>
-</section>
-
-<section class="beat" data-act="9" data-pos="left" data-title="Backup B · EP credit factors" data-qa="Mohammed Alghamdi">
-  <p class="eyebrow">Backup B</p>
-  <h2>EP credit factors and economic effects</h2>
-  <div class="scroller">
-    <table class="dtable">
-      <thead><tr><th>Draft category</th><th>Base factor</th><th>What strengthens the value case</th></tr></thead>
-      <tbody>
-        <tr><td>Knowledge transfer / localisation</td><td>1–3</td><td>Recognised competence or new qualified product/service scope</td></tr>
-        <tr><td>Technology transfer / R&amp;D / exports</td><td>2–4</td><td>Usable rights, applied results or lasting export channels</td></tr>
-        <tr><td>Investment</td><td>1–3</td><td>Strategic new activity rather than routine capital replacement</td></tr>
-        <tr><td>Subcontracting</td><td>1–2</td><td>Eligible local supply, with supplier size and local content evidence</td></tr>
-      </tbody>
-    </table>
-    <div class="tell" style="margin-top:12px;padding:12px 15px"><p class="tag" style="color:var(--gold);font-size:.7rem;font-weight:600">Conditional credit example</p><p><strong>SAR 10m approved technology activity × (4 + bonus 2) = SAR 60m credit</strong></p></div>
-    <p class="note" style="margin-top:10px">A factor of 6 measures EP compliance credit. It does not mean sixfold GDP or a sixfold investment return.</p>
-    <p class="src">Draft Art. 9: knowledge transfer 1–3; localisation 1–3; technology transfer 2–4; export development 2–4; R&amp;D 2–4; investment 1–3; subcontracting 1–2. An exceptional additional 1–2 may apply for rare know-how/technology, a priority development area or a principal SME beneficiary, subject to LCGPA criteria. A qualifying base 4 plus bonus 2 gives 6 — not 4 × 2; not every category reaches 6, and no factor is guaranteed. Tiers: 25% (75–300m single tender, or 100–300m cumulative), 20% above 300 to 500m, 15% above 500m; exclude VAT. No final adoption notice was established. Historical 35% material [R09] remains background only. Source: LCGPA consultation text [R63]; IMF [R08].</p>
-  </div>
-</section>
-
-<section class="beat" data-act="9" data-pos="right" data-title="Backup C · What the public evidence establishes" data-qa="Abdulmajeed Alajlan">
-  <p class="eyebrow">Backup C</p>
-  <h2>What the public evidence establishes</h2>
-  <div class="scroller">
-    <table class="dtable">
-      <thead><tr><th>Evidence reviewed</th><th>Finding</th><th>Information still missing</th></tr></thead>
-      <tbody>
-        <tr><td>MoS King Salman works notices</td><td>Main and preliminary works prequalification</td><td>Award, contractor, eligible imports and EP agreement</td></tr>
-        <tr><td>Estithmar Qiddiya mechanical award</td><td>SAR 829m total package value</td><td>Import value and EPP coverage</td></tr>
-        <tr><td>Fangda Qiddiya facade filing</td><td>SAR 997.3m excluding VAT</td><td>Import value and applicable procurement route</td></tr>
-      </tbody>
-    </table>
-    <div class="card" style="margin-top:12px"><span class="chip chip--g" style="align-self:flex-start">Documented search gap</span><p>LCGPA training, consultation documents, procurement notices and supplier disclosures provide general rules and package detail. They do not establish a stadium EP outcome or an approved shared academy in the sources reviewed.</p></div>
-    <p class="src">Evidence reviewed through 21 October 2026. MoS main works invitation 25 Nov 2025, due 16 Feb 2026. Preliminary invitation 7 Apr 2026, due 28 Apr 2026. These are invitations, not award confirmations. The Qiddiya facade announcement gives 1,146,877,544 incl. VAT and 997,284,821 ex VAT. The academy should target remaining eligible packages and other confirmed venues. [R02, R03, R09, R11, R23, R24, R27]</p>
-  </div>
-</section>
-
-<section class="beat" data-act="9" data-pos="left" data-title="Backup D · Rights and tools" data-qa="Abdulrahman Aldahlawi">
-  <p class="eyebrow">Backup D</p>
-  <h2>Rights and tools delivered by the academy</h2>
-  <div class="scroller">
-    <table class="dtable">
-      <thead><tr><th>Deliverable</th><th>What the agreement must specify</th><th>Proof of usable capability</th></tr></thead>
-      <tbody>
-        <tr><td>IP and manuals</td><td>Field of use, territory, term, ownership, adaptation and trainer rights</td><td>Signed licence plus a task completed independently</td></tr>
-        <tr><td>Tools and equipment</td><td>Diagnostic software, control rigs, meters, material-test kit access</td><td>Delivery/access record, calibration and practical test</td></tr>
-        <tr><td>Trainer development</td><td>Assessed trainer candidates, teaching rights and a returning cohort</td><td>Observed teaching, learner results and paid deployment</td></tr>
-        <tr><td>Local products</td><td>Grades, trial quantities, certificates, origin and available capacity</td><td>Independent test, approved specification and supplier invoice</td></tr>
-        <tr><td>Export route</td><td>Rights to sell courses/services or products in agreed territories</td><td>Customer contract, permission and net export receipt</td></tr>
-      </tbody>
-    </table>
-    <p class="note" style="margin-top:10px"><strong>An attendance certificate alone does not transfer rights, technology or an export business.</strong></p>
-    <p class="src">Sources: LCGPA consultation Arts. 8–9 [R63]; WIPO licensing [R64]; NITI training capability [R42]. Proposed contractual design. Existing capabilities (NITI apprenticeships [R42]; ALUPCO [R66]; Sika’s 2018 plant [R67]) are examples, not available capacity or partner commitments. Draft Arts. 8(3), 14 and 15 prohibit crediting routine duties, transferring credits to another company or claiming the same activity for multiple obligors. The academy never claims ownership of a supplier’s existing IP merely because training occurs.</p>
-  </div>
-</section>
-
-<section class="beat" data-act="9" data-pos="right" data-title="Backup E · Procurement and delivery plan" data-qa="Abdulrahman Aldahlawi">
-  <p class="eyebrow">Backup E</p>
-  <h2>A practical procurement and delivery plan</h2>
-  <div class="scroller">
-    <div class="stages">
-      <div class="st"><h3>Before approval</h3><p>Confirm tender and EPP version<br>Verify imports and responsible supplier<br>Agree scope, factors and extra activities<br>Secure rights, budget and placements</p></div>
-      <div class="st"><h3>During delivery</h3><p>Train before commissioning<br>Record activity costs and credit allocation<br>Keep safety and quality standards<br>Check for duplicate claims</p></div>
-      <div class="st"><h3>After training</h3><p>Independent practical tests<br>Track paid work at 6 and 12 months<br>Verify trainer return and new service scope<br>Expand only on justified cost and results</p></div>
-    </div>
-    <div class="card" style="margin-top:12px"><span class="tag">Supporting LCGPA purchasing mechanisms</span><p><strong>Mandatory List:</strong> check listed items and exceptions.<br><strong>Product preference and local content weighting:</strong> apply the tender’s rules.<br><strong>SME preference:</strong> check the narrower scope for eligible lower-value contracts.</p></div>
-    <p class="src">Assessment basis: official April 2026 consultation text [R63], Arts. 6–9. The effective tender and EP agreement control actual application. The 421m whole-stadium model is not an eligible supplier import base. Sources: [R09], [R55], [R56], [R54]. Joint delivery and joint purchasing are distinct approvals.</p>
-  </div>
-</section>
-
-<section class="beat" data-act="9" data-pos="left" data-title="Backup F · Joint buying and evidence" data-qa="Nada Alyahya">
-  <p class="eyebrow">Backup F</p>
-  <h2>Joint buying and the evidence of value</h2>
-  <div class="scroller">
-    <table class="dtable">
-      <thead><tr><th>Step</th><th>Buyer or delivery action</th><th>Evidence</th></tr></thead>
-      <tbody>
-        <tr><td>Define demand</td><td>Confirm sites, quantities, performance and delivery dates</td><td>Material passports and demand schedule</td></tr>
-        <tr><td>Compete fairly</td><td>Use suitable lots, multiple suppliers and staged call-offs</td><td>Approved tender, comparable bids and capacity checks</td></tr>
-        <tr><td>Test savings</td><td>Compare like-for-like full delivered costs, including tests and inventory</td><td>Baseline quote, contract, invoices and administration costs</td></tr>
-        <tr><td>Verify local value</td><td>Check Saudi output and the imported inputs inside the substitute</td><td>Manufacturer origin, input records and new service scope</td></tr>
-        <tr><td>Verify later value</td><td>Check next-site jobs, trainer return and permitted exports</td><td>Employer records, assessment results and net export receipts</td></tr>
-      </tbody>
-    </table>
-    <p class="note" style="margin-top:10px"><strong>No guaranteed discount. No double counting of wages, sales, savings, export receipts or EP credits as GDP.</strong></p>
-    <p class="src">Illustration: the 94m chemicals group plus 83m metals group is 177m; replacing 25% yields about 44m additional domestic purchases before embedded imports and cost effects. The 25% substitution assumption is separate from the 25% EPP rate. Purchasing savings = verified baseline cost for comparable specification and quantity less total contracted delivery, testing, inventory and administration cost. Export gains use net receipts after foreign inputs and licensing costs. Sources: OECD procurement efficiency [R65] and competition [R68]; LCGPA consultation [R63]. Proposal and measurement design.</p>
-  </div>
-</section>
-
-<section class="beat" data-act="9" data-pos="right" data-title="Backup G · Conditions behind the academy" data-qa="Abdulrahman Aldahlawi">
-  <p class="eyebrow">Backup G</p>
-  <h2>The conditions behind the academy</h2>
-  <div class="scroller">
-    <table class="dtable">
-      <thead><tr><th>Decision gate</th><th>Evidence required</th><th>If the condition fails</th></tr></thead>
-      <tbody>
-        <tr><td>Demand and paid work</td><td>Named employers, signed paid placements, site access and the next-site work plan.</td><td>Delay intake, reduce the cohort or change the training window.</td></tr>
-        <tr><td>Skills and extra value</td><td>A documented skill gap, baseline duties and independent practical assessments.</td><td>Use existing skills or redesign the extra training scope.</td></tr>
-        <tr><td>Cost and usable rights</td><td>Supplier quotes, full pilot budget, licensed manuals/software and equipment access.</td><td>Renegotiate rights or choose a better supplier-development option.</td></tr>
-        <tr><td>Policy and procurement</td><td>LCGPA approval, separate supplier records, buyer authority and fair competition.</td><td>Use separately approved activity or defer shared delivery.</td></tr>
-        <tr><td>Expansion after the pilot</td><td>Verified competence, paid work and trainer return at 6 and 12 months.</td><td>Redesign or stop. A new facility requires a separate business case.</td></tr>
-      </tbody>
-    </table>
-    <p class="note" style="margin-top:10px"><strong>Proof before scale:</strong> employers agree pass rates, placements and acceptable unit cost before launch.</p>
-    <p class="src">Basis: report Sections 5–8 and Appendix F; NITI [R42]; UK BIS [R54]; LCGPA consultation [R63]; WIPO [R64]. Proposed decision gates. A paid training placement is not a guarantee of permanent employment. Do not create an institution just because EP funds exist.</p>
-  </div>
-</section>
-
-<section class="beat" data-act="9" data-pos="left" data-title="Backup H · How offset programmes set factors" data-qa="Mohammed Alghamdi">
-  <p class="eyebrow">Backup H</p>
-  <h2>How offset programmes set factors</h2>
-  <div class="scroller">
-    <table class="dtable">
-      <thead><tr><th>Source</th><th>What it says about credit factors</th><th>Type of source</th></tr></thead>
-      <tbody>
-        <tr><td>U.S. Commerce Dept (BIS), offset definitions</td><td>Credit = actual value × factor. Example: factor 6 turns $0.2m of technology transfer into $1.2m credit.</td><td>Official government</td></tr>
-        <tr><td>India defence offset policy, 2012</td><td>Technology the government asks for: factor 3. Investment or technology in small firms: factor 1.5.</td><td>News report of official policy</td></tr>
-        <tr><td>UAE Tawazun programme, 2019 guidelines</td><td>Higher factor for high-end value-chain work, local content or skilled jobs for UAE nationals.</td><td>Law-firm summary</td></tr>
-        <tr><td>Linköping University PhD thesis, 2016</td><td>Factors are negotiated. The buyer gives higher factors to what it values most.</td><td>Academic</td></tr>
-      </tbody>
-    </table>
-    <p class="note" style="margin-top:10px"><strong>Common pattern: the more lasting local value, the higher the factor.</strong> Our rule follows the same direction: start at the draft minimum and add 1 for each condition met, as in the EP credit plan on slide 12. Researched for context only. These programmes did not set our factors; LCGPA sets the final factor.</p>
-    <p class="src">Sources: U.S. BIS, Offset Reporting Definitions; Business Standard, “New offset rules allow technology transfer”, Aug 2012; Herbert Smith Freehills, Tawazun Economic Program guidelines, May 2019; Linköping University Dissertation No. 1785, 2016.</p>
-  </div>
-</section>
-
-<section class="beat" data-act="9" data-pos="wide-l" data-title="Backup I · EPP is a share of imports" data-qa="Mohammed Alghamdi">
-  <p class="eyebrow">Backup I</p>
-  <h2>EPP is a share of imports, not contract value</h2>
-  <div class="scroller">
-    <p class="lede">The EP obligation is a percentage of the imported goods and services in a contract, not of the total contract value.</p>
-    <div class="grid g2w">
-      <blockquote class="quote">
-        <p>The current version of the EPP, originally issued in 2022, requires bidders on contracts with an import value above SAR 100 million to commit to re-investing 35% of that import value in the local economy.</p>
-        <p><b>Amended applicability thresholds:</b> … The updated draft introduces two thresholds: the EPP applies to (i) individual (direct) tenders with an import value of SAR 75 million or more (“competition threshold”) …</p>
-        <p><b>Lowering of topline EPP obligation and introduction of tiers:</b> … 25% EP obligation for the first tier (SAR 75-300 million for competition threshold, SAR 100-300 million for cumulative threshold); 20% for the second tier (SAR 300-500 million for both thresholds); and 15% for the third tier (over SAR 500 million under both thresholds).</p>
-        <cite>DGA source extract</cite>
-      </blockquote>
-      <div class="card">
-        <span class="tag">What the source says</span>
-        <ul class="rec">
-          <li data-n="01">Current policy (2022): 35% of the import value, for contracts with imports above SAR 100m (pp. 2–3).</li>
-          <li data-n="02">Draft (April 2026): applies to tenders with imports of SAR 75m or more; tiers of 25% / 20% / 15% set by import value (pp. 4–5).</li>
-          <li data-n="03"><strong>Our case: SAR 421m imports × 20% = SAR 84m, not SAR 4.5bn × 25%.</strong></li>
-        </ul>
-      </div>
-    </div>
-    <p class="src">Source: DGA Group, “Updated Version of Saudi Economic Participation Policy Issued for Public Consultation”, April 2026, pp. 2–5. DGA’s analysis of the LCGPA draft, not the LCGPA text itself.</p>
-  </div>
-</section>
-
-<section class="beat" data-act="9" data-pos="wide-l" data-title="Backup · Material groups in detail" data-qa="Abdulaziz Alweheab">
-  <p class="eyebrow">Backup · Part 1 detail</p>
-  <h2>Materials: steel/aluminium/copper group (54.5%) and electrical group (50.3%) have high import shares</h2>
-  <div class="scroller">
-    <div class="plot" data-chart="imports8x"></div>
-    <p class="note" style="margin-top:8px">The examples clarify the material groups. Coatings/chemical products and metals lead by estimated value.</p>
-    <p class="src">*Examples within broad groups. Amounts are group estimates from GASTAT 2023 national ratios applied to construction purchases [R05]. Example items do not allocate the total to that particular item. Metals include steel, aluminium and copper, not only fabricated roof structures; fabricated metal products and general-purpose machinery are separate categories. We do not have King Salman orders, grades or customs-origin data. Use a material passport: specification, quantity, origin, manufacturer, certificates, delivered price, licensed rights, available capacity and import content of local substitutes.</p>
-  </div>
-</section>
-
 <section class="beat" data-act="9" data-pos="center" data-title="Sources 1 of 4">
   <p class="eyebrow">Sources 1 of 4</p>
   <h2>Case, sector and stadium packages</h2>
@@ -1367,7 +1219,7 @@ Detail for questions: the 24 learners, six trainer candidates and two eligible s
 <footer class="bar-act">
   <div class="acts" id="acts"></div>
   <div class="nav">
-    <span class="count" id="count">1 / 30</span>
+    <span class="count" id="count">1 / 20</span>
     <button class="btn" id="btnPrev" title="Previous (←)"><svg viewBox="0 0 16 16"><path d="M10 2.5 4.5 8l5.5 5.5"></path></svg></button>
     <button class="btn" id="btnNext" title="Next (→)"><svg viewBox="0 0 16 16"><path d="M6 2.5 11.5 8 6 13.5"></path></svg></button>
   </div>
@@ -2651,23 +2503,8 @@ window.EPP_STAGE = (function () {
         { v: 36, lab: '~SAR 36m', k: 'Approved activity', c: 'other' },
         { v: 84, lab: 'SAR 84m', k: 'EP credit earned', c: 'local' }] } },
     { p: [-318, 152, 556], t: [0, -116, 0], l: 1, f: .3, g: 1, cr: 1, rb: 'THANK YOU · QUESTIONS WELCOME', sc: ['GROUP 8', 'QUESTIONS WELCOME'], fw: true },
-    /* appendix — backups A to I, then sources */
-    { p: IN_R.p, t: IN_R.t, l: .95, f: .4, g: .8, rb: 'BACKUPS AND SOURCES · FOR QUESTIONS', sc: ['BACKUP A', 'r = 0.4725'],
-      hb: { x: -30, max: 1400, span: 38, h: 30, bars: [
-        { v: 600, lab: '600', k: '60% local|round 1', c: 'base' },
-        { v: 1137.4, lab: '1,137', k: '60% local|all rounds', c: 'base' },
-        { v: 700, lab: '700', k: '70% local|round 1', c: 'local' },
-        { v: 1327, lab: '1,327', k: '70% local|all rounds', c: 'local' }] } },
-    { p: [180, 54, 250], t: [0, 40, 0], l: .85, f: .2, g: .8, sc: ['BACKUP B', 'CREDIT FACTORS'] },
-    { p: [150, 27, 164], t: [234, -6, 146], l: .8, f: .2, g: .9, yd: 1, sc: ['BACKUP C', 'PUBLIC EVIDENCE'], sg: 'EVIDENCE · WHAT IS STILL MISSING' },
-    { p: [332, 13, 148], t: [300, 4, 168], l: .82, f: .3, g: .95, yd: 1, sc: ['BACKUP D', 'RIGHTS AND TOOLS'], sg: 'RIGHTS · TOOLS · TRAINERS' },
-    { p: [262, 22, 300], t: [318, 6, 214], l: .78, f: .18, g: .88, yd: 1, sc: ['BACKUP E', 'DELIVERY PLAN'], sg: 'BEFORE · DURING · AFTER' },
-    { p: [0, 232, 252], t: [0, 14, 0], l: .9, f: .2, g: .7, sc: ['BACKUP F', 'JOINT BUYING'] },
-    { p: [-66, 152, -52], t: [0, 22, 0], l: .9, f: .2, g: .8, sc: ['BACKUP G', 'DECISION GATES'] },
-    { p: [-250, 120, 250], t: [0, 50, 0], l: .85, f: .1, g: .7, sc: ['BACKUP H', 'OFFSET FACTORS'] },
-    { p: [0, 64, 92], t: [0, 26, -34], l: .95, f: .3, g: .8, sc: ['BACKUP I', '421m × 20% = 84m'] },
-    { p: [318, 58, 318], t: [322, 5, 192], l: .74, f: .15, g: .6, yd: 1, sc: ['MATERIAL GROUPS', 'IN DETAIL'], sg: 'MATERIAL PASSPORTS' },
-    { p: [0, 76, 212], t: [0, 30, 0], l: .9, f: .2, g: .85, sc: ['SOURCES', '1 OF 4'] },
+    /* appendix — sources */
+    { p: [0, 76, 212], t: [0, 30, 0], l: .9, f: .2, g: .85, rb: 'SOURCES · GROUP 8 · ECN 511', sc: ['SOURCES', '1 OF 4'] },
     { p: [-210, 92, 300], t: [0, 36, 0], l: .88, f: .15, g: .8, sc: ['SOURCES', '2 OF 4'] },
     { p: [0, 108, 236], t: [0, 34, 0], l: .88, f: .15, g: .8, sc: ['SOURCES', '3 OF 4'] },
     { p: [-72, 96, 548], t: [0, 62, 0], l: .95, f: .1, g: .9, sc: ['SOURCES', 'REVIEWED OCT 2026'] }
@@ -2875,7 +2712,7 @@ window.EPP_STAGE = (function () {
     { id: '2', label: 'Multiplier and leakage', num: '2', budget: 205 },
     { id: '3', label: 'EPP and controls', num: '3', budget: 120 },
     { id: '4', label: 'The academy proposal', num: '4', budget: 155 },
-    { id: '9', label: 'Backups and sources', budget: 0 }
+    { id: '9', label: 'Sources', budget: 0 }
   ];
   function fmt(s) { var m = Math.floor(s / 60); return m + ':' + String(Math.floor(s % 60)).padStart(2, '0'); }
 
@@ -2927,13 +2764,13 @@ window.EPP_STAGE = (function () {
     people: 'M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6M3 20v-1.5A4.5 4.5 0 0 1 7.5 14h1A4.5 4.5 0 0 1 13 18.5V20M16.5 11a2.5 2.5 0 1 0 0-5M21 20v-1.5a4 4 0 0 0-3.2-3.9'
   };
   var TEAM = [
-    { n: 'Abdulmajeed Alajlan', r: 'Our case · 01', s: 'm' },
-    { n: 'Abdulrahman Aldahlawi', r: 'The academy · 09–10', s: 'm' },
-    { n: 'Salman Alfaris', r: 'The multiplier · 02–04', s: 'm' },
-    { n: 'Mohammed Alghamdi', r: 'The EPP · 06', s: 'm' },
-    { n: 'Abdulaziz Alweheab', r: 'Import leakage · 05', s: 'm' },
-    { n: 'Nada Alyahya', r: 'Value and decision · 11–12', s: 'f' },
-    { n: 'Haifa Binnafisah', r: 'London 2012 and controls · 07–08', s: 'f' }
+    { n: 'Abdulmajeed Alajlan', r: 'Our case and the multiplier', s: 'm', sl: '01–02' },
+    { n: 'Abdulrahman Aldahlawi', r: 'London 2012 and the controls', s: 'm', sl: '07–08' },
+    { n: 'Salman Alfaris', r: 'Construction, GDP and imports', s: 'm', sl: '03 · import dependence' },
+    { n: 'Mohammed Alghamdi', r: 'The EPP obligation', s: 'm', sl: '06' },
+    { n: 'Abdulaziz Alweheab', r: 'The scenario and the leak', s: 'm', sl: '04–05' },
+    { n: 'Nada Alyahya', r: 'Value and the decision', s: 'f', sl: '11–12' },
+    { n: 'Haifa Binnafisah', r: 'The academy proposal', s: 'f', sl: '09–10' }
   ];
   function avatar(sex, i) {
     var id = 'av' + i;
@@ -2961,13 +2798,16 @@ window.EPP_STAGE = (function () {
       hair +
       '</svg>';
   }
+  var INIT_T = { 'Abdulmajeed Alajlan': 'AA', 'Abdulaziz Alweheab': 'AW', 'Abdulrahman Aldahlawi': 'AD' };
   function renderTeam(root) {
     var g = root.querySelector('#teamGrid');
     if (!g || g.children.length) return;
     TEAM.forEach(function (m, i) {
       var d = document.createElement('div');
       d.className = 'member';
-      d.innerHTML = avatar(m.s, i) + '<span class="nm">' + m.n + '</span><span class="note" style="font-size:.66rem">' + m.r + '</span>';
+      var w = m.n.split(' ');
+      d.innerHTML = '<span class="ty-ini">' + (INIT_T[m.n] || (w[0][0] + w[1][0])) + '</span><span class="nm"><b>' + w[0] + '</b> ' + w.slice(1).join(' ') + '</span><span class="rl">' + m.r + '</span><span class="sl">' + m.sl + '</span>';
+      d.style.setProperty('--d', (i * 70) + 'ms');
       g.appendChild(d);
     });
   }
