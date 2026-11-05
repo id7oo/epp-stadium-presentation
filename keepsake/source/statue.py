@@ -152,7 +152,7 @@ def build(S, small, cut=False, text='top'):
         yf = -D / 2
         for (txt, wt, tr), cap, zc in zip(lines3, (L(7.0), L(3.1), L(2.6)), (H - L(5.8), H - L(11.6), H - L(16.0))):
             P['gold'].append(_face_relief(tracked_cs(txt, cap, 0, zc, wt, tr), L(.8), yf))
-        P['gold'].append(_face_relief(rect(-W / 2 + L(18), L(1.5), W / 2 - L(18), L(2.3)), L(.6), yf))
+        P['gold'].append(_face_relief(rect(-W / 2 + L(18), 0, W / 2 - L(18), L(.8)), L(.6), yf))   # on the bed line: no ledge
         _back_logo(P, D, H, L(15.5))
         yStrip = -D / 2 + L(6)
     else:
@@ -206,7 +206,7 @@ def build(S, small, cut=False, text='top'):
         fx, fy = math.cos(th), math.sin(th)
         mid_a, mid_b = a0 + (Ai - a0) * .5, b0 + (Bi - b0) * .5
         vw = L(3.2, 2)
-        v = box(-vw / 2, -L(4), 0, vw / 2, L(4), L(3.2, 2)).rotate([0, 0, math.degrees(th) + 90])
+        v = box(-vw / 2, -L(4), 0, vw / 2, L(4), L(60)).rotate([0, 0, math.degrees(th) + 90])   # open aisle cut down through the rows: no roof to bridge
         v = v.translate([mid_a * fx, cy + mid_b * fy, z0 + L(2.2) + (L(24) - L(2.2)) * .5 ** 1.2 - L(3.2, 2) + .01])
         P.setdefault('_cut', []).append(v)
 
@@ -278,9 +278,10 @@ def build(S, small, cut=False, text='top'):
     # 45-degree underside to a point, then a thin snap-off pin down to the centre spot
     apex = sb_bot - sbw / 2
     pyr = Manifold.hull_points(np.array([[dx * sbw / 2, cy + dy * sbw / 2, sb_bot] for dx in (-1, 1) for dy in (-1, 1)] + [[0, cy, apex]]))
-    pin_r = L(.9, .7)
-    pin = Manifold.cylinder(apex - (z0 + PODIUM) + L(.6), pin_r, pin_r * .55, 16).translate([0, cy, z0 + PODIUM - .01])
-    P['white'] += [body, pyr, pin]
+    pin_r = L(1.3, .9)
+    pin = Manifold.cylinder(apex - (z0 + PODIUM) + L(1.2), pin_r, pin_r * .8, 20).translate([0, cy, z0 + PODIUM - .01])
+    P['white'] += [body, pyr]
+    P['gold'].append(pin)                          # a slim gold mast holds the board: no unsupported cables
     # four red screens, with MBSC and 2034 in white on the large model
     scr_w, scr_h, scr_d = sbw - L(2.4, 1.4), sbh - L(2.2, 1.4), L(.6, .5)
     for k, label in enumerate(['MBSC', '2034', 'MBSC', '2034']):
@@ -295,16 +296,7 @@ def build(S, small, cut=False, text='top'):
             m = m.rotate([0, 0, 90 * k]).translate([0, cy, 0])
             if col == 'red': P['red'].append(m)
             else: P.setdefault('_over', []).append(m)
-    # cables: straight gold rods from the board's top corners to the wall top
-    cr = L(.75, .6)
-    for dx in (-1, 1):
-        for dy in ((1,) if cut else (-1, 1)):
-            th = math.atan2(dy * B, dx * A)
-            ex, ey = (Ai + L(1)) * math.cos(th), cy + (Bi + L(1)) * math.sin(th)
-            sx0, sy0 = dx * (sbw / 2 - cr), cy + dy * (sbw / 2 - cr)
-            pts = [[px + ox, py + oy, sb_top - cr * 2 + oz] for (px, py) in ((sx0, sy0), (ex, ey))
-                   for ox in (-cr, cr) for oy in (-cr, cr) for oz in (0, cr * 2)]
-            P['gold'].append(Manifold.hull_points(np.array(pts)))
+    # (the hanging cables of the real board are left out: a horizontal rod cannot print without support)
 
     # palms along the approach (green)
     rng = np.random.default_rng(2034)
