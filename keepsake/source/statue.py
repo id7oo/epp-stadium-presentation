@@ -332,32 +332,7 @@ def build(S, small, cut=False, text='top'):
                     seg.append([c[0] + r * math.cos(a), c[1] + r * math.sin(a), c[2]])
             parts.append(Manifold.hull_points(np.array(seg)))
         top = pts_axis[-1]
-        parts.append(Manifold.sphere(tr * 1.25, 18).translate(top.tolist()))
-        nf = 9 if not small else 7
-        for j in range(nf):
-            a = 2 * math.pi * j / nf + rng.uniform(-.25, .25)
-            reach = L(6.4, 3.6) * rng.uniform(.85, 1.1)
-            lift = L(3.4, 2.0) * rng.uniform(.9, 1.15)
-            end = lift + reach * .22                           # keeps rising to the tip, ~12 deg there
-            d = np.array([math.cos(a), math.sin(a), 0.0])
-            p0 = top + [0, 0, L(.2)]; p1 = top + d * reach * .35 + [0, 0, lift]; p2 = top + d * reach + [0, 0, end]
-            side = np.array([-d[1], d[0], 0.0])
-            SEG = 7
-            prev = None
-            for i in range(SEG + 1):
-                t = i / SEG
-                c = bez(p0, p1, p2, t)
-                w = (L(1.5, 1.0) * (1 - t) + L(.45, .45) * t)
-                th = (L(.8, .7) * (1 - t) + L(.45, .45) * t)
-                sec = [c + side * w / 2, c - side * w / 2, c + [0, 0, th / 2], c - [0, 0, th / 2]]
-                if prev is not None:
-                    parts.append(Manifold.hull_points(np.array(prev + sec)))
-                prev = sec
-        # two young spear fronds standing up in the middle
-        for j in range(2):
-            a = rng.uniform(0, 2 * math.pi); d = np.array([math.cos(a), math.sin(a), 0.0]) * L(1.2)
-            tip = top + d + [0, 0, L(3.2, 2)]
-            parts.append(Manifold.hull_points(np.array([top + [L(.5), 0, 0], top - [L(.5), 0, 0], top + [0, L(.5), 0], top - [0, L(.5), 0], tip])))
+        parts += printable_crown(top, tr, L(5.0, 3.2), rng, 8 if not small else 6)
         return union(parts)
     pal = []
     # an avenue of palms lining the approach road
@@ -507,6 +482,28 @@ def _billboard(P, L, z0, small, bb_x0, bb_x1, bb_y):
     frame = (rect(bb_x0, z0 + base_h, bb_x1, z0 + base_h + bh) - rect(bb_x0 + fr, z0 + base_h + fr, bb_x1 - fr, z0 + base_h + bh - fr))
     P['gold'].append(on_face(frame, L(.6, .5), front))
 
+
+def printable_crown(top, tr, reach, rng, n=8):
+    """Palm crown built for FDM: a 45-degree hub and n straight fronds rising at
+    exactly 45 degrees, never thinner than 0.9 mm (two 0.4 mm lines), so every
+    0.2 mm layer sits on the one below. Alternating long and short fronds."""
+    parts = []
+    hub_h = 1.6
+    parts.append(Manifold.cylinder(hub_h, tr, tr + hub_h, 20).translate([top[0], top[1], top[2] - .4]))
+    for j in range(n):
+        a = 2 * math.pi * j / n + rng.uniform(-.18, .18)
+        R = reach * (1.0 if j % 2 == 0 else .72) * rng.uniform(.92, 1.06)
+        d = np.array([math.cos(a), math.sin(a), 0.0]); side = np.array([-d[1], d[0], 0.0])
+        base = np.array(top) + d * (tr * .6) + [0, 0, .3]
+        tip = base + d * R + [0, 0, R]                       # 45 degrees exactly
+        w0, w1, t0, t1 = 2.0, .9, 1.3, .9
+        pts = []
+        for c, w, t in ((base, w0, t0), (tip, w1, t1)):
+            for sw in (-1, 1):
+                for st in (-1, 1):
+                    pts.append(c + side * sw * w / 2 + np.array([0, 0, 1.0]) * st * t / 2)
+        parts.append(Manifold.hull_points(np.array(pts)))
+    return parts
 
 def _face_relief(cs, depth, y_face, embed=.3):
     """Relief drawn in (x, z) standing `depth` out from a face at y_face towards -Y,
