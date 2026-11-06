@@ -714,6 +714,14 @@ body.show-bottom .nexthint{ opacity:0 }
   background:rgba(4,14,11,.62); border:1px solid rgba(255,255,255,.22); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); transform:translateZ(50px) }
 .p3-badge b{ font-family:var(--display); font-weight:800; font-size:1.05rem; color:var(--gold); letter-spacing:-.02em; margin-right:4px }
 .photo3d figcaption{ font-size:.6rem; color:var(--fg-3); margin-top:10px; text-align:right }
+.case-photo .p3-card img{ aspect-ratio:4/3 }
+.r1{ margin-top:10px } .r1-v{ font-size:clamp(1.4rem,2vw,1.9rem); font-weight:800; color:var(--fg); margin:0 0 10px; line-height:1.15 }
+.r1-v small{ font-size:.6em } .r1-v span{ display:block; font-size:.72rem; font-weight:500; color:var(--fg-2); margin-top:4px }
+.r1-bar{ display:flex; gap:4px; height:18px; margin:4px 0 12px } .r1-bar i{ border-radius:9px; background:var(--s-local); box-shadow:0 0 14px color-mix(in srgb,var(--s-local) 45%,transparent) }
+.r1-bar i + i{ background:var(--s-import); box-shadow:0 0 14px color-mix(in srgb,var(--s-import) 45%,transparent) }
+.r1-l{ font-size:.78rem; color:var(--fg-2); margin:0 0 8px; line-height:1.4 } .r1-l b{ font-weight:800; margin-right:4px; font-size:.95rem }
+.tile--sm{ padding:8px 12px } .tile--sm .v{ font-size:clamp(1.05rem,1.5vw,1.35rem) } .tile--sm .k{ font-size:.66rem }
+@media (max-width:900px){ .case-top{ grid-template-columns:1fr !important } }
 @keyframes p3float{ 0%,100%{ translate:0 0 } 50%{ translate:0 -5px } }
 @media (prefers-reduced-motion: reduce){ .p3-card{ animation:none } }
 
@@ -822,49 +830,36 @@ body.hide-names .who{ display:none !important }
   <h1 style="font-size:clamp(1.9rem,4.3vw,3.6rem);font-weight:800;letter-spacing:-.03em;max-width:19ch">Building King Salman Stadium: <span style="color:var(--accent)">how much of the money stays in Saudi Arabia?</span></h1>
   <p class="lede" style="margin-top:14px;max-width:60ch;font-size:clamp(.95rem,1.15vw,1.06rem)">Construction and Infrastructure · <em>Topic B:</em> the multiplier effect of public capital spending, and where the money leaks</p>
   <p class="note team-line" style="margin-top:8px"><strong>Group 8</strong><span>Abdulmajeed Alajlan</span><span>Abdulrahman Aldahlawi</span><span>Salman Alfaris</span><span>Mohammed Alghamdi</span><span>Abdulaziz Alweheab</span><span>Nada Alyahya</span><span>Haifa Binnafisah</span></p>
-  <template class="spk">Shown before the timed talk. Twelve content slides, about eight minutes. Click, or press →, to drive in.</template>
+  <template class="spk">Shown before the timed talk. Eleven content slides, about seven and a half minutes. Click, or press →, to drive in.</template>
 </section>
 
 <!-- ══ PART 1 · OUR CASE ═══════════════════════════════════════════════════ -->
-<section class="beat" data-act="1" data-pos="wide-l" data-title="Construction and Infrastructure" data-next="Who buys the stadium, and who supplies it" data-who="Abdulmajeed Alajlan" data-sec="40" data-no="01">
+<section class="beat" data-act="1" data-pos="wide-l" data-title="Construction and Infrastructure" data-next="How one public payment travels through the economy" data-who="Abdulmajeed Alajlan" data-sec="40" data-no="01">
   <p class="eyebrow">01 · Construction and Infrastructure</p>
   <h2>Our case: the 2034 World Cup stadium programme</h2>
   <div class="scroller">
-    <figure class="photo3d" data-tilt>
-      <div class="p3-card">
-        <img src="assets/king-salman-stadium.jpg" alt="King Salman Stadium concept rendering">
-        <span class="p3-glare"></span>
-        <span class="p3-badge"><b>92,760</b> planned seats · King Salman Stadium, Riyadh</span>
+    <div class="grid case-top" style="grid-template-columns:minmax(0,1fr) minmax(0,1.05fr) minmax(0,.85fr);gap:12px;align-items:start">
+      <div>
+        <p class="lede" style="margin:0 0 8px"><strong>A stadium buys civil works, materials, building systems and specialist expertise.</strong></p>
+        <ul class="rec">
+          <li data-n="→">Ministry of Sport buys the works.</li>
+          <li data-n="→">Populous designs the stadium.</li>
+          <li data-n="→">Contractors and specialist suppliers deliver.</li>
+        </ul>
       </div>
-      <figcaption>King Salman Stadium concept rendering © Populous</figcaption>
-    </figure>
-    <div class="split-photo" style="grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);margin-top:12px">
-      <p class="lede" style="margin:0"><strong>A stadium buys civil works, materials, building systems and specialist expertise.</strong></p>
-      <ul class="rec">
-        <li data-n="→">Ministry of Sport buys the works.</li>
-        <li data-n="→">Populous designs the stadium.</li>
-        <li data-n="→">Contractors and specialist suppliers deliver.</li>
-      </ul>
-    </div>
-    <div class="grid g3" style="margin-top:12px">
-      <div class="tile" data-ic="venue"><span class="v">15</span><span class="k">stadiums in 5 host cities</span></div>
-      <div class="tile tile--green" data-ic="growth"><span class="v">7.8<small>%</small></span><span class="k">of Saudi value added, 2023 sector scale</span></div>
-      <div class="tile tile--blue"><span class="v">SAR 646<small>bn</small></span><span class="k">gross output, 2023</span></div>
-    </div>
-    <p class="src">Sources: FIFA 2034 bid evaluation; GASTAT Supply and Use Tables 2023; Ministry of Sport; Populous [R01, R05, R02–R03, R53].</p>
-  </div>
-  <template class="spk">Our sector is Construction and Infrastructure. A stadium buys civil works, materials, building systems and specialist expertise. We use the 2034 stadium programme, with King Salman Stadium as our main example. The Ministry of Sport procures its works and Populous is the designer. FIFA’s 2024 bid baseline assessed fifteen stadiums across five cities. Construction generated 7.8 percent of Saudi value added in 2023. We ask how this public spending can leave Saudi firms able to supply the next project.</template>
-</section>
-
-<section class="beat" data-act="1" data-pos="bottom" data-title="Who buys, who supplies" data-next="How one public payment travels through the economy" data-who="Abdulmajeed Alajlan" data-sec="0">
-  <p class="eyebrow">Part 1 · The sector</p>
-  <h2>A World Cup stadium is a construction job inside a sector worth 7.8% of the Saudi economy</h2>
-  <div class="scroller">
-    <div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))">
-      <div class="tile tile--green"><span class="v">7.8<small>%</small></span><span class="k">of Saudi value added comes from construction (SAR 338bn of SAR 4,333bn, 2023)</span></div>
-      <div class="tile tile--blue"><span class="v">SAR 646<small>bn</small></span><span class="k">construction output in 2023, of which SAR 307.5bn is bought-in inputs</span></div>
-      <div class="tile"><span class="v">15</span><span class="k">stadiums across 5 host cities in FIFA’s 2024 bid evaluation</span></div>
-      <div class="tile tile--gold"><span class="v">92,760</span><span class="k">planned seats at King Salman Stadium, Riyadh — our case</span></div>
+    <figure class="photo3d case-photo" data-tilt style="margin:0">
+        <div class="p3-card">
+          <img src="assets/king-salman-stadium.jpg" alt="King Salman Stadium concept rendering">
+          <span class="p3-glare"></span>
+          <span class="p3-badge"><b>92,760</b> planned seats</span>
+        </div>
+        
+      </figure>
+      <div class="stack" style="gap:8px">
+        <div class="tile tile--sm"><span class="v">15</span><span class="k">stadiums in 5 host cities</span></div>
+        <div class="tile tile--green tile--sm"><span class="v">7.8<small>%</small></span><span class="k">of Saudi value added comes from construction (SAR 338bn of SAR 4,333bn, 2023)</span></div>
+        <div class="tile tile--blue tile--sm"><span class="v">SAR 646<small>bn</small></span><span class="k">gross output, 2023</span></div>
+      </div>
     </div>
     <div class="tablewrap" style="border:0;padding-top:0;margin-top:12px">
       <table class="dtable">
@@ -877,10 +872,13 @@ body.hide-names .who{ display:none !important }
       </table>
     </div>
     <p class="note" style="margin-top:10px">International–Saudi joint ventures deliver the main works; <strong>specialist imported systems arrive through subcontracts.</strong></p>
-    <p class="src">Sources: R05 (sheet 6.3), R01, R02–R03, R57, R58, R23–R24. Calculation: construction gross value added 338.3bn ÷ total GVA 4,332.9bn = 7.81% (GASTAT 2023, sheet 6.3).</p>
+    <p class="src">Sources: FIFA 2034 bid evaluation; GASTAT Supply and Use Tables 2023; Ministry of Sport; Populous [R01, R05, R02–R03, R53, R57, R58, R23–R24]. Image © Populous.</p>
   </div>
-  <template class="spk">Our sector is construction and infrastructure. In 2023 Saudi construction produced SAR 646 billion of output and SAR 338 billion of value added, which is 7.8% of all value added in the economy. The 2034 World Cup adds fifteen stadiums in five cities. Our case is King Salman Stadium in Riyadh, the largest, with 92,760 planned seats. The buyers are public: the Ministry of Sport for King Salman, Qiddiya Investment Company and Aramco for other venues. The suppliers are joint ventures of international and Saudi contractors, plus specialist firms for mechanical systems and facades. So who supplies matters: every package bought from abroad is money that leaves the Kingdom.</template>
+  <template class="spk">Our sector is Construction and Infrastructure. A stadium buys civil works, materials, building systems and specialist expertise. We use the 2034 stadium programme, with King Salman Stadium as our main example. The Ministry of Sport procures its works and Populous is the designer. FIFA’s 2024 bid baseline assessed fifteen stadiums across five cities. Construction generated 7.8 percent of Saudi value added in 2023. We ask how this public spending can leave Saudi firms able to supply the next project.
+
+Table: the buyers are public: the Ministry of Sport for King Salman, Qiddiya Investment Company and Aramco for other venues. The suppliers are joint ventures of international and Saudi contractors, plus specialist firms for mechanical systems and facades. So who supplies matters: every package bought from abroad is money that leaves the Kingdom.</template>
 </section>
+
 
 <!-- ══ PART 2 · THE MULTIPLIER AND THE LEAKS ═══════════════════════════════ -->
 <section class="beat" data-act="2" data-pos="right" data-title="The spending multiplier" data-next="How much of construction is Saudi value" data-who="Abdulmajeed Alajlan" data-sec="45" data-no="02">
@@ -892,16 +890,15 @@ body.hide-names .who{ display:none !important }
       <p style="font-size:clamp(.92rem,1.06vw,1.02rem)"><strong>GDP multiplier = extra GDP caused ÷ extra public spending</strong></p>
       <p class="note" style="margin-top:4px">Illustration: SAR 100m extra spending causes SAR 120m extra GDP. <span class="key key--y">Multiplier = 1.2.</span></p>
     </div>
-    <div class="grid g3" style="margin-top:10px">
-      <div class="card"><span class="tag">Micro</span><p>A firm chooses a supplier.</p></div>
-      <div class="card"><span class="tag">Macro</span><p>The combined effect on GDP.</p></div>
-      <div class="card card--lift"><span class="tag">Our topic</span><p>The spending multiplier is <strong>macroeconomics</strong>.</p></div>
-    </div>
     <p class="src">Source: IMF, Fiscal Multipliers, 2014, section II [R69]. Teaching example, not a Saudi estimate.</p>
   </div>
-  <template class="spk">The spending multiplier starts when one payment becomes income for someone else. A stadium contractor pays workers and suppliers. They spend some of that income again, creating later production. Imports and saving reduce the next round. A GDP multiplier compares additional GDP with additional public spending. If an extra one hundred million riyals causes one hundred and twenty million in extra GDP, the multiplier is one point two. That is only a teaching example. A company choosing a Saudi supplier is a microeconomic decision. The combined effect on GDP is macroeconomics. EP credit up to six belongs to a different calculation.
+  <template class="spk">This slide explains the spending multiplier.
 
-Qualification: the 100m / 120m example illustrates the definition only. GDP is incremental value added over a specified period, compared with the baseline. Imports, capacity, price changes and policy responses can reduce the effect.</template>
+When the government spends money, for example paying a contractor to build a stadium, that money becomes income for workers and suppliers. They spend part of it again, so other Saudi businesses produce and earn more.
+
+But not all the money stays in the economy. Imports and savings reduce the effect in each round.
+
+We measure it like this: multiplier = extra GDP divided by extra public spending. For example, if the government spends SAR 100 million and GDP grows by SAR 120 million, the multiplier is 1.2.</template>
 </section>
 
 <section class="beat" data-act="2" data-pos="left" data-title="Construction and Saudi GDP" data-next="Which inputs leak abroad" data-who="Salman Alfaris" data-sec="40" data-no="03">
@@ -916,7 +913,6 @@ Qualification: the 100m / 120m example illustrates the definition only. GDP is i
       <div class="tile tile--green"><span class="v">7.8<small>%</small></span><span class="k">of Saudi gross value added</span></div>
       <div class="card"><p>GDP counts the extra value created at each Saudi stage <strong>once</strong>. A local supplier’s full invoice also includes inputs bought from other firms.</p></div>
     </div>
-    <p class="note" style="margin-top:10px"><span class="key key--y">Academy link:</span> qualified local suppliers can win orders and create extra Saudi value.</p>
     <p class="src">Source: GASTAT, Supply and Use Tables 2023, sheets 6.2–6.3 [R05]. Sector share describes scale, not a GDP multiplier.</p>
   </div>
   <template class="spk">Our sector is construction and infrastructure. GASTAT reports six hundred and forty-five point eight billion riyals of construction output in 2023. Subtract three hundred and seven point five billion of bought-in inputs, and construction adds three hundred and thirty-eight point three billion of value. That is seven point eight percent of Saudi gross value added. GDP counts the extra value created in each Saudi stage once. Our academy can help qualified Saudi suppliers win orders, but the GDP effect depends on additional production, imported inputs, capacity and cost. Local invoices alone do not measure a GDP multiplier.
@@ -937,7 +933,7 @@ Qualification: 645.8 minus 307.5 equals 338.3bn, using rounded figures. Total Sa
 Amount = construction use of the product (sheet 6.2 col. H) × its national import rate: basic metals 21.9 × 54.5% = 12.0; electrical machinery 4.0 × 50.3% = 2.0; other chemical products 31.1 × 43.2% = 13.4.</template>
 </section>
 
-<section class="beat" data-act="2" data-pos="right" data-title="A SAR 4.5bn stadium scenario" data-thread="3" data-next="What is inside the SAR 421m leak" data-who="Abdulaziz Alweheab" data-sec="40" data-no="04">
+<section class="beat" data-act="2" data-pos="right" data-title="A SAR 4.5bn stadium scenario" data-thread="3" data-next="The SAR 421m sets the EP obligation" data-who="Abdulaziz Alweheab" data-sec="40" data-no="04">
   <p class="eyebrow">04 · Applying the multiplier to our case</p>
   <h2>Applying a SAR 4.5bn stadium scenario</h2>
   <div class="scroller">
@@ -946,31 +942,28 @@ Amount = construction use of the product (sheet 6.2 col. H) × its national impo
       <div class="tile"><span class="v" style="font-size:clamp(1.15rem,1.7vw,1.5rem)">about SAR 3.7bn</span><span class="k">Aramco Stadium · 46,096 seats</span></div>
       <div class="tile tile--green" style="border-color:color-mix(in srgb,var(--s-local) 50%,transparent)"><span class="v" style="font-size:clamp(1.15rem,1.7vw,1.5rem)">SAR 4.5bn</span><span class="k">Group scenario, not a published budget or a validated cost estimate</span></div>
     </div>
-    <figure class="fig" style="margin-top:12px">
-      <figcaption><span class="ft">Round 1</span><span class="fh">Estimated purchases using GASTAT 2023 construction ratios</span></figcaption>
-      <div class="plot" data-chart="scenario"></div>
-    </figure>
-    <p class="src">Sources: R57, R58 (benchmarks); GASTAT Supply and Use Tables 2023, sheets 6.1–6.2 [R05]. Group scenario using national ratios; figures are rounded.</p>
+    <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:12px;margin-top:12px;align-items:start">
+      <figure class="fig" style="margin:0">
+        <figcaption><span class="ft">Round 1</span><span class="fh">Estimated purchases using GASTAT 2023 construction ratios</span></figcaption>
+        <div class="r1">
+          <p class="r1-v">SAR 2,143<small>m</small> <span>total purchases = 47.6% of the SAR 4.5bn</span></p>
+          <div class="r1-bar"><i style="flex:80.3"></i><i style="flex:19.7"></i></div>
+          <p class="r1-l"><b style="color:var(--s-local)">SAR 1,721m</b> Purchases inside Saudi Arabia (80.3%) → next spending round</p>
+          <p class="r1-l"><b style="color:var(--s-import)">SAR 421m</b> Purchases from abroad (19.7%) — the first leak</p>
+        </div>
+      </figure>
+      <figure class="fig" style="margin:0">
+        <figcaption><span class="ft">Estimated stadium imports, SAR million</span><span class="fh">The materials behind the SAR 421m leak</span></figcaption>
+        <div class="plot" data-chart="materials"></div>
+      </figure>
+    </div>
+    <p class="note" style="margin-top:8px"><strong>This scenario estimates first-round purchases and import leakage, not the final GDP multiplier.</strong></p>
+    <p class="src">Sources: R57, R58 (benchmarks); GASTAT Supply and Use Tables 2023, sheets 6.1–6.2 [R05]. Group scenario using national ratios; figures are rounded. Examples under each input group are illustrative.</p>
   </div>
   <template class="spk">We apply the mechanism to a clearly labelled stadium scenario. The group assumes a value of four-and-a-half billion riyals, using other stadium contracts only as scale comparisons. GASTAT’s construction ratios imply about 2,143 million in intermediate purchases. The model estimates 1,721 million in domestic purchases and 421 million in imports. Local suppliers can spend their receipts again. The imports are the first purchase leakage. This is a first-round purchase split, not a measured total multiplier or all the value that stays in Saudi Arabia.</template>
 </section>
 
-<section class="beat" data-act="2" data-pos="left" data-title="The materials behind the leakage" data-thread="4" data-next="The SAR 421m sets the EP obligation" data-who="Abdulaziz Alweheab" data-sec="40" data-no="05">
-  <p class="eyebrow">05 · The materials behind the import leakage</p>
-  <h2>Estimated imports in the SAR 4.5bn stadium scenario</h2>
-  <div class="scroller">
-    <div class="grid" style="grid-template-columns:minmax(0,1.7fr) minmax(150px,1fr);gap:14px;align-items:start">
-      <div class="plot" data-chart="materials"></div>
-      <div class="stack">
-        <div class="tile tile--orange"><span class="r">Stadium imports</span><span class="v">SAR 421<small>m</small></span><span class="k">19.7% of the SAR 2,143m estimated purchases, split by input</span></div>
-        <div class="tile tile--gold"><span class="v">SAR 177<small>m</small></span><span class="k">Chemicals + metals · 42% of stadium’s imports</span></div>
-        <div class="card"><span class="tag">Actual item check</span><p>Grade, quantity, origin, certification and price from supplier schedules.</p></div>
-      </div>
-    </div>
-    <p class="src">Examples under each group are illustrative. Each bar retains its whole GASTAT group value. Source: GASTAT, Supply and Use Tables 2023, sheets 6.1–6.2 [R05]. National product ratios applied to construction use; group scenario, not invoices.</p>
-  </div>
-  <template class="spk">The chart now names the materials we mean. Protective coatings, sealants and adhesives sit within the chemicals group. Steel, aluminium and copper sit within the metals group. The largest modelled groups are ninety-four million and eighty-three million riyals, together forty-two percent of estimated imports. The amounts still describe whole statistical groups, not item-level invoices. We must confirm the exact grade, quantity, origin and price from supplier schedules. That lets the academy qualify a Saudi substitute rather than simply promise to localise all metals.</template>
-</section>
+
 
 <!-- ══ PART 3 · EPP AND LESSONS ════════════════════════════════════════════ -->
 <section class="beat" data-act="3" data-pos="right" data-title="Stadium EPP at 20%" data-thread="5" data-next="How London 2012 turned a deadline into skills" data-who="Mohammed Alghamdi" data-sec="50" data-no="06">
@@ -978,7 +971,7 @@ Amount = construction use of the product (sheet 6.2 col. H) × its national impo
   <h2>Assessment basis: the official April 2026 consultation framework</h2>
   <div class="scroller">
     <div class="eqn">
-      <div><span class="v" style="color:var(--s-import)">SAR 421m</span><span class="k">Estimated stadium imports · SAR 4.5bn scenario, slide 5</span></div>
+      <div><span class="v" style="color:var(--s-import)">SAR 421m</span><span class="k">Estimated stadium imports · SAR 4.5bn scenario, slide 04</span></div>
       <b>×</b>
       <div><span class="v">20%</span><span class="k">Second import tier · SAR 300m–500m per tender</span></div>
       <b>=</b>
@@ -986,10 +979,7 @@ Amount = construction use of the product (sheet 6.2 col. H) × its national impo
     </div>
     <div class="plot" data-chart="tiers" style="margin-top:6px"></div>
     <p class="note"><span class="key key--y">Assumption:</span> one main contract with one company, so all SAR 421m counts.</p>
-    <div class="grid g2" style="margin-top:10px">
-      <div class="card"><span class="tag">Draft category factors</span><p>Knowledge transfer / localisation <strong>1–3</strong><br>Technology transfer / exports <strong>2–4</strong></p></div>
-      <div class="card card--lift"><span class="tag">4 + 2 = 6</span><p>Qualifying base + approved bonus. Rare technology or other eligible grounds.</p></div>
-    </div>
+    <div class="card" style="margin-top:10px"><span class="tag">Draft category factors</span><p>Knowledge transfer / localisation <strong>1–3</strong><br>Technology transfer / exports <strong>2–4</strong></p></div>
     <p class="note" style="margin-top:8px">Credit differs from cash, GDP and ROI.</p>
     <p class="src">Source: LCGPA, Economic Participation Policy Update, consultation text, Articles 6–9 [R63]; DGA Group, April 2026. Imports: group scenario [R05]. Actual tender terms control the applicable version.</p>
   </div>
@@ -998,7 +988,7 @@ Amount = construction use of the product (sheet 6.2 col. H) × its national impo
 Qualification: 421 × 20% = 84.2m, rounded to 84m. This applies the tier rate to the whole import value; the draft summaries do not say whether tiers are marginal. If marginal: 300 × 25% + 121 × 20% = 99.2m. The 421m covers modelled intermediate-input imports only, so imported equipment or foreign services could raise the EP base.</template>
 </section>
 
-<section class="beat" data-act="3" data-pos="bottom" data-title="London 2012" data-thread="5" data-next="The five controls that make it credible" data-who="Abdulrahman Aldahlawi" data-sec="30" data-no="07">
+<section class="beat" data-act="3" data-pos="bottom" data-title="London 2012" data-thread="5" data-next="One academy that licenses, qualifies and buys together" data-who="Abdulrahman Aldahlawi" data-sec="30" data-no="07">
   <p class="eyebrow">07 · London 2012 offers a construction skills lesson</p>
   <h2>A fixed event deadline made live-site learning especially valuable</h2>
   <div class="scroller">
@@ -1014,27 +1004,6 @@ Qualification: 421 × 20% = 84.2m, rounded to 84m. This applies the tier rate to
   <template class="spk">London 2012 shows that a fixed-event construction programme can support a skills legacy. The UK government reported more than three thousand training places and four hundred and eight apprentices. Training connected people to live construction work. The weakness was relying on encouragement rather than binding skills requirements. Our adaptation puts paid practice, independent tests and trainer return into the delivery agreement. We measure what participants can do and where they work afterwards.</template>
 </section>
 
-<section class="beat" data-act="3" data-pos="right" data-title="The controls" data-thread="5" data-next="One academy that licenses, qualifies and buys together" data-who="Abdulrahman Aldahlawi" data-sec="40" data-no="08">
-  <p class="eyebrow">08 · The controls that make the solution credible</p>
-  <h2>Five risks, five controls</h2>
-  <div class="scroller">
-    <div class="ctl">
-      <div class="row"><span class="r">Routine training earns extra credit</span><span class="c">Record existing duties. Fund new competence, rights or tooling.</span></div>
-      <div class="row"><span class="r">IP cannot be used independently</span><span class="c">Agree licences, diagnostic access, trainer rights and export territory.</span></div>
-      <div class="row"><span class="r">Shared delivery duplicates claims</span><span class="c">Keep each supplier’s approved activities, cost allocation and ledger separate.</span></div>
-      <div class="row"><span class="r">Local substitutes or bulk buying fail</span><span class="c">Test grades, capacity and full cost. Use fair lots and multiple suppliers.</span></div>
-      <div class="row"><span class="r">Skills have no work after handover</span><span class="c">Confirm placements before training and contract the next site.</span></div>
-    </div>
-    <p class="note" style="margin:12px 0 6px"><strong>Evidence at three points</strong></p>
-    <div class="timeline">
-      <div><b>Before</b><span>baseline and rights</span></div>
-      <div><b>Completion</b><span>independent tests</span></div>
-      <div><b>6 / 12 months</b><span>work and trainer return</span></div>
-    </div>
-    <p class="src">Sources: LCGPA consultation Arts. 8(3), 13–16 [R63]; WIPO licensing [R64]; OECD competition safeguards [R68]; UK additionality study [R54].</p>
-  </div>
-  <template class="spk">The solution has to pass five tests. It must add capability beyond ordinary warranty training. The IP agreement must actually allow Saudi teams to use the tools and train others. Each supplier keeps its own approved obligation and credit record. Joint purchasing must preserve competition, quality and access for smaller suppliers. Finally, train before commissioning and confirm the next paid placement. We test skills at the start and completion, then check work and trainer return after six and twelve months. We stop or redesign a track that fails these tests.</template>
-</section>
 
 <!-- ══ PART 4 · THE PROPOSAL ═══════════════════════════════════════════════ -->
 <section class="beat" data-act="4" data-pos="wide-l" data-title="One academy, three functions" data-thread="5" data-next="Start on live sites before building a campus" data-who="Haifa Binnafisah" data-sec="30" data-no="09">
@@ -1122,11 +1091,11 @@ Detail for questions: the 24 learners, six trainer candidates and two eligible s
       <figcaption><span class="ft">EP credit plan</span><span class="fh">SAR 84m from about SAR 36m of activity (average factor 2.33; SAR 63m at low-end factors)</span></figcaption>
       <div class="plot" data-chart="creditplan"></div>
     </figure>
-    <p class="note" style="margin-top:6px"><strong>Why these factors:</strong> LCGPA sets the final factor within each draft range. We start at the minimum and add 1 per condition met: usable licences (2→3), new skills with independent tests (1→2), approved Saudi materials with real orders (1→2). Not the maximum: no manufacturing rights, recognised qualification or new plant.</p>
+    <p class="note" style="margin-top:6px"><strong>About the factors:</strong> The factors shown are group assumptions within the draft policy ranges, subject to LCGPA approval. They are not an official scoring formula.</p>
     <p class="note" style="margin-top:8px"><span class="key key--g">Proposed start: 24 learners, 6 trainer candidates, 2 confirmed eligible sites</span></p>
     <p class="src">Proposal targets for agreement, not forecasts or observed results. Scale on proven skills, demand, quality, cost and licensed rights. Policy basis: LCGPA [R63].</p>
   </div>
-  <template class="spk">We ask LCGPA to approve a pilot with clearly allocated supplier activities and evidence for any higher credit factor. The authorised buyer should approve a competitive shared purchasing process with separate contracts and fair supplier access. Our proposed starting design is twenty-four learners at two confirmed eligible sites, with six candidates returning as trainers. These are targets to agree, not results already achieved. To cover the SAR 84 million EP obligation, we plan about 36 million of approved activity: 12 million each on technology transfer at a factor of 3, knowledge transfer at 2 and localisation at 2. We use the middle of each draft range because the academy adds new, independently tested capability and usable licences, but no manufacturing rights or rare technology, so we claim no bonus. LCGPA sets the final factor. At the low end of every range we would need about 63 million, still below 84. Expand only when skills, paid demand, licensed rights, supplier quality and costs justify it. The goal is a Saudi capability that keeps working after the stadium opens.</template>
+  <template class="spk">We ask LCGPA to approve a pilot with clearly allocated supplier activities and evidence for any higher credit factor. The authorised buyer should approve a competitive shared purchasing process with separate contracts and fair supplier access. Our proposed starting design is twenty-four learners at two confirmed eligible sites, with six candidates returning as trainers. These are targets to agree, not results already achieved. To cover the SAR 84 million EP obligation, we plan about 36 million of approved activity: 12 million each on technology transfer at a factor of 3, knowledge transfer at 2 and localisation at 2. These factors are our group assumptions within the draft policy ranges, subject to LCGPA approval; they are not an official scoring formula. At the low end of every range we would need about 63 million, still below 84. Expand only when skills, paid demand, licensed rights, supplier quality and costs justify it. The goal is a Saudi capability that keeps working after the stadium opens.</template>
 </section>
 
 <section class="beat thanks" data-act="4" data-pos="center" data-title="Thank you" data-who="Group 8" data-sec="0">
@@ -1211,6 +1180,28 @@ Detail for questions: the 24 learners, six trainer candidates and two eligible s
   </div>
 </section>
 
+<section class="beat" data-act="9" data-pos="center" data-title="Backup: the controls">
+  <p class="eyebrow">08 · The controls that make the solution credible</p>
+  <h2>Five risks, five controls</h2>
+  <div class="scroller">
+    <div class="ctl">
+      <div class="row"><span class="r">Routine training earns extra credit</span><span class="c">Record existing duties. Fund new competence, rights or tooling.</span></div>
+      <div class="row"><span class="r">IP cannot be used independently</span><span class="c">Agree licences, diagnostic access, trainer rights and export territory.</span></div>
+      <div class="row"><span class="r">Shared delivery duplicates claims</span><span class="c">Keep each supplier’s approved activities, cost allocation and ledger separate.</span></div>
+      <div class="row"><span class="r">Local substitutes or bulk buying fail</span><span class="c">Test grades, capacity and full cost. Use fair lots and multiple suppliers.</span></div>
+      <div class="row"><span class="r">Skills have no work after handover</span><span class="c">Confirm placements before training and contract the next site.</span></div>
+    </div>
+    <p class="note" style="margin:12px 0 6px"><strong>Evidence at three points</strong></p>
+    <div class="timeline">
+      <div><b>Before</b><span>baseline and rights</span></div>
+      <div><b>Completion</b><span>independent tests</span></div>
+      <div><b>6 / 12 months</b><span>work and trainer return</span></div>
+    </div>
+    <p class="src">Sources: LCGPA consultation Arts. 8(3), 13–16 [R63]; WIPO licensing [R64]; OECD competition safeguards [R68]; UK additionality study [R54].</p>
+  </div>
+  <template class="spk">The solution has to pass five tests. It must add capability beyond ordinary warranty training. The IP agreement must actually allow Saudi teams to use the tools and train others. Each supplier keeps its own approved obligation and credit record. Joint purchasing must preserve competition, quality and access for smaller suppliers. Finally, train before commissioning and confirm the next paid placement. We test skills at the start and completion, then check work and trainer return after six and twelve months. We stop or redesign a track that fails these tests.</template>
+</section>
+
 </div><!-- /#deck -->
 
 <div class="thread" id="thread" aria-label="Follow the riyal"></div>
@@ -1221,7 +1212,7 @@ Detail for questions: the 24 learners, six trainer candidates and two eligible s
 <footer class="bar-act">
   <div class="acts" id="acts"></div>
   <div class="nav">
-    <span class="count" id="count">1 / 20</span>
+    <span class="count" id="count">1 / 18</span>
     <button class="btn" id="btnPrev" title="Previous (←)"><svg viewBox="0 0 16 16"><path d="M10 2.5 4.5 8l5.5 5.5"></path></svg></button>
     <button class="btn" id="btnNext" title="Next (→)"><svg viewBox="0 0 16 16"><path d="M6 2.5 11.5 8 6 13.5"></path></svg></button>
   </div>
@@ -1232,7 +1223,7 @@ Detail for questions: the 24 learners, six trainer candidates and two eligible s
   <div class="clock" id="clock">0:00</div>
   <div class="rowline"><span id="timerWho">—</span><span id="timerSlide">—</span></div>
   <div class="rowline"><span id="timerAct">Part 1 · Our case</span><span id="timerBudget">0:40</span></div>
-  <div class="rowline"><span>Slide times total</span><span>8:40</span></div>
+  <div class="rowline"><span>Slide times total</span><span>7:20</span></div>
   <div class="btns">
     <button class="btn" id="btnStart">Start</button>
     <button class="btn" id="btnReset">Reset</button>
@@ -2470,7 +2461,6 @@ window.EPP_STAGE = (function () {
       rb: 'ECN 511 · GROUP 8 · HOW MUCH OF THE MONEY STAYS IN SAUDI ARABIA?', sc: ['KING SALMAN', 'RIYADH · 2034'], sg: 'DELIVERY GATE' },
     /* PART 1 — our case */
     { p: [-300, 34, 520], t: [40, 56, 0], l: .62, f: 0, g: .6, yd: 1, cr: 1, rb: 'PART 1 · OUR CASE · CONSTRUCTION AND INFRASTRUCTURE', sc: ['92,760', 'PLANNED SEATS'] },
-    { p: [120, 74, 430], t: [270, -40, 170], l: .7, f: 0, g: .6, yd: 1, cr: 1, sc: ['15 STADIUMS', '5 HOST CITIES'], sg: 'WHO SUPPLIES · GATE 4' },
     /* PART 2 — the multiplier and the leaks */
     { p: [40, 172, 190], t: [64, 52, 0], l: .95, f: 1, g: .75, rb: 'PART 2 · THE SPENDING MULTIPLIER AND WHERE THE MONEY LEAKS', sc: ['GDP MULTIPLIER', '100m → 120m = 1.2'] },
     { p: IN_L.p, t: IN_L.t, l: .97, f: .2, g: .72, sc: ['7.8%', 'OF SAUDI VALUE ADDED'],
@@ -2484,15 +2474,9 @@ window.EPP_STAGE = (function () {
         { v: 2143, lab: 'SAR 2,143m', k: 'Total purchases|47.6% of 4.5bn', c: 'base' },
         { v: 1721, lab: 'SAR 1,721m', k: 'Inside Saudi|80.3% · next round', c: 'local' },
         { v: 421, lab: 'SAR 421m', k: 'From abroad|19.7% · first leak', c: 'imp' }] } },
-    { p: IN_L.p, t: IN_L.t, l: 1, f: .6, g: .8, sc: ['SAR 421m', 'STADIUM IMPORTS'],
-      hb: { x: 28, max: 260, span: 28, h: 24, bars: [
-        { v: 244, lab: 'SAR 244m', k: '7 other groups', c: 'other' },
-        { v: 83, lab: 'SAR 83m', k: 'Basic metals', c: 'imp' },
-        { v: 94, lab: 'SAR 94m', k: 'Chemicals', c: 'imp' }] } },
     /* PART 3 — EPP and controls, staged at the yard */
     { p: [356, 18, 248], t: [318, 8, 196], l: .8, f: .25, g: .95, yd: 1, rb: 'PART 3 · EPP AT 20 PERCENT, CREDIT UP TO 6', sc: ['SAR 84m', '421m × 20%'], sg: 'EP OBLIGATION · 20% · SAR 84m' },
     { p: [-520, 165, -430], t: [0, 60, 0], l: .72, f: 0, g: .5, sc: ['3,000+ · 408', 'LONDON 2012'] },
-    { p: [-430, 96, -360], t: [-30, 40, 40], l: .74, f: .1, g: .6, sc: ['5 CONTROLS', '3 EVIDENCE POINTS'] },
     /* PART 4 — the proposal, at the training rig */
     { p: [276, 8, 194], t: [312, 7, 226], l: .85, f: .45, g: .95, yd: 1, cr: 1, rb: 'PART 4 · ONE SHARED MATERIALS AND SYSTEMS ACADEMY', sc: ['ONE ACADEMY', 'THREE FUNCTIONS'], sg: 'SHARED ACADEMY · ONE HOST' },
     { p: [312, 16, 258], t: [284, 10, 198], l: .88, f: .5, g: .95, yd: 1, cr: 1, sc: ['24 · 6 · 2', 'LEARNERS · TRAINERS · SITES'], sg: 'HANDS-ON FIRST · ACADEMY AFTER EVIDENCE' },
@@ -2509,7 +2493,9 @@ window.EPP_STAGE = (function () {
     { p: [0, 76, 212], t: [0, 30, 0], l: .9, f: .2, g: .85, rb: 'SOURCES · GROUP 8 · ECN 511', sc: ['SOURCES', '1 OF 4'] },
     { p: [-210, 92, 300], t: [0, 36, 0], l: .88, f: .15, g: .8, sc: ['SOURCES', '2 OF 4'] },
     { p: [0, 108, 236], t: [0, 34, 0], l: .88, f: .15, g: .8, sc: ['SOURCES', '3 OF 4'] },
-    { p: [-72, 96, 548], t: [0, 62, 0], l: .95, f: .1, g: .9, sc: ['SOURCES', 'REVIEWED OCT 2026'] }
+    { p: [-72, 96, 548], t: [0, 62, 0], l: .95, f: .1, g: .9, sc: ['SOURCES', 'REVIEWED OCT 2026'] },
+    /* backup — the controls */
+    { p: [-430, 96, -360], t: [-30, 40, 40], l: .74, f: .1, g: .6, sc: ['5 CONTROLS', '3 EVIDENCE POINTS'] }
   ];
 
   var V = T.Vector3;
@@ -2711,8 +2697,8 @@ window.EPP_STAGE = (function () {
   var ACTS = [
     { id: '0', label: 'Arrival', budget: 0 },
     { id: '1', label: 'Our case', num: '1', budget: 40 },
-    { id: '2', label: 'Multiplier and leakage', num: '2', budget: 205 },
-    { id: '3', label: 'EPP and controls', num: '3', budget: 120 },
+    { id: '2', label: 'Multiplier and leakage', num: '2', budget: 165 },
+    { id: '3', label: 'EPP and controls', num: '3', budget: 80 },
     { id: '4', label: 'The academy proposal', num: '4', budget: 155 },
     { id: '9', label: 'Sources', budget: 0 }
   ];
