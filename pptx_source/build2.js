@@ -314,6 +314,7 @@ divider(P2, '02', 'Multiplier and leakage', 'Follow the riyal: where it is spent
   bar(s, bx, 5.1, wl - 0.05, 0.5, HX.green, { r: 0.25 }); bar(s, bx + wl, 5.1, bw2 - wl, 0.5, HX.imp, { r: 0.25 });
   T(s, [run('SAR 1,721m  ', { fontFace: F.black, color: HX.green, fontSize: 15 }), run('Purchases inside Saudi Arabia (80.3%) → next spending round')], { x: bx, y: 5.74, w: 6.3, h: 0.55, fontSize: 12 });
   T(s, [run('SAR 421m  ', { fontFace: F.black, color: HX.imp, fontSize: 15 }), run('Purchases from abroad (19.7%) — the first leak')], { x: bx + 6.3, y: 5.74, w: bw2 - 6.3, h: 0.55, fontSize: 12, align: 'right' });
+  T(s, 'This scenario estimates first-round purchases and import leakage, not the final GDP multiplier.', { x: bx, y: 6.12, w: bw2, h: 0.3, fontSize: 11.5, fontFace: F.semi, color: HX.fg });
   src(s, 'Sources: R57, R58 (benchmarks); GASTAT Supply and Use Tables 2023, sheets 6.1–6.2 [R05]. Group scenario using national ratios; figures are rounded.', 6.58);
   thread(s, 3, [0, 1, 2]);
 }
@@ -519,8 +520,8 @@ divider(P4, '04', 'The academy proposal', 'Turning the obligation into Saudi cap
   const rx = gx + gw + 0.15, rw = W - MX - rx;
   stat(s, rx, 3.55, rw, 1.2, 'SAR 84m', 'EP credit = 36 + 24 + 24', HX.green, { vs: 28, vh: 0.55, g: { tint: 'green', edge: '22D38B' } });
   glass(rx, 4.88, rw, 1.22, { shadow: false });
-  T(s, [run('Why these factors: ', { fontFace: F.semi, color: HX.fg }), run('LCGPA sets the final factor within each draft range. We start at the minimum and add 1 per condition met: usable licences (2→3), new skills with independent tests (1→2), approved Saudi materials with real orders (1→2). Not the maximum: no manufacturing rights, recognised qualification or new plant.')],
-    { x: rx + 0.22, y: 4.95, w: rw - 0.42, h: 1.12, fontSize: 9.5, valign: 'middle' });
+  T(s, [run('About the factors: ', { fontFace: F.semi, color: HX.fg }), run('The factors shown are group assumptions within the draft policy ranges, subject to LCGPA approval. They are not an official scoring formula.')],
+    { x: rx + 0.22, y: 4.95, w: rw - 0.42, h: 1.12, fontSize: 11.5, valign: 'middle' });
   T(s, 'Proposed start: 24 learners, 6 trainer candidates, 2 confirmed eligible sites', { x: MX, y: 6.2, w: CW, h: 0.3, fontSize: 13, fontFace: F.semi, color: C.accent1 });
   src(s, 'Proposal targets for agreement, not forecasts or observed results. Scale on proven skills, demand, quality, cost and licensed rights. Policy basis: LCGPA [R63].', 6.55);
   thread(s, 7, [6]);
