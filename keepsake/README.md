@@ -14,6 +14,34 @@ The plinth carries three lines of raised gold lettering, each in its own size an
 | RIYADH · 2034 (with gold rules either side) | SemiBold, letter-spaced | 4.0 mm / 2.7 mm |
 | GROUP 8 · MBSC EMBA · ECN 511 · 2026 | Medium (SemiBold on the small model) | 3.1 mm / 2.4 mm |
 
+## ⚡ Light edition: a fast print, about 5–6 hours
+
+![Light edition](preview/render_light_hero.jpg)
+
+A compact version: **118 × 66 mm base, 65 mm tall when assembled.** It keeps the parts that matter most:
+- the stadium cut exactly in half, with its stepped bowl, diagrid facade, gold roof ring, half pitch with markings, and the scoreboard (red MBSC / 2034 screens);
+- the container quay (red and white lower tier, gold and white upper tier) and two trucks on the road: an imported red container arriving, and a white, made-in-Saudi one leaving;
+- a large **full-colour MBSC logo plaque** (100 × 62 mm) with the college name and GROUP 8 · MBSC EMBA · ECN 511 · 2026;
+- KING SALMAN STADIUM · RIYADH 2034 in gold along the front.
+
+**Why it is fast:** a colour swap costs 1.5–2 minutes, and it is needed on every layer that holds more than one colour. Here each colour stays in a short band of layers:
+- the logo plaque prints **flat, face up**, with its colours inlaid in the top 0.6 mm (3 layers);
+- the containers share one red band and one gold band;
+- the stadium is white, with gold only on the top ring.
+
+**Estimate, both parts on one plate at 0.16 mm:**
+- 81 colour swaps;
+- about 2 hours of printing;
+- about 50 g of filament.
+
+I estimated this with PrusaSlicer at X1C speeds and counted the swaps layer by layer. Expect **about 5–6 hours** in total; Bambu Studio shows the exact figure after slicing. Zero floating regions in a layer-by-layer check.
+
+**File:** `print/stadium_light_4colour.3mf`. It holds two objects on one plate: the base and the plaque.
+- Settings: 0.16 mm layers, 2 walls, 10% infill, supports off, prime tower on, *Flush into objects' infill* on.
+- **Assembly:** push the plaque into the slot in the rail behind the stadium, logo facing the front. The slot is 3.5 mm wide for the 3.2 mm plaque. Add a drop of super glue in the slot if it is loose.
+
+Generator: `source/light.py`.
+
 ## Three versions of the large model
 
 The same full stadium scene, with the lettering in three places:
