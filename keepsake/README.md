@@ -18,11 +18,11 @@ The plinth carries three lines of raised gold lettering, each in its own size an
 
 ![Light edition](preview/render_light_hero.jpg)
 
-A compact version: **118 × 66 mm base, 65 mm tall when assembled.** It keeps the parts that matter most:
+A compact version: **118 × 69 mm base, 69 mm tall when assembled.** It keeps the parts that matter most:
 - the stadium cut exactly in half, with its stepped bowl, diagrid facade, gold roof ring, half pitch with markings, and the scoreboard (red MBSC / 2034 screens);
 - the container quay (red and white lower tier, gold and white upper tier) and two trucks on the road: an imported red container arriving, and a white, made-in-Saudi one leaving;
-- a large **full-colour MBSC logo plaque** (100 × 62 mm) with the college name and GROUP 8 · MBSC EMBA · ECN 511 · 2026;
-- KING SALMAN STADIUM · RIYADH 2034 in gold along the front.
+- the **official MBSC logo** on its own plaque (100 × 67 mm). Only the red shield and the college name in Arabic and English, built from the vector logo `source/mbsc_logo_official.svg`;
+- three gold lines along the front: KING SALMAN STADIUM, RIYADH · 2034, and GROUP 8 · MBSC EMBA · ECN 511 · 2026.
 
 **Why it is fast:** a colour swap costs 1.5–2 minutes, and it is needed on every layer that holds more than one colour. Here each colour stays in a short band of layers:
 - the logo plaque prints **flat, face up**, with its colours inlaid in the top 0.6 mm (3 layers);
@@ -32,7 +32,7 @@ A compact version: **118 × 66 mm base, 65 mm tall when assembled.** It keeps th
 **Estimate, both parts on one plate at 0.16 mm:**
 - 81 colour swaps;
 - about 2 hours of printing;
-- about 50 g of filament.
+- about 52 g of filament.
 
 I estimated this with PrusaSlicer at X1C speeds and counted the swaps layer by layer. Expect **about 5–6 hours** in total; Bambu Studio shows the exact figure after slicing. Zero floating regions in a layer-by-layer check.
 
