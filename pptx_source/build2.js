@@ -63,6 +63,7 @@ function eyebrow(s, text, x = MX, y = 0.46) {
 const SPK = { 'Abdulmajeed Alajlan': ['AA', '22D38B'], 'Salman Alfaris': ['SA', '4A95F0'], 'Abdulaziz Alweheab': ['AW', 'EE6A33'],
   'Mohammed Alghamdi': ['MA', 'E2B357'], 'Abdulrahman Aldahlawi': ['AD', '2BC2CF'], 'Haifa Binnafisah': ['HB', 'C77BDB'], 'Nada Alyahya': ['NA', 'EE6A95'] };
 function presenter(s, title) {
+  return;   // presenter pills removed: names appear on the Thank you slide only
   const m = META[title]; if (!m || !SPK[m.who]) return;
   const [ini, col] = SPK[m.who];
   const tail = (m.sec && +m.sec ? m.sec + 's' : '') + (m.no && m.no !== '·' ? '   ' + m.no + ' / 12' : '');
