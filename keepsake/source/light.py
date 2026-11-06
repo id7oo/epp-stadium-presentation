@@ -16,7 +16,7 @@ than one colour. So every colour here lives in a short band of layers:
     containers one gold band;
   * the scoreboard's red screens are flush inlays, so they add no overhangs.
 
-Two objects on one plate: the base (118 x 66 mm) and the logo plaque (100 x 62 mm).
+Two objects on one plate: the base (118 x 69 mm) and the logo plaque (100 x 68 mm).
 
 Usage: python light.py OUT_DIR
 """
@@ -30,13 +30,14 @@ import editions as ED
 from statue import ellipse, rrect, rect, slab, box, union, tracked_cs, COLOURS, HERE
 
 S = 0.62                                   # stadium scale relative to the large model
-W, D = 118.0, 66.0                         # base footprint: compact, the half stadium fills it
+W, D = 118.0, 69.0                         # base footprint: compact, the half stadium fills it
 H0 = 6.0                                   # base thickness; the scene starts at z = H0
-CY = -11.0                                 # the cut line: the stadium's long axis
+CY = -10.0                                 # the cut line: the stadium's long axis
 SX = -W / 2 + 3 + 58 * S + 2 * S           # stadium centre (x), left part of the base
-PT, PH, PW = 3.2, 62.0, 100.0              # plaque thickness, height, width
+PT, PW = 3.2, 100.0                        # plaque thickness, width (height PH follows the logo)
+LOGO_W = 92.0                              # logo width on the plaque
 SLOT_DEPTH = 3.5                           # how far the slot goes into the base
-RAIL_H, RAIL_Y0, RAIL_Y1 = 8.0, 23.0, 30.0
+RAIL_H, RAIL_Y0, RAIL_Y1 = 8.0, 24.0, 31.0
 SLOT_Y = (RAIL_Y0 + RAIL_Y1) / 2
 SLOT_W, SLOT_CLEAR = PT + 0.3, 0.4         # slot width, and extra length along x
 INSERT = SLOT_DEPTH + RAIL_H               # plaque length hidden in the rail
@@ -53,13 +54,14 @@ def base():
     P['white'].append(rrect(W, D, 7).extrude(CH, scale_top=((W - 2 * CH) / W, (D - 2 * CH) / D)).translate([0, 0, H0 - CH]))
 
     # front strip: KING SALMAN STADIUM, then RIYADH · 2034 between gold rules
-    y_strip = -D / 2 + 12.0
-    t1 = tracked_cs('KING SALMAN STADIUM', 5.0, 0, -D / 2 + 8.6, 'Black', .05)
-    t2 = tracked_cs('RIYADH  \u00b7  2034', 2.6, 0, -D / 2 + 3.6, 'SemiBold', .3)
-    P['gold'] += [slab(t1, z0, .6), slab(t2, z0, .6)]
+    y_strip = -D / 2 + 15.0
+    t1 = tracked_cs('KING SALMAN STADIUM', 5.0, 0, -D / 2 + 11.4, 'Black', .05)
+    t2 = tracked_cs('RIYADH  \u00b7  2034', 2.4, 0, -D / 2 + 6.6, 'SemiBold', .3)
+    t3 = tracked_cs('GROUP 8  \u00b7  MBSC EMBA  \u00b7  ECN 511  \u00b7  2026', 2.2, 0, -D / 2 + 2.9, 'SemiBold', .16)
+    P['gold'] += [slab(t1, z0, .6), slab(t2, z0, .6), slab(t3, z0, .6)]
     b1, b2 = t1.bounds(), t2.bounds()
     for x0, x1 in [(b1[0], b2[0] - 3), (b2[2] + 3, b1[2])]:
-        P['gold'].append(box(x0, -D / 2 + 3.6 - .4, z0, x1, -D / 2 + 3.6 + .4, z0 + .6))
+        P['gold'].append(box(x0, -D / 2 + 6.6 - .4, z0, x1, -D / 2 + 6.6 + .4, z0 + .6))
 
     # stadium dimensions
     A, B = L(58), L(51)
@@ -202,38 +204,45 @@ def base():
     return ED.resolve(P)
 
 # ══ the logo plaque, printed flat and face up ═══════════════════════════════
+def _logo_masks():
+    """The official MBSC logo (mbsc_logo_official.svg, rendered to masks), cropped to
+    the shield and the college name: the rule and the campus line are left out."""
+    red = np.array(Image.open(os.path.join(HERE, 'mbsc_official_red.png')).convert('L')) > 127
+    txt = np.array(Image.open(os.path.join(HERE, 'mbsc_official_text.png')).convert('L')) > 127
+    cols = np.arange(red.shape[1])[None, :]
+    rule = red & (cols >= 2100)
+    top_of_rule = np.where(rule.any(1))[0].min()
+    shield_red = red & (cols < 2100)
+    name = txt.copy(); name[top_of_rule - 20:] = False
+    rows = np.where((shield_red | name).any(1))[0]
+    r0, r1 = rows.min(), rows.max() + 1
+    return shield_red[r0:r1], name[r0:r1]
+
+SHIELD_MASK, NAME_MASK = _logo_masks()
+LOGO_H = LOGO_W * SHIELD_MASK.shape[0] / SHIELD_MASK.shape[1]
+PH = round(INSERT + 12.0 + LOGO_H + 3.0, 1)     # the logo clears the stands, with a 3 mm top margin
+
 def plaque():
-    """Plaque in its print pose: lying flat, face up, bottom edge at y = 0."""
+    """The MBSC logo, the shield and the college name and nothing else, on a plaque
+    in its print pose: lying flat, face up, bottom edge at y = 0. Red shield with the
+    white MBSC, swoosh and calligraphy left in the plaque's white; the Arabic and
+    English name in gold."""
+    from scipy import ndimage
     P = ED.new_parts()
     T = PT
     P['white'].append(rrect(PW, PH, 2.5).translate([0, PH / 2]).extrude(T))
     zi = T - INLAY
     inl = lambda cs: slab(cs, zi, INLAY + .001)
-    # gold frame on the visible part
-    fr = 1.2
-    v0 = INSERT + 1.5
-    P['gold'].append(inl(rect(-PW / 2 + 1.8, v0, PW / 2 - 1.8, PH - 1.8) - rect(-PW / 2 + 1.8 + fr, v0 + fr, PW / 2 - 1.8 - fr, PH - 1.8 - fr)))
-    # the full college logo: red shield with white calligraphy, gold name, red rule
-    full = np.array(Image.open(os.path.join(HERE, 'logo_full.png')).convert('L')) > 127
-    redm = np.array(Image.open(os.path.join(HERE, 'logo_red.png')).convert('L')) > 127
-    lh = 25.0
-    k = lh / full.shape[0]; lw_ = full.shape[1] * k
-    x_left, v_top = -lw_ / 2, PH - 5.0
-    sc = 1010
-    sh = np.zeros_like(full); sh[:, :sc] = full[:, :sc]
-    tx = np.zeros_like(full); tx[:, sc:] = full[:, sc:]
-    shield = morphology.remove_small_holes(sh, max_size=5000)
-    sh_w = morphology.dilation(sh & ~redm, morphology.disk(5)) & shield
-    sh_cs, wh_cs = ST._mask_rings(shield, x_left, v_top, k), ST._mask_rings(sh_w, x_left, v_top, k)
-    P['red'].append(inl(sh_cs - wh_cs))
-    P['gold'].append(inl(ST._mask_rings(morphology.dilation(tx & ~redm, morphology.disk(4)), x_left, v_top, k)))
-    if (tx & redm).any():
-        P['red'].append(inl(ST._mask_rings(morphology.dilation(tx & redm, morphology.disk(3)), x_left, v_top, k)))
-    # caption under the logo
-    cap = tracked_cs('GROUP 8  ·  MBSC EMBA  ·  ECN 511  ·  2026', 2.6, 0, v_top - lh - 4.0, 'Bold', .12)
-    P['gold'].append(inl(cap))
-    S_ = ED.resolve(P)
-    return S_
+    shield_red, name = SHIELD_MASK, NAME_MASK
+    k = LOGO_W / shield_red.shape[1]               # mm per pixel
+    px = lambda mm: max(1, int(round(mm / k)))
+    x_left, v_top = -LOGO_W / 2, PH - 3.0
+    # keep every white line inside the shield at least ~0.45 mm wide so the red cannot close over it
+    white_in = ndimage.binary_fill_holes(shield_red) & ~shield_red
+    white_in = morphology.dilation(white_in, morphology.disk(px(.08)))
+    P['red'].append(inl(ST._mask_rings(shield_red & ~white_in, x_left, v_top, k)))
+    P['gold'].append(inl(ST._mask_rings(morphology.dilation(name, morphology.disk(px(.09))), x_left, v_top, k)))
+    return ED.resolve(P)
 
 def plaque_upright(Pq):
     """The plaque turned upright and dropped into the slot (for the assembled preview)."""
