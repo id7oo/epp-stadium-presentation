@@ -3,7 +3,7 @@
 **Building King Salman Stadium: how much of the money stays in Saudi Arabia?**
 MBSC EMBA · ECN 511 Economics for Managers · Topic B
 
-Open in the deck with **R** (click a row to jump to that slide). **N** shows the speaker notes for the current slide, **P** shows the presenter timer.
+Open in the deck with **R** (click a row to jump to that slide). **N** shows the speaker notes for the current slide, **P** shows the presenter timer, **H** (or the Names button) hides the presenter names on the slides.
 
 ## The team
 

@@ -756,6 +756,7 @@ body.show-bottom .nexthint{ opacity:0 }
 /* ── closing slide ──────────────────────────────────────────────────────── */
 .beat.thanks{ width:min(1040px,90vw) !important; padding:clamp(30px,3.4vw,52px) clamp(28px,3.4vw,56px); align-items:center; text-align:center }
 .beat.thanks .who{ display:none }
+body.hide-names .who{ display:none !important }
 .ty-head{ display:flex; flex-direction:column; align-items:center; gap:6px; margin-bottom:clamp(20px,2.6vw,34px) }
 .ty-kicker{ font-size:.72rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--gold) }
 .beat.thanks h2.ty-title{ font-family:var(--display); font-weight:800; font-size:clamp(3rem,6.6vw,5.6rem); letter-spacing:-.045em; line-height:1; margin:0;
@@ -807,6 +808,7 @@ body.show-bottom .nexthint{ opacity:0 }
     <button class="btn" id="btnOverview" title="All beats (O)"><svg viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="5" height="5" rx="1"></rect><rect x="9.5" y="1.5" width="5" height="5" rx="1"></rect><rect x="1.5" y="9.5" width="5" height="5" rx="1"></rect><rect x="9.5" y="9.5" width="5" height="5" rx="1"></rect></svg>Map</button>
     <button class="btn" id="btnTimer" aria-pressed="false" title="Presenter timer (P)"><svg viewBox="0 0 16 16"><circle cx="8" cy="9" r="5.6"></circle><path d="M8 6v3l2 1.4M6 1.4h4"></path></svg>Timer</button>
     <button class="btn" id="btnRun" title="Run sheet: who presents what (R)"><svg viewBox="0 0 16 16"><path d="M2.5 3.5h11M2.5 8h11M2.5 12.5h7"></path></svg>Run sheet</button>
+    <button class="btn" id="btnNames" aria-pressed="true" title="Show or hide presenter names on the slides (H)"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.5"></circle><path d="M3 13.5c.6-2.6 2.6-4 5-4s4.4 1.4 5 4"></path></svg>Names</button>
     <button class="btn" id="btnNotes" aria-pressed="false" title="Speaker notes (N)"><svg viewBox="0 0 16 16"><path d="M3 2.5h10v11H3zM5.5 5.5h5M5.5 8h5M5.5 10.5h3"></path></svg>Notes</button>
     <button class="btn" id="btnFull" title="Fullscreen (F)"><svg viewBox="0 0 16 16"><path d="M1.6 5.6V1.6h4M10.4 1.6h4v4M14.4 10.4v4h-4M5.6 14.4h-4v-4"></path></svg>Full</button>
   </div>
@@ -2995,6 +2997,16 @@ window.EPP_STAGE = (function () {
     renderNotes();
   }
   btnNotes.addEventListener('click', function (e) { e.stopPropagation(); toggleNotes(); });
+  /* ── presenter-name toggle: hide the speaker tags on every slide (H) ───── */
+  var btnNames = document.getElementById('btnNames');
+  function setNames(on) {
+    document.body.classList.toggle('hide-names', !on);
+    btnNames.setAttribute('aria-pressed', on ? 'true' : 'false');
+    try { localStorage.setItem('epp-names', on ? 'on' : 'off'); } catch (e) {}
+  }
+  function toggleNames() { setNames(document.body.classList.contains('hide-names')); }
+  btnNames.addEventListener('click', function (e) { e.stopPropagation(); toggleNames(); });
+  (function () { var v = null; try { v = localStorage.getItem('epp-names'); } catch (e) {} if (v === 'off') setNames(false); })();
   spkPanel.addEventListener('click', function (e) { e.stopPropagation(); });
 
   /* ── the riyal thread: one chain of numbers that links the money story ── */
@@ -3200,6 +3212,7 @@ window.EPP_STAGE = (function () {
     else if (k === 'p' || k === 'P') { toggleTimer(); }
     else if (k === 'n' || k === 'N') { toggleNotes(); }
     else if (k === 'r' || k === 'R') { toggleRun(); }
+    else if (k === 'h' || k === 'H') { toggleNames(); }
     else if (k === 'f' || k === 'F') { document.getElementById('btnFull').click(); }
   });
 
