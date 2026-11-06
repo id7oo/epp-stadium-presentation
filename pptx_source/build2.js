@@ -152,14 +152,14 @@ pres.addSection({ title: 'Opening' });
   T(s, 'Abdulmajeed Alajlan  ·  Abdulrahman Aldahlawi  ·  Salman Alfaris  ·  Mohammed Alghamdi  ·  Abdulaziz Alweheab  ·  Nada Alyahya  ·  Haifa Binnafisah',
     { x: MX + 0.45, y: 5.65, w: 7.4, h: 0.6, fontSize: 11.5, color: C.background2 });
   // the main presentation: the interactive 3D web edition, with a QR code to scan
-  { const URL = 'https://id7oo.github.io/epp-stadium-presentation/', cx = 9.3, cy = 0.95, cw = W - MX - cx;
+  { const URL = 'https://mbsc-group8-ecn511.com/', cx = 9.3, cy = 0.95, cw = W - MX - cx;
     glass(cx, cy, cw, 2.75, { r: 0.24, tint: 'dark', edge: 'E2B357' });
     T(s, 'THE MAIN PRESENTATION', { x: cx + 0.25, y: cy + 0.2, w: cw - 0.5, h: 0.25, fontSize: 9, fontFace: F.semi, color: C.accent2, charSpacing: 3 });
     s.addImage({ path: IMG('qr.png'), x: cx + 0.25, y: cy + 0.58, w: 1.3, h: 1.3, altText: 'QR code: ' + URL, hyperlink: { url: URL, tooltip: 'Open the interactive 3D presentation' } });
     T(s, [run('Interactive 3D edition', { fontFace: F.semi, color: HX.fg, breakLine: true }), run('Live in the browser. This deck is the handout copy.', { color: HX.fg2 })],
       { x: cx + 1.72, y: cy + 0.6, w: cw - 1.92, h: 1.25, fontSize: 11, lineSpacingMultiple: 1.05 });
-    T(s, [run('id7oo.github.io/epp-stadium-presentation', { hyperlink: { url: URL, tooltip: 'Open the interactive 3D presentation' } })],
-      { x: cx + 0.25, y: cy + 2.08, w: cw - 0.4, h: 0.4, fontSize: 10.5, fontFace: F.semi, color: HX.green, valign: 'middle' }); }
+    T(s, [run('mbsc-group8-ecn511.com', { hyperlink: { url: URL, tooltip: 'Open the interactive 3D presentation' } })],
+      { x: cx + 0.25, y: cy + 2.08, w: cw - 0.4, h: 0.4, fontSize: 13, fontFace: F.semi, color: HX.green, valign: 'middle' }); }
   T(s, 'Cover image: King Salman Stadium concept rendering © Populous', { x: MX, y: 7.05, w: 6, h: 0.25, fontSize: 8, color: C.accent6 });
   notes(s, 'Arrival');
 }

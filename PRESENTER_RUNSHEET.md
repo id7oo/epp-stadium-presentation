@@ -5,6 +5,8 @@ MBSC EMBA · ECN 511 Economics for Managers · Topic B
 
 Open in the deck with **R** (click a row to jump to that slide). **N** shows the speaker notes for the current slide, **P** shows the presenter timer, **H** (or the Names button) hides the presenter names on the slides.
 
+Live at **https://mbsc-group8-ecn511.com** (the old id7oo.github.io link redirects there).
+
 ## The team
 
 | | Presenter | Presents | Talk time |
