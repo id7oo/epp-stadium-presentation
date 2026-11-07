@@ -42,6 +42,28 @@ I estimated this with PrusaSlicer at X1C speeds and counted the swaps layer by l
 
 Generator: `source/light.py`.
 
+## 🎁 Gift box for the light edition (printed at 1.469×)
+
+![Gift box, closed](preview/render_giftbox_closed.jpg)
+![Gift box, open](preview/render_giftbox_open.jpg)
+![Gift box, back](preview/render_giftbox_back.jpg)
+
+A green box with a lift-off lid, sized for the light edition printed at 1.469×. At that scale the model's base is 173.4 × 101.4 mm, and it stands 101.5 mm tall.
+
+**The two parts:**
+- **Tray** (190.7 × 118.8 × 10 mm): the model sits in a fitted recess with 1 mm of clearance. There are two finger scoops to lift it out.
+- **Lid** (186.7 × 114.8 × 106.5 mm): it slides over the tray's lip and rests on the flange.
+  - The lid top carries the official MBSC logo (red shield, white details, gold name), a gold frame, KING SALMAN STADIUM, RIYADH · 2034, PRESENTED TO DR. R. E. GEORGE, and GROUP 8 · MBSC EMBA · ECN 511 · 2026.
+  - The walls are debossed: KING SALMAN STADIUM and the course on the front, GROUP 8 and the seven names on the back, RIYADH · 2034 on the sides.
+
+**Printing:** `print/stadium_light_giftbox.3mf` holds both parts on one plate.
+- The lid prints upside down, so all the colour sits in its first 3 layers. That's only 10 colour swaps.
+- The textured plate gives the lid top a fine finish.
+- Estimate: about 7 hours and about 290 g of filament, nearly all green.
+- Settings: 0.2 mm layers, 4 walls, supports off. A layer-by-layer check found zero floating regions.
+
+Generator: `source/box.py`. Change `BODY` to make a white box, or `DR` for the dedication.
+
 ## Three versions of the large model
 
 The same full stadium scene, with the lettering in three places:
