@@ -118,16 +118,13 @@ def lid():
     P['white'].append(inl(tracked_cs('PRESENTED TO ' + DR, 3.4, 0, y, 'SemiBold', .2)))
     y -= 6.6
     P['gold'].append(inl(tracked_cs('GROUP 8  ·  MBSC EMBA  ·  ECN 511  ·  2026', 3.0, 0, y, 'Bold', .16)))
-    # debossed walls, in the box colour: the course on the front, the team on the back, the city on the sides
+    # debossed walls, in the box colour: the course on the front, the group on the back, the city on the sides
     cuts = []
     for txt, cap, wt, tr, zc in [('KING SALMAN STADIUM', 8.0, 'Black', .06, 60.0),
                                   ('ECN 511  \u00b7  ECONOMICS FOR MANAGERS  \u00b7  MBSC EMBA', 2.9, 'SemiBold', .2, 48.0)]:
         cuts.append(ED.face_solid(tracked_cs(txt, cap, 0, zc, wt, tr), 0, -LO_D / 2, embed=.6))
-    team = [('GROUP 8', 7.0, 'Black', .3, 72.0),
-            ('ABDULMAJEED ALAJLAN  \u00b7  SALMAN ALFARIS', 3.5, 'SemiBold', .14, 60.0),
-            ('ABDULRAHMAN ALDAHLAWI  \u00b7  NADA ALYAHYA', 3.5, 'SemiBold', .14, 53.0),
-            ('MOHAMMED ALGHAMDI  \u00b7  HAIFA BINNAFISAH', 3.5, 'SemiBold', .14, 46.0),
-            ('ABDULAZIZ ALWEHEAB', 3.5, 'SemiBold', .14, 39.0)]
+    team = [('GROUP 8', 9.0, 'Black', .3, 60.0),
+            ('MBSC EMBA  \u00b7  2026', 4.0, 'SemiBold', .3, 47.0)]
     for txt, cap, wt, tr, zc in team:
         cuts.append(ED.face_solid(tracked_cs(txt, cap, 0, zc, wt, tr), 0, -LO_D / 2, embed=.6).rotate([0, 0, 180]))
     city = tracked_cs('RIYADH  \u00b7  2034', 6.0, 0, 55.0, 'Black', .3)
