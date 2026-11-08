@@ -53,7 +53,7 @@ A green box with a lift-off lid, sized for the light edition printed at 1.469×.
 **The two parts:**
 - **Tray** (190.7 × 118.8 × 10 mm): the model sits in a fitted recess with 1 mm of clearance. There are two finger scoops to lift it out.
 - **Lid** (186.7 × 114.8 × 106.5 mm): it slides over the tray's lip and rests on the flange.
-  - The lid top carries the official MBSC logo (red shield, white details, gold name), a gold frame, KING SALMAN STADIUM, RIYADH · 2034, PRESENTED TO DR. R. E. GEORGE, and GROUP 8 · MBSC EMBA · ECN 511 · 2026.
+  - The lid top carries only the official MBSC logo and the college name (red shield, white details, gold name), centred inside a gold frame.
   - The walls are debossed: KING SALMAN STADIUM and the course on the front, GROUP 8 and MBSC EMBA · 2026 on the back, RIYADH · 2034 on the sides.
 
 **Printing:** `print/stadium_light_giftbox.3mf` holds both parts on one plate.
@@ -62,7 +62,7 @@ A green box with a lift-off lid, sized for the light edition printed at 1.469×.
 - Estimate: about 7 hours and about 290 g of filament, nearly all green.
 - Settings: 0.2 mm layers, 4 walls, supports off. A layer-by-layer check found zero floating regions.
 
-Generator: `source/box.py`. Change `BODY` to make a white box, or `DR` for the dedication.
+Generator: `source/box.py`. Change `BODY` to make a white box.
 
 ## Three versions of the large model
 
