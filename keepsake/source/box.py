@@ -100,24 +100,12 @@ def lid():
     # gold frame
     m = 6.0
     P['gold'].append(inl(rrect(fw - 2 * m, fd - 2 * m, 8) - rrect(fw - 2 * m - 2.4, fd - 2 * m - 2.4, 6.8)))
-    # the logo
-    LW = 112.0
-    rings, lh = _logo_layers(LW, -LW / 2, fd / 2 - m - 6.5)
+    # the logo with the college name, centred on the lid, and nothing else
+    LW = 150.0
+    _, lh = _logo_layers(LW, 0, 0)
+    rings, lh = _logo_layers(LW, -LW / 2, lh / 2)
     for c, cs in rings.items():
         P[c].append(inl(cs))
-    y = fd / 2 - m - 6.5 - lh
-    # lettering under the logo
-    y -= 9.0
-    t1 = tracked_cs('KING SALMAN STADIUM', 7.4, 0, y, 'Black', .05); P['gold'].append(inl(t1))
-    y -= 8.2
-    t2 = tracked_cs('RIYADH  ·  2034', 3.4, 0, y, 'SemiBold', .3); P['white'].append(inl(t2))
-    b1, b2 = t1.bounds(), t2.bounds()
-    for x0, x1 in [(b1[0], b2[0] - 4), (b2[2] + 4, b1[2])]:
-        P['gold'].append(inl(rect(x0, y - .5, x1, y + .5)))
-    y -= 8.0
-    P['white'].append(inl(tracked_cs('PRESENTED TO ' + DR, 3.4, 0, y, 'SemiBold', .2)))
-    y -= 6.6
-    P['gold'].append(inl(tracked_cs('GROUP 8  ·  MBSC EMBA  ·  ECN 511  ·  2026', 3.0, 0, y, 'Bold', .16)))
     # debossed walls, in the box colour: the course on the front, the group on the back, the city on the sides
     cuts = []
     for txt, cap, wt, tr, zc in [('KING SALMAN STADIUM', 8.0, 'Black', .06, 60.0),
