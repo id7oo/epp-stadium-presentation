@@ -64,19 +64,22 @@ def contd(no, title):
 # ════════════════════════════════════════════════════════════════════════════
 # COVER
 # ════════════════════════════════════════════════════════════════════════════
-TEAM = [('Abdulmajeed Alajlan', 'AA', '#22D38B'), ('Abdulrahman Aldahlawi', 'AD', '#2BC2CF'), ('Salman Alfaris', 'SA', '#4A95F0'),
-        ('Mohammed Alghamdi', 'MA', '#E2B357'), ('Abdulaziz Alweheab', 'AW', '#EE6A33'), ('Nada Alyahya', 'NA', '#EE6A95'),
-        ('Haifa Binnafisah', 'HB', '#C77BDB')]
+import json
+TEAM = ['Abdulmajeed Saleh Alajlan', 'Abdulrahman Ibrahim Aldahlawi', 'Salman Hamad Alfaris', 'Mohammed Saleh Alghamdi',
+        'Abdulaziz Fahad Alweheab', 'Nada Yousef Alyahya', 'Haifa Fahad Binnafisah']
+_ids = os.path.join(HERE, 'team_ids.json')
+IDS = json.load(open(_ids)) if os.path.exists(_ids) and not os.environ.get('NO_IDS') else {}
+SHORT = [n.split()[0] + ' ' + n.split()[-1] for n in TEAM]
 
 COVER = f'''
 <section class="page cover" style="background:#04090B">
   <div style="position:absolute;left:0;top:0;width:210mm;height:192mm;background:url(img/cover.jpg) center/cover;
        -webkit-mask-image:linear-gradient(180deg,#000 55%,rgba(0,0,0,.6) 78%,transparent);"></div>
-  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,9,11,.72) 0%,rgba(4,9,11,.1) 22%,rgba(4,9,11,0) 45%),
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,9,11,.92) 0%,rgba(4,9,11,.7) 13%,rgba(4,9,11,.25) 26%,rgba(4,9,11,0) 40%),
        radial-gradient(120mm 90mm at 80% 92%,rgba(20,110,75,.28),transparent 70%)"></div>
   <div style="position:absolute;left:16mm;top:13mm;right:16mm;display:flex;justify-content:space-between;align-items:center">
-    <img src="img/mbsc_logo_dark.svg" style="height:15mm">
-    <span class="eb">MBSC Executive MBA · ECN 511 Economics for Managers</span>
+    <img src="img/mbsc_logo_dark.svg" style="height:16mm;filter:drop-shadow(0 0 3mm rgba(0,0,0,.55))">
+    <span class="eb" style="background:rgba(5,11,12,.82);border-color:rgba(226,179,87,.75);color:#F0C46A;padding:1.6mm 3.6mm 1.6mm 2.8mm">MBSC Executive MBA · ECN 511 Economics for Managers</span>
   </div>
   <div class="gl" style="position:absolute;left:16mm;right:16mm;top:124mm;padding:9mm 10mm 8mm;background:linear-gradient(158deg,rgba(255,255,255,.12),rgba(255,255,255,.03) 36%,rgba(255,255,255,.01)),rgba(10,24,22,.62);border-color:rgba(255,255,255,.16)">
     <span class="eb">Group report · Construction and Infrastructure · Topic B</span>
@@ -92,19 +95,13 @@ COVER = f'''
       <div><div class="v l gold">SAR 84.32m</div><div class="kv">EP obligation at the 20% draft rate</div></div>
     </div>
   </div>
-  <div style="position:absolute;left:16mm;right:16mm;bottom:15mm;display:flex;justify-content:space-between;align-items:flex-end">
-    <div>
-      <div class="k" style="letter-spacing:.32em">Group 8</div>
-      <div style="display:flex;flex-wrap:wrap;gap:1.6mm 4mm;max-width:128mm;font-size:8pt;color:var(--fg2)">
-        {''.join(f'<span style="display:inline-flex;align-items:center;gap:1.4mm"><i style="width:1.6mm;height:1.6mm;border-radius:50%;background:{col}"></i>{n}</span>' for n, _, col in TEAM)}
-      </div>
-    </div>
-    <div style="text-align:right">
-      <div style="font-size:15pt;font-weight:800;color:var(--fg);letter-spacing:-.01em">15 November 2026</div>
-      <div class="xs fg3">MBSC Executive MBA</div>
-    </div>
+  <div style="position:absolute;left:16mm;right:16mm;bottom:16mm">
+    <div style="display:flex;align-items:baseline;gap:4mm;margin-bottom:2.4mm">
+      <div style="font-size:15pt;font-weight:800;color:var(--fg);letter-spacing:-.01em">Group 8</div>
+      <div class="hr" style="flex:1;margin:0;align-self:center"></div></div>
+    <div style="font-size:9pt;line-height:1.7;color:var(--fg2)">{'<span style="color:#56696A">  ·  </span>'.join(SHORT[:4])}<br>{'<span style="color:#56696A">  ·  </span>'.join(SHORT[4:])}</div>
   </div>
-  <div class="src" style="position:absolute;left:16mm;bottom:7mm;font-size:5.4pt">Cover image: King Salman Stadium concept rendering © Populous</div>
+  <div class="src" style="position:absolute;left:16mm;bottom:8mm;font-size:6pt">Cover image: King Salman Stadium concept rendering © Populous</div>
 </section>'''
 PAGES.append(COVER)
 
@@ -165,57 +162,41 @@ assumption;</strong> actual eligibility depends on the tender’s supplier struc
 PRI = [('Establish eligibility before pricing.', 'Map imported packages to foreign suppliers, confirm the applicable policy and obtain an approved obligation calculation.', 'Eligibility'),
        ('Approve a staged shared programme.', 'Combine licensed systems training with qualification of Saudi materials, starting with paid placements and confirmed orders across two eligible sites.', 'Programme'),
        ('Award credit against additional, verifiable capability.', 'Agree the activity baseline, rights, valuation factors and evidence before investment, then measure sustained employment and repeat orders.', 'Credit')]
+SEE = ['Developed in sections 2 and 6', 'Developed in section 5', 'Developed in sections 3 and 4']
 pri_html = ''.join(f'''
-  <div class="gl {'green' if i == 1 else ''}" style="padding:5mm 5mm 5mm;display:flex;flex-direction:column">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start">
-      <div style="font-size:30pt;font-weight:300;line-height:.9;color:var(--gold)">0{i + 1}</div><span class="tag {'g' if i == 1 else 'y'}">{t}</span></div>
-    <div style="font-size:10.5pt;font-weight:800;line-height:1.25;color:var(--fg);margin:4mm 0 2mm">{a}</div>
-    <div class="sm">{b}</div></div>''' for i, (a, b, t) in enumerate(PRI))
+  <div class="gl {'green' if i == 1 else ''}" style="padding:6.5mm 6mm;display:grid;grid-template-columns:18mm 1fr auto;gap:5mm;align-items:center;margin-bottom:{0 if i == 2 else 4}mm">
+    <div style="font-size:36pt;font-weight:300;line-height:.9;color:var(--gold)">0{i + 1}</div>
+    <div><div style="font-size:12pt;font-weight:800;line-height:1.25;color:var(--fg);margin-bottom:1.4mm">{a}</div>
+      <div style="font-size:9.2pt;line-height:1.5">{b}</div></div>
+    <div style="text-align:right;align-self:start"><span class="tag {'g' if i == 1 else 'y'}">{t}</span><div class="xs fg3 mt1" style="white-space:nowrap">{SEE[i]}</div></div></div>''' for i, (a, b, t) in enumerate(PRI))
 
-TL = [('Preceding framework', 'SAR 100m import threshold, 35% obligation', 'm'),
-      ('14 April 2026', 'Consultation on the policy update announced in Umm Al-Qura', 'y'),
-      ('22 April 2026', 'Consultation closed', 'y'),
-      ('15 November 2026', 'Official Arabic text of the April draft accessed for this report', 'g'),
-      ('Before implementation', 'Confirm contract-specific commencement and transition provisions', 'o')]
-tl_html = ''.join(f'''<div style="position:relative;padding-left:6mm;margin-bottom:{0 if i == len(TL) - 1 else 3.2}mm">
-  <i style="position:absolute;left:0;top:1mm;width:2.6mm;height:2.6mm;border-radius:50%;background:{ {'m': '#7F928F', 'y': '#E2B357', 'g': '#22D38B', 'o': '#EE6A33'}[k] };box-shadow:0 0 2mm {'rgba(226,179,87,.5)' if k == 'y' else 'transparent'}"></i>
-  <div style="font-size:7.6pt;font-weight:800;color:var(--fg)">{d}</div><div class="xs">{t}</div></div>''' for i, (d, t, k) in enumerate(TL))
+TL = [('Preceding framework', 'SAR 100m import threshold and a 35% obligation', '#7F928F'),
+      ('14 April 2026', 'Consultation on the policy update announced in Umm Al-Qura', '#E2B357'),
+      ('22 April 2026', 'Consultation closed', '#E2B357'),
+      ('Publication + 120 days', 'Article 19: the updated policy takes effect 120 days after publication', '#22D38B'),
+      ('Before implementation', 'Confirm contract-specific commencement and transition; Article 4 keeps existing obligations under their original rules', '#EE6A33')]
+tl_html = ''.join(f'''<div style="position:relative;padding-top:7mm">
+  <i style="position:absolute;left:0;top:1.2mm;width:3.2mm;height:3.2mm;border-radius:50%;background:{col};box-shadow:0 0 2.4mm {col}99;border:.5mm solid #0b1513"></i>
+  <div style="font-size:9.4pt;font-weight:800;color:var(--fg);line-height:1.25;margin-bottom:1.4mm">{d}</div><div class="sm">{t}</div></div>''' for d, t, col in TL)
 
-team_html = ''.join(f'''<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.6mm">
-  <div style="width:11mm;height:11mm;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8pt;font-weight:800;color:{col};
-    border:.4mm solid {col};background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.14),rgba(255,255,255,.02));box-shadow:0 0 3.5mm {col}55">{ini}</div>
-  <div style="font-size:7pt;font-weight:700;color:var(--fg);line-height:1.2">{n.split()[0]}<br><span style="font-weight:500;color:var(--fg3)">{n.split()[1]}</span></div></div>''' for n, ini, col in TEAM)
 
 page(f'''
 {contd('01', 'Sector at a glance')}
 <h2>Our three priorities</h2>
-<div class="g3 mb3" style="grid-auto-rows:1fr">{pri_html}</div>
+<div class="mb3">{pri_html}</div>
 
-<div class="sm2 mb3">
-  <div class="gl dark" style="padding:5mm">
-    <div class="k">Policy basis · timeline</div>
-    <div class="mt1">{tl_html}</div>
+<div><h2>Policy basis</h2>
+<p class="mb3">This report analyses LCGPA’s April 2026 consultation draft, using the official Arabic text accessed on 15 November 2026, and compares it with
+the preceding framework. The consultation notice confirms the draft’s consultation history. Contract-specific commencement and transition
+provisions require confirmation before implementation. {c('4–6')}</p>
+<div class="gl dark" style="padding:5mm 5.5mm 5.5mm">
+  <div class="k">From the preceding framework to implementation</div>
+  <div style="position:relative;margin-top:2mm">
+    <i style="position:absolute;left:1.6mm;right:6mm;top:2.8mm;height:.35mm;background:linear-gradient(90deg,#7F928F,#E2B357 30%,#22D38B 70%,#EE6A33)"></i>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4mm">{tl_html}</div>
   </div>
-  <div>
-    <h2>Policy basis</h2>
-    <p>This report analyses LCGPA’s April 2026 consultation draft, using the official Arabic text accessed on 15 November 2026, and compares it with
-    the preceding framework. The consultation notice confirms the draft’s consultation history. Contract-specific commencement and transition
-    provisions require confirmation before implementation. {c('4–6')}</p>
-    <div class="gl gold tight mt2" style="display:flex;gap:3mm;align-items:center">
-      <div class="v m gold" style="flex:none">120 days</div>
-      <div class="xs">Article 19 provides for effectiveness 120 days after publication, while Article 4 preserves obligations under the rules that applied when they arose. {c('4')}</div>
-    </div>
-  </div>
-</div>
-
-<div class="gl" style="padding:5mm 5mm 5.5mm">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4.5mm">
-    <span class="eb">Prepared by · Group 8</span><span class="xs fg3">MBSC Executive MBA · ECN 511 Economics for Managers</span></div>
-  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2mm">{team_html}</div>
-  <div class="hr"></div>
-  <p class="sm mb0">Prepared by Abdulmajeed Alajlan, Abdulrahman Aldahlawi, Salman Alfaris, Mohammed Alghamdi, Abdulaziz Alweheab, Nada Alyahya and
-  Haifa Binnafisah. <strong>The analysis and recommendations express the group’s views, independently of DGA and LCGPA.</strong></p>
-</div>
+  <div class="src mt2">Sources: {c('4, Articles 4 and 19; 5; 6')}</div>
+</div></div>
 ''', sec='01 · Sector at a glance', bg='b')
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -883,8 +864,8 @@ factors, with technology, knowledge and localisation in equal values.</p>
     </div>
   </div>
   <div style="display:flex;flex-direction:column;gap:2.4mm">
-    <div class="gl tight gold" style="display:flex;align-items:center;gap:4mm;padding:2.6mm 4mm"><div class="v m gold" style="width:30mm;flex:none;white-space:nowrap">SAR 0.72m</div><div class="xs">2% administration fee at factors 3, 2, 2</div></div>
-    <div class="gl tight" style="display:flex;align-items:center;gap:4mm;padding:2.6mm 4mm"><div class="v m" style="width:30mm;flex:none;white-space:nowrap">SAR 1.26m</div><div class="xs">2% administration fee at category minima</div></div>
+    <div class="gl tight gold" style="display:flex;align-items:center;gap:4mm;padding:2.6mm 4mm"><div class="v m gold" style="width:30mm;flex:none;white-space:nowrap">SAR 0.72m</div><div class="xs">2% fee at factors 3, 2, 2</div></div>
+    <div class="gl tight" style="display:flex;align-items:center;gap:4mm;padding:2.6mm 4mm"><div class="v m" style="width:30mm;flex:none;white-space:nowrap">SAR 1.26m</div><div class="xs">2% fee at category minima</div></div>
     <div class="gl tight" style="display:flex;align-items:center;gap:4mm;padding:2.6mm 4mm"><div class="v m" style="width:30mm;flex:none;white-space:nowrap">SAR 8.43m</div><div class="xs">10% EP guarantee on the SAR 84.32m obligation</div></div>
   </div>
 </div>
@@ -928,7 +909,7 @@ page(f'''
   <div class="k">The deadline clock under the April 2026 draft</div>
   <svg width="100%" viewBox="0 0 168 22" style="margin-top:2mm">
     <line x1="4" y1="9" x2="164" y2="9" stroke="rgba(226,179,87,.55)" stroke-width=".4"/>
-    {''.join(f'<circle cx="{x}" cy="9" r="1.8" fill="{c_}" stroke="#141007" stroke-width=".5"/><text x="{x}" y="4.4" font-size="2.5" font-weight="800" fill="#F2F7F6" text-anchor="middle">{t}</text><text x="{x}" y="14.6" font-size="2.05" font-weight="500" fill="#B4C5C2" text-anchor="middle">{s1}</text><text x="{x}" y="17.6" font-size="2.05" font-weight="500" fill="#B4C5C2" text-anchor="middle">{s2}</text>' for x, c_, t, s1, s2 in [(10, '#7F928F', 'Day 0', 'main contract', 'signed'), (42, '#E2B357', '90 days', 'EP contract', 'deadline'), (74, '#E2B357', '+30 days', 'guarantee after', 'EP-contract signature'), (106, '#22D38B', 'Quarterly', 'report within 10', 'working days'), (138, '#22D38B', '60 working days', 'final statement after', 'the last project'), (160, '#4A95F0', '6 · 12 mo', 'verify work and', 'repeat orders')])}
+    {''.join(f'<circle cx="{x}" cy="9" r="1.8" fill="{c_}" stroke="#141007" stroke-width=".5"/><text x="{x}" y="4.4" font-size="2.7" font-weight="800" fill="#F2F7F6" text-anchor="middle">{t}</text><text x="{x}" y="14.6" font-size="2.3" font-weight="500" fill="#B4C5C2" text-anchor="middle">{s1}</text><text x="{x}" y="17.6" font-size="2.3" font-weight="500" fill="#B4C5C2" text-anchor="middle">{s2}</text>' for x, c_, t, s1, s2 in [(10, '#7F928F', 'Day 0', 'main contract', 'signed'), (42, '#E2B357', '90 days', 'EP contract', 'deadline'), (74, '#E2B357', '+30 days', 'guarantee after', 'EP-contract signature'), (106, '#22D38B', 'Quarterly', 'report within 10', 'working days'), (138, '#22D38B', '60 working days', 'final statement after', 'the last project'), (160, '#4A95F0', '6 · 12 mo', 'verify work and', 'repeat orders')])}
   </svg>
 </div>
 <div class="src">Policy deadlines above follow the April 2026 draft, Articles 13–16. Confirm the applicable terms for each contract.</div>
@@ -1032,23 +1013,24 @@ and data years are stated below.</p>
 # ════════════════════════════════════════════════════════════════════════════
 BACK = f'''
 <section class="page" style="background:#04090B">
-  <div style="position:absolute;left:0;top:0;width:210mm;height:170mm;background:url(img/back.jpg) center/cover;
-       -webkit-mask-image:linear-gradient(180deg,#000 60%,transparent)"></div>
-  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,9,11,.45),rgba(4,9,11,0) 30%),radial-gradient(130mm 80mm at 20% 85%,rgba(20,110,75,.25),transparent 70%)"></div>
-  <div style="position:absolute;left:16mm;right:16mm;top:150mm">
-    <span class="eb">Group 8 · MBSC EMBA · ECN 511</span>
-    <div style="font-size:40pt;font-weight:800;color:var(--fg);letter-spacing:-.03em;line-height:1;margin:5mm 0 3mm">Thank you</div>
-    <div style="font-size:11pt;color:var(--fg2);max-width:130mm;line-height:1.45">Economic Participation in Saudi Stadium Construction · a practical
-    playbook using the King Salman Stadium case</div>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2mm;margin-top:9mm">{team_html}</div>
+  <div style="position:absolute;left:0;top:0;width:210mm;height:150mm;background:url(img/back.jpg) center 40%/cover;
+       -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent)"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,9,11,.6),rgba(4,9,11,0) 20%,rgba(4,9,11,0) 26%,rgba(4,9,11,.82) 40%,rgba(4,9,11,.96) 52%),radial-gradient(130mm 80mm at 20% 88%,rgba(20,110,75,.22),transparent 70%)"></div>
+  <div style="position:absolute;left:16mm;top:12mm"><img src="img/mbsc_logo_dark.svg" style="height:14mm;filter:drop-shadow(0 0 3mm rgba(0,0,0,.6))"></div>
+  <div style="position:absolute;left:16mm;right:16mm;top:122mm">
+    <span class="eb">MBSC Executive MBA · ECN 511 Economics for Managers</span>
+    <div style="font-size:34pt;font-weight:800;color:var(--fg);letter-spacing:-.03em;line-height:1;margin:4.5mm 0 2.6mm">Prepared by <span class="green">Group 8</span></div>
+    <div style="font-size:10.5pt;color:var(--fg2);line-height:1.45">Economic Participation in Saudi Stadium Construction · a practical playbook using the King Salman Stadium case</div>
   </div>
-  <div class="gl" style="position:absolute;left:16mm;right:16mm;bottom:16mm;padding:4.5mm 5mm;display:grid;grid-template-columns:auto 1fr auto;gap:5mm;align-items:center">
-    <img src="img/qr.png" style="width:22mm;height:22mm;border-radius:1.6mm;background:#fff;padding:1.2mm">
-    <div><div class="k">The main presentation</div><div style="font-size:9pt;font-weight:700;color:var(--fg)">Interactive 3D edition, live in the browser</div>
-      <a href="https://mbsc-group8-ecn511.com" style="font-size:10.5pt;font-weight:800;color:var(--green)">mbsc-group8-ecn511.com</a></div>
-    <img src="img/mbsc_logo_dark.svg" style="height:13mm">
+  <div class="gl" style="position:absolute;left:16mm;right:16mm;top:166mm;padding:3mm 7mm 4mm">
+    <div style="display:grid;grid-template-columns:10mm 1fr auto;gap:4mm;padding:2.4mm 0;border-bottom:.25mm solid rgba(226,179,87,.45)">
+      <span class="k mb0" style="margin:0">No.</span><span class="k mb0" style="margin:0">Student name</span><span class="k mb0" style="margin:0;text-align:right">{'Student number' if IDS else ''}</span></div>
+    {''.join(f'<div style="display:grid;grid-template-columns:10mm 1fr auto;gap:4mm;align-items:baseline;padding:3.3mm 0;border-bottom:.25mm solid rgba(255,255,255,{0 if i == len(TEAM) - 1 else .08})"><span style="font-size:9pt;font-weight:300;color:var(--gold)">{i + 1:02d}</span><span style="font-size:11pt;font-weight:700;color:var(--fg)">{n}</span><span style="font-size:11pt;font-weight:700;color:var(--fg2);letter-spacing:.06em;font-variant-numeric:tabular-nums">{IDS.get(n, "")}</span></div>' for i, n in enumerate(TEAM))}
   </div>
-  <div class="src" style="position:absolute;left:16mm;bottom:8mm;font-size:5.4pt">Image: Group 8 3D model of King Salman Stadium</div>
+  <div style="position:absolute;left:16mm;right:16mm;bottom:15mm;display:flex;justify-content:space-between;align-items:flex-end;gap:8mm">
+    <p class="sm mb0" style="max-width:120mm">The analysis and recommendations express the group’s views, independently of DGA and LCGPA.</p>
+    <div class="src" style="font-size:6pt;text-align:right">Image: Group 8 3D model of King Salman Stadium</div>
+  </div>
 </section>'''
 PAGES.append(BACK)
 
@@ -1067,7 +1049,7 @@ toc_html = ''.join(f'''<div style="display:grid;grid-template-columns:16mm 1fr a
   <div style="font-size:11pt;font-weight:800;color:var(--fg)">{SECTION_START[n]:02d}</div></div>''' for n, t, d in TOC)
 toc_html += f'''<div style="display:grid;grid-template-columns:16mm 1fr auto;gap:4mm;align-items:center;padding:4.2mm 0;border-top:.25mm solid rgba(255,255,255,.1);border-bottom:.25mm solid rgba(255,255,255,.1)">
   <div style="font-size:24pt;font-weight:300;color:var(--fg3);line-height:1">R</div>
-  <div><div style="font-size:12pt;font-weight:800;color:var(--fg);line-height:1.2">References</div><div class="sm fg3">24 numbered sources, accessed 15 November 2026</div></div>
+  <div><div style="font-size:12pt;font-weight:800;color:var(--fg);line-height:1.2">References</div><div class="sm fg3">24 numbered sources, with links</div></div>
   <div style="font-size:11pt;font-weight:800;color:var(--fg)">{SECTION_START['R']:02d}</div></div>'''
 
 KEYS = [('SAR 338.3bn', 'construction gross value added, 2023', ''), ('7.8%', 'of Saudi gross value added', 'green'),
@@ -1080,7 +1062,7 @@ PAGES[:] = PAGES[:CONTENTS_IDX]
 page(f'''
 <div style="display:flex;justify-content:space-between;align-items:flex-end;margin:2mm 0 6mm">
   <div><span class="eb">Inside the report</span><div style="font-size:30pt;font-weight:800;color:var(--fg);letter-spacing:-.025em;line-height:1;margin-top:4mm">Contents</div></div>
-  <div class="xs fg3" style="text-align:right">Group 8 · MBSC Executive MBA<br>ECN 511 Economics for Managers · 15 November 2026</div>
+  <div class="xs fg3" style="text-align:right">Group 8 · MBSC Executive MBA<br>ECN 511 Economics for Managers</div>
 </div>
 {toc_html}
 <div class="k mt4">The case in six numbers</div>

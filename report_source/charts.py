@@ -9,6 +9,7 @@ def pt(x): return x * 0.3528
 
 
 def T(x, y, s, size=7, w=500, fill=FG2, anchor='start', extra=''):
+    size = max(size, 6.1)
     return (f'<text x="{x:.2f}" y="{y:.2f}" font-size="{pt(size):.3f}" font-weight="{w}" fill="{fill}" '
             f'text-anchor="{anchor}" {extra}>{s}</text>')
 
@@ -60,7 +61,7 @@ def gastat(W=168):
     out.append(T(x0 + pw + 2.5, y2 + 4.3, '47.6% of output', 6.6, 700, FG2))
     out.append(R(x0, y2, pw * (1 - imp) - .5, 6, GREEN, 1.6, 'filter="url(#glow)"'))
     out.append(R(x0 + pw * (1 - imp) + .5, y2, pw * imp - .5, 6, IMP, 1.6, 'filter="url(#glow)"'))
-    out.append(T(x0 + pw * (1 - imp) / 2, y2 + 4.1, 'made in Saudi Arabia · 80.3%', 5.8, 800, '#062014', 'middle'))
+    out.append(T(x0 + pw * (1 - imp) / 2, y2 + 4.1, 'Saudi-made 80.3%', 6.2, 800, '#062014', 'middle'))
     xi = x0 + pw * (1 - imp) + .5
     out.append(f'<path d="M{xi:.2f},{y2 + 6} L{x0},{y3} M{x0 + pw:.2f},{y2 + 6} L{x0 + pw * imp:.2f},{y3}" stroke="rgba(238,106,51,.45)" stroke-width=".3" stroke-dasharray="0.8 0.8"/>')
     out.append(R(x0, y3, pw * imp, 6, IMP, 1.6, 'filter="url(#glow)"'))
@@ -81,7 +82,7 @@ IMPORTS = [('Other chemical products', 'paints, coatings, sealants, adhesives', 
 
 
 def imports_chart(W=106):
-    lab = 44; bx = lab + 2; bw = W - bx - 22; rh = 6.7; top = 2
+    lab = 44; bx = lab + 2; bw = W - bx - 22; rh = 7.2; top = 2
     out = []
     for i, (n, ex, v, hl) in enumerate(IMPORTS):
         y = top + i * rh
