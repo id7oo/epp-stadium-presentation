@@ -1,0 +1,6 @@
+{
+  "name": "group8-epp-report",
+  "private": true,
+  "description": "A4 PDF edition of the Group 8 EPP report, King Salman Night Glass design",
+  "dependencies": { "@fontsource/plus-jakarta-sans": "5.0.20" }
+}

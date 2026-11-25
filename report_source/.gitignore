@@ -1,0 +1,7 @@
+img/
+node_modules/
+png/
+report.html
+report.pdf
+package-lock.json
+__pycache__/
