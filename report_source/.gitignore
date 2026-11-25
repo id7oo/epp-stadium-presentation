@@ -6,3 +6,6 @@ report.pdf
 package-lock.json
 __pycache__/
 team_ids.json
+flat/
+chk/
+report_flat.pdf

@@ -101,7 +101,6 @@ COVER = f'''
       <div class="hr" style="flex:1;margin:0;align-self:center"></div></div>
     <div style="font-size:9pt;line-height:1.7;color:var(--fg2)">{'<span style="color:#56696A">  ·  </span>'.join(SHORT[:4])}<br>{'<span style="color:#56696A">  ·  </span>'.join(SHORT[4:])}</div>
   </div>
-  <div class="src" style="position:absolute;left:16mm;bottom:8mm;font-size:6pt">Cover image: King Salman Stadium concept rendering © Populous</div>
 </section>'''
 PAGES.append(COVER)
 
@@ -1029,7 +1028,6 @@ BACK = f'''
   </div>
   <div style="position:absolute;left:16mm;right:16mm;bottom:15mm;display:flex;justify-content:space-between;align-items:flex-end;gap:8mm">
     <p class="sm mb0" style="max-width:120mm">The analysis and recommendations express the group’s views, independently of DGA and LCGPA.</p>
-    <div class="src" style="font-size:6pt;text-align:right">Image: Group 8 3D model of King Salman Stadium</div>
   </div>
 </section>'''
 PAGES.append(BACK)
